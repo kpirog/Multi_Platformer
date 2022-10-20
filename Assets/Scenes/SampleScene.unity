@@ -293,7 +293,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   networkPlayerPrefab: {fileID: 8408755885801751688, guid: 92b5084e2c46f014bbcac4e4de258b1a, type: 3}
-  temporarySpawnPosition: {x: 0, y: -4.15}
+  temporarySpawnPositions:
+  - {x: -4, y: -4.15}
+  - {x: 4, y: -4.15}
 --- !u!1 &2057504056
 GameObject:
   m_ObjectHideFlags: 0

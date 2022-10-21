@@ -9,18 +9,19 @@ namespace GDT.Character
     {
         private CharacterMovementHandler _movementHandler;
         private CharacterAnimationHandler _animationHandler;
-        private CharacterGroundChecker _groundChecker;
+        private CharacterWallGroundChecker _wallGroundChecker;
 
         private void Awake()
         {
             _movementHandler = GetComponent<CharacterMovementHandler>();
             _animationHandler = GetComponent<CharacterAnimationHandler>();
-            _groundChecker = GetComponent<CharacterGroundChecker>();
+            _wallGroundChecker = GetComponent<CharacterWallGroundChecker>();
         }
 
         public override void FixedUpdateNetwork()
         {
             HandleFallDown();
+            HandleSlide();
 
             if (GetInput(out NetworkInputData input))
             {
@@ -31,12 +32,20 @@ namespace GDT.Character
 
         private void HandleFallDown()
         {
-            _animationHandler.SetFallDownAnimation(!_groundChecker.IsGrounded && _movementHandler.IsFallingDown());
+            _animationHandler.SetFallDownAnimation(!_wallGroundChecker.IsGrounded && _movementHandler.IsFallingDown());
         }
 
+        private void HandleSlide()
+        {
+            if (_wallGroundChecker.IsSliding)
+            {
+                _movementHandler.Slide();
+            }
+        }
+        
         private void HandleJump(NetworkInputData input)
         {
-            if (input.IsJumpButtonPressed && _groundChecker.IsGrounded)
+            if (input.IsJumpButtonPressed && (_wallGroundChecker.IsGrounded || _wallGroundChecker.IsSliding)) 
             {
                 _movementHandler.Jump();
                 _animationHandler.SetJumpAnimation();

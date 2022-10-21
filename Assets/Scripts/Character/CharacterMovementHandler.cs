@@ -6,10 +6,11 @@ namespace GDT.Character
     public class CharacterMovementHandler : NetworkBehaviour
     {
         [SerializeField] private float acceleration;
-        [SerializeField] private float maxSpeed;
         [SerializeField] private float jumpForce;
         [SerializeField] private float drag;
         
+        [SerializeField] private float wallSlidingMultiplier;
+
         private NetworkRigidbody2D _rb;
 
         private void Awake()
@@ -31,12 +32,17 @@ namespace GDT.Character
             
             _rb.Rigidbody.drag = 0f;
             _rb.Rigidbody.velocity += direction * acceleration * Runner.DeltaTime;
-            _rb.Rigidbody.velocity = Vector2.ClampMagnitude(_rb.Rigidbody.velocity, maxSpeed);
         }
 
         public void Jump()
         {
             _rb.Rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+
+        public void Slide()
+        {
+            _rb.Rigidbody.velocity = new Vector2(_rb.Rigidbody.velocity.x,
+                Mathf.Clamp(_rb.Rigidbody.velocity.y, -wallSlidingMultiplier, float.MaxValue));
         }
         
         public void SetDrag()

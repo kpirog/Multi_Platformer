@@ -261,9 +261,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   acceleration: 20
-  maxSpeed: 10
-  jumpForce: 30
+  jumpForce: 15
   drag: 5
+  wallSlidingMultiplier: 1
 --- !u!114 &5313378900914907410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,6 +307,10 @@ MonoBehaviour:
   groundCheckLayer:
     serializedVersion: 2
     m_Bits: 128
+  wallTouchLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  wallTouchDistance: 0.52
 --- !u!1 &451250083032043622
 GameObject:
   m_ObjectHideFlags: 0

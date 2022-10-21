@@ -9,13 +9,13 @@ namespace GDT.Character
     {
         private CharacterMovementHandler _movementHandler;
         private CharacterAnimationHandler _animationHandler;
-        private CharacterWallGroundChecker _wallGroundChecker;
+        private CharacterTouchChecker _touchChecker;
 
         private void Awake()
         {
             _movementHandler = GetComponent<CharacterMovementHandler>();
             _animationHandler = GetComponent<CharacterAnimationHandler>();
-            _wallGroundChecker = GetComponent<CharacterWallGroundChecker>();
+            _touchChecker = GetComponent<CharacterTouchChecker>();
         }
 
         public override void FixedUpdateNetwork()
@@ -32,12 +32,12 @@ namespace GDT.Character
 
         private void HandleFallDown()
         {
-            _animationHandler.SetFallDownAnimation(!_wallGroundChecker.IsGrounded && _movementHandler.IsFallingDown());
+            _animationHandler.SetFallDownAnimation(!_touchChecker.IsGrounded && _movementHandler.IsFallingDown());
         }
 
         private void HandleSlide()
         {
-            if (_wallGroundChecker.IsSliding)
+            if (_touchChecker.IsSliding)
             {
                 _movementHandler.Slide();
             }
@@ -45,7 +45,7 @@ namespace GDT.Character
         
         private void HandleJump(NetworkInputData input)
         {
-            if (input.IsJumpButtonPressed && (_wallGroundChecker.IsGrounded || _wallGroundChecker.IsSliding)) 
+            if (input.JumpButtonPressed && (_touchChecker.IsGrounded || _touchChecker.IsSliding)) 
             {
                 _movementHandler.Jump();
                 _animationHandler.SetJumpAnimation();
@@ -54,17 +54,35 @@ namespace GDT.Character
 
         private void HandleMovement(NetworkInputData input)
         {
-            if (input.MovementDirection.sqrMagnitude > 0f)
+            Vector2 direction = GetMovementDirection(input);
+
+            if (direction != Vector2.zero)
             {
-                _movementHandler.Move(input.MovementDirection);
+                _movementHandler.Move(direction);
+                
                 _animationHandler.SetMovementAnimation(true);
-                _animationHandler.SetSpriteDirection(input.MovementDirection);
+                _animationHandler.SetSpriteDirection(direction);
             }
             else
             {
                 _movementHandler.SetDrag();
                 _animationHandler.SetMovementAnimation(false);
             }
+        }
+
+        private Vector2 GetMovementDirection(NetworkInputData input)
+        {
+            if (input.GetButton(InputButton.Left))
+            {
+                return Vector2.left;
+            }
+            
+            if (input.GetButton(InputButton.Right))
+            {
+                return Vector2.right;
+            }
+            
+            return Vector2.zero;
         }
     }
 }

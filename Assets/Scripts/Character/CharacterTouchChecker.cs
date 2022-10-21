@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GDT.Character
 {
-    public class CharacterWallGroundChecker : MonoBehaviour
+    public class CharacterTouchChecker : MonoBehaviour
     {
         [SerializeField] private BoxCollider2D boxCollider;
         [SerializeField] private LayerMask groundCheckLayer;
@@ -14,7 +14,7 @@ namespace GDT.Character
         private Bounds _bounds;
         private bool _touchingLeftWall;
         private bool _touchingRightWall;
-        
+
         public bool IsGrounded { get; private set; }
         public bool IsSliding => (_touchingLeftWall || _touchingRightWall) && !IsGrounded;
         

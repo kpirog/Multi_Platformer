@@ -1,4 +1,5 @@
 using Fusion;
+using GDT.Data;
 using UnityEngine;
 
 namespace GDT.Character
@@ -8,9 +9,8 @@ namespace GDT.Character
         [SerializeField] private float acceleration;
         [SerializeField] private float jumpForce;
         [SerializeField] private float drag;
-        
         [SerializeField] private float wallSlidingMultiplier;
-
+        
         private NetworkRigidbody2D _rb;
 
         private void Awake()
@@ -28,8 +28,6 @@ namespace GDT.Character
 
         public void Move(Vector2 direction)
         {
-            direction.Normalize();
-            
             _rb.Rigidbody.drag = 0f;
             _rb.Rigidbody.velocity += direction * acceleration * Runner.DeltaTime;
         }
@@ -38,7 +36,7 @@ namespace GDT.Character
         {
             _rb.Rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
-
+        
         public void Slide()
         {
             _rb.Rigidbody.velocity = new Vector2(_rb.Rigidbody.velocity.x,

@@ -6,5 +6,7 @@ namespace GDT.Data
     public struct NetworkInputData : INetworkInput
     {
         public Vector2 MovementDirection;
+        
+        public NetworkBool IsJumpButtonPressed;
     }
 }

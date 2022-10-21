@@ -8,6 +8,8 @@ namespace GDT.Character
         [SerializeField] private SpriteRenderer spriteRenderer;
 
         private const string MoveAnimationKey = "IsMoving";
+        private const string JumpAnimationKey = "Jump";
+        private const string FallDownAnimationKey = "IsFallingDown";
         
         public void SetSpriteDirection(Vector2 direction)
         {
@@ -17,6 +19,17 @@ namespace GDT.Character
         public void SetMovementAnimation(bool isMoving)
         {
             animator.SetBool(MoveAnimationKey, isMoving);
+        }
+
+        public void SetJumpAnimation()
+        {
+            animator.SetTrigger(JumpAnimationKey);
+        }
+
+        public void SetFallDownAnimation(bool isFallingDown)
+        {
+            animator.ResetTrigger(JumpAnimationKey);
+            animator.SetBool(FallDownAnimationKey, isFallingDown);
         }
     }
 }

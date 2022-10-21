@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 451250082444480747}
   - component: {fileID: 451250082444480744}
   - component: {fileID: 451250082444480745}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,8 @@ GameObject:
   - component: {fileID: 3032775604980960168}
   - component: {fileID: 5313378900914907410}
   - component: {fileID: 3473388298916993735}
-  m_Layer: 0
+  - component: {fileID: 1884619130283848126}
+  m_Layer: 6
   m_Name: NetworkPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,12 +189,12 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
-  m_GravityScale: 1
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &8219087795995188947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,7 +234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  networkObject: {fileID: 8774837033957304556}
+  characterInputHandler: {fileID: 5872625924751504148}
 --- !u!114 &5872625924751504148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,7 +260,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  speed: 20
+  acceleration: 20
+  maxSpeed: 10
+  jumpForce: 30
+  drag: 5
 --- !u!114 &5313378900914907410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,6 +291,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+--- !u!114 &1884619130283848126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451250082508976847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 410988c71a2de0b4286a6194c7ec4ef2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxCollider: {fileID: 451250083032043616}
+  groundCheckLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &451250083032043622
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,7 +317,7 @@ GameObject:
   m_Component:
   - component: {fileID: 451250083032043617}
   - component: {fileID: 451250083032043616}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

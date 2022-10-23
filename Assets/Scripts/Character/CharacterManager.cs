@@ -1,4 +1,3 @@
-using System;
 using Fusion;
 using GDT.Data;
 using UnityEngine;
@@ -8,48 +7,42 @@ namespace GDT.Character
     public class CharacterManager : NetworkBehaviour
     {
         private CharacterMovementHandler _movementHandler;
+        private CharacterInputHandler _inputHandler;
         private CharacterAnimationHandler _animationHandler;
-        private CharacterTouchChecker _touchChecker;
+        private CharacterTouchDetector _touchDetector;
 
         private void Awake()
         {
             _movementHandler = GetComponent<CharacterMovementHandler>();
+            _inputHandler = GetComponent<CharacterInputHandler>();
             _animationHandler = GetComponent<CharacterAnimationHandler>();
-            _touchChecker = GetComponent<CharacterTouchChecker>();
+            _touchDetector = GetComponent<CharacterTouchDetector>();
         }
 
         public override void FixedUpdateNetwork()
         {
+            _movementHandler.LimitSpeed();
             HandleFallDown();
-            HandleSlide();
 
             if (GetInput(out NetworkInputData input))
             {
+                var pressedButtons = input.Buttons.GetPressed(_inputHandler.PreviousButtons);
+                _inputHandler.PreviousButtons = input.Buttons;
+                
                 HandleMovement(input);
-                HandleJump(input);
+                HandleJump(pressedButtons, input);
             }
         }
 
         private void HandleFallDown()
         {
-            _animationHandler.SetFallDownAnimation(!_touchChecker.IsGrounded && _movementHandler.IsFallingDown());
-        }
-
-        private void HandleSlide()
-        {
-            if (_touchChecker.IsSliding)
-            {
-                _movementHandler.Slide();
-            }
+            _animationHandler.SetFallDownAnimation(!_touchDetector.IsGrounded && _movementHandler.IsFallingDown());
         }
         
-        private void HandleJump(NetworkInputData input)
+        private void HandleJump(NetworkButtons pressedButtons, NetworkInputData input)
         {
-            if (input.JumpButtonPressed && (_touchChecker.IsGrounded || _touchChecker.IsSliding)) 
-            {
-                _movementHandler.Jump();
-                _animationHandler.SetJumpAnimation();
-            }
+            _movementHandler.Jump(pressedButtons, _touchDetector);
+            _movementHandler.BetterJumpLogic(input, _touchDetector);
         }
 
         private void HandleMovement(NetworkInputData input)
@@ -58,7 +51,7 @@ namespace GDT.Character
 
             if (direction != Vector2.zero)
             {
-                _movementHandler.Move(direction);
+                _movementHandler.Move(input);
                 
                 _animationHandler.SetMovementAnimation(true);
                 _animationHandler.SetSpriteDirection(direction);

@@ -137,7 +137,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 451250082508976847}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 2}
   m_ConstrainProportionsScale: 0
@@ -175,6 +175,7 @@ MonoBehaviour:
   - {fileID: 5872625924751504148}
   - {fileID: 3032775604980960168}
   - {fileID: 3473388298916993735}
+  - {fileID: 1884619130283848126}
   SimulationBehaviours: []
 --- !u!50 &7364302895507760177
 Rigidbody2D:
@@ -262,10 +263,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  acceleration: 20
-  jumpForce: 12
+  acceleration: 1500
+  maxVelocity: 10
+  jumpForce: 14
   drag: 5
   wallSlidingMultiplier: 1
+  fallMultiplier: 2
+  lowJumpMultiplier: 4
+  horizontalVelocityReduction: {x: 0.95, y: 1}
+  verticalVelocityReduction: {x: 1, y: 0.95}
 --- !u!114 &5313378900914907410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,14 +311,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 410988c71a2de0b4286a6194c7ec4ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxCollider: {fileID: 451250083032043616}
-  groundCheckLayer:
+  _interpolationDataSource: 0
+  groundLayer:
     serializedVersion: 2
     m_Bits: 128
-  wallTouchLayer:
+  wallLayer:
     serializedVersion: 2
     m_Bits: 256
-  wallTouchDistance: 0.52
+  groundCheckMultiplier: 0.03
 --- !u!1 &451250083032043622
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,4 @@
 using Fusion;
-using UnityEngine;
 using System;
 
 namespace GDT.Data
@@ -15,11 +14,15 @@ namespace GDT.Data
     public struct NetworkInputData : INetworkInput
     {
         public NetworkButtons Buttons;
-        public NetworkBool JumpButtonPressed;
-        
+
         public bool GetButton(InputButton button) 
         {
             return Buttons.IsSet(button);
+        }
+
+        public NetworkButtons GetButtonDown(NetworkButtons previousButtons)
+        {
+            return Buttons.GetPressed(previousButtons);
         }
         
         public bool AxisPressed()

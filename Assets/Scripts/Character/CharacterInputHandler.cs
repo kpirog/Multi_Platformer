@@ -9,33 +9,25 @@ namespace GDT.Character
 {
     public class CharacterInputHandler : NetworkBehaviour, INetworkRunnerCallbacks
     {
-        private bool _jumpButtonPressed;
+        public NetworkButtons PreviousButtons { get; set; }
         
         public override void Spawned()
         {
-            Runner.AddCallbacks(this);
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Object.HasInputAuthority)
             {
-                _jumpButtonPressed = true;
+                Runner.AddCallbacks(this);
             }
         }
-
+        
         public void OnInput(NetworkRunner runner, NetworkInput input)
         {
             NetworkInputData inputData = new NetworkInputData();
             
             inputData.Buttons.Set(InputButton.Left, Input.GetKey(KeyCode.A));
             inputData.Buttons.Set(InputButton.Right, Input.GetKey(KeyCode.D));
-
-            inputData.JumpButtonPressed = _jumpButtonPressed;
+            inputData.Buttons.Set(InputButton.Jump, Input.GetKey(KeyCode.Space));
 
             input.Set(inputData);
-
-            _jumpButtonPressed = false;
         }
 
         #region Useless code

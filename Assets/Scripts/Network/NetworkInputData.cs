@@ -8,21 +8,18 @@ namespace GDT.Data
     {
         Left = 1 << 0,
         Right = 1 << 1,
-        Jump = 1 << 2
+        Jump = 1 << 2,
+        Shoot = 1 << 3
     }
 
     public struct NetworkInputData : INetworkInput
     {
         public NetworkButtons Buttons;
+        public float ShootingAngle;
 
         public bool GetButton(InputButton button) 
         {
             return Buttons.IsSet(button);
-        }
-
-        public NetworkButtons GetButtonDown(NetworkButtons previousButtons)
-        {
-            return Buttons.GetPressed(previousButtons);
         }
         
         public bool AxisPressed()

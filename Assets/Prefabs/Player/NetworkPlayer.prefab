@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 451250082444480747}
   - component: {fileID: 451250082444480744}
   - component: {fileID: 451250082444480745}
+  - component: {fileID: 2169294605145577788}
   m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
@@ -105,6 +106,36 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2169294605145577788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451250082444480750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  Animator: {fileID: 451250082444480745}
+  TotalWords: 1
+  SyncSettings: 79
+  FloatAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: -814817977
+  TimeAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: 1061325578
+  WeightAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: -814817977
+  StateHashes: 000000002b1a167c7940695546980c4f14c2736628a981077af3fe2e26e66c193c7756f3f3529d9dd0e29e3bedae2e02ce1e2da4
+  TriggerHashes: 0000000028a98107
 --- !u!1 &451250082508976847
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,6 +154,7 @@ GameObject:
   - component: {fileID: 5313378900914907410}
   - component: {fileID: 3473388298916993735}
   - component: {fileID: 1884619130283848126}
+  - component: {fileID: 2404496963435984385}
   m_Layer: 6
   m_Name: NetworkPlayer
   m_TagString: Untagged
@@ -176,6 +208,8 @@ MonoBehaviour:
   - {fileID: 3032775604980960168}
   - {fileID: 3473388298916993735}
   - {fileID: 1884619130283848126}
+  - {fileID: 2404496963435984385}
+  - {fileID: 2169294605145577788}
   SimulationBehaviours: []
 --- !u!50 &7364302895507760177
 Rigidbody2D:
@@ -319,6 +353,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   groundCheckMultiplier: 0.03
+--- !u!114 &2404496963435984385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451250082508976847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5b245ef2b42bde42aef9149fc6e180a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  arrowPrefab: {fileID: 2847973654369247365, guid: f8cd4e996e2fdb541bc09b483ce113e6, type: 3}
 --- !u!1 &451250083032043622
 GameObject:
   m_ObjectHideFlags: 0

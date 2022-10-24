@@ -10,12 +10,11 @@ namespace GDT.Character
         [SerializeField] private float groundCheckMultiplier;
 
         private Collider2D _collider;
+        private bool _isSlidingLeft, _isSlidingRight;
         
+        public bool IsSliding => _isSlidingLeft || _isSlidingRight;
         public bool IsGrounded { get; private set; }
-        public bool IsSlidingLeft { get; private set; }
-        public bool IsSlidingRight { get; private set; }
         
-        public bool IsSliding => IsSlidingLeft || IsSlidingRight;
 
         private void Awake()
         {
@@ -29,11 +28,11 @@ namespace GDT.Character
                     (Vector2)transform.position + Vector2.down * _collider.bounds.extents.y * groundCheckMultiplier,
                     _collider.bounds.size, 0f, groundLayer);
 
-            IsSlidingLeft = Runner.GetPhysicsScene2D()
+            _isSlidingLeft = Runner.GetPhysicsScene2D()
                 .OverlapCircle((Vector2)transform.position + (Vector2.left * _collider.bounds.extents.x), 0.01f,
                     wallLayer);
 
-            IsSlidingRight = Runner.GetPhysicsScene2D()
+            _isSlidingRight = Runner.GetPhysicsScene2D()
                 .OverlapCircle((Vector2)transform.position + (Vector2.right * _collider.bounds.extents.x), 0.01f,
                     wallLayer);
         }

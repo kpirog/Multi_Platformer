@@ -4,33 +4,41 @@ using UnityEngine;
 
 namespace GDT.Character
 {
-    public class CharacterManager : NetworkBehaviour
+    public class CharacterController : NetworkBehaviour
     {
         private CharacterMovementHandler _movementHandler;
         private CharacterInputHandler _inputHandler;
-        private CharacterAnimationHandler _animationHandler;
         private CharacterTouchDetector _touchDetector;
-
+        private CharacterShootingController _shootingController;
+        private CharacterAnimationHandler _animationHandler;
+        
+        
         private void Awake()
         {
             _movementHandler = GetComponent<CharacterMovementHandler>();
             _inputHandler = GetComponent<CharacterInputHandler>();
-            _animationHandler = GetComponent<CharacterAnimationHandler>();
             _touchDetector = GetComponent<CharacterTouchDetector>();
+            _shootingController = GetComponent<CharacterShootingController>();
+            _animationHandler = GetComponent<CharacterAnimationHandler>();
         }
 
         public override void FixedUpdateNetwork()
         {
+            if (!Object.HasInputAuthority) return;
+            
             _movementHandler.LimitSpeed();
             HandleFallDown();
+            HandleSlide();
 
             if (GetInput(out NetworkInputData input))
             {
                 var pressedButtons = input.Buttons.GetPressed(_inputHandler.PreviousButtons);
+                var releasedButtons = input.Buttons.GetReleased(_inputHandler.PreviousButtons);
                 _inputHandler.PreviousButtons = input.Buttons;
                 
                 HandleMovement(input);
                 HandleJump(pressedButtons, input);
+                HandleShoot(input, releasedButtons, input.ShootingAngle);
             }
         }
 
@@ -52,14 +60,28 @@ namespace GDT.Character
             if (direction != Vector2.zero)
             {
                 _movementHandler.Move(input);
-                
-                _animationHandler.SetMovementAnimation(true);
-                _animationHandler.SetSpriteDirection(direction);
             }
             else
             {
                 _movementHandler.SetDrag();
-                _animationHandler.SetMovementAnimation(false);
+            }
+        }
+
+        private void HandleSlide()
+        {
+            _movementHandler.Slide(_touchDetector);
+        }
+
+        private void HandleShoot(NetworkInputData input, NetworkButtons releasedButtons, float angle)
+        {
+            if (input.GetButton(InputButton.Shoot))
+            {
+                _shootingController.StretchBow();
+            }
+
+            if (releasedButtons.IsSet(InputButton.Shoot))
+            {
+                _shootingController.ReleaseArrow(angle);
             }
         }
 

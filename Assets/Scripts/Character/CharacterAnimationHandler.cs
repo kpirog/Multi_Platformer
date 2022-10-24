@@ -1,3 +1,5 @@
+using Fusion;
+using GDT.Data;
 using UnityEngine;
 
 namespace GDT.Character
@@ -6,11 +8,12 @@ namespace GDT.Character
     {
         [SerializeField] private Animator animator;
         [SerializeField] private SpriteRenderer spriteRenderer;
-
-        private const string MoveAnimationKey = "IsMoving";
-        private const string JumpAnimationKey = "Jump";
-        private const string FallDownAnimationKey = "IsFallingDown";
         
+        private static readonly int MovementKey = Animator.StringToHash("IsMoving");
+        private static readonly int JumpKey = Animator.StringToHash("Jump");
+        private static readonly int FallDownKey = Animator.StringToHash("IsFallingDown");
+        private static readonly int ShootKey = Animator.StringToHash("IsShooting");
+
         public void SetSpriteDirection(Vector2 direction)
         {
             spriteRenderer.flipX = direction.x < 0;
@@ -18,18 +21,31 @@ namespace GDT.Character
 
         public void SetMovementAnimation(bool isMoving)
         {
-            animator.SetBool(MoveAnimationKey, isMoving);
+            animator.SetBool(MovementKey, isMoving);
         }
 
-        public void SetJumpAnimation()
+        public void SetJumpAnimation(NetworkButtons pressedButtons)
         {
-            animator.SetTrigger(JumpAnimationKey);
+            if (pressedButtons.IsSet(InputButton.Jump))
+            {
+                animator.SetTrigger(JumpKey);
+            }
         }
 
         public void SetFallDownAnimation(bool isFallingDown)
         {
-            animator.ResetTrigger(JumpAnimationKey);
-            animator.SetBool(FallDownAnimationKey, isFallingDown);
+            animator.ResetTrigger(JumpKey);
+            animator.SetBool(FallDownKey, isFallingDown);
+        }
+
+        public void SetShootAnimation()
+        {
+            animator.SetBool(ShootKey, true);
+        }
+
+        public void StopShootAnimation()
+        {
+            animator.SetBool(ShootKey, false);
         }
     }
 }

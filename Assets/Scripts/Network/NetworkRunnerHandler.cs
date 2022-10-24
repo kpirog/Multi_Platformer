@@ -18,8 +18,6 @@ namespace GDT.Network
         private void Start()
         {
             InitializeNetworkRunner(_networkRunner, GameMode.AutoHostOrClient, "TestSession");
-
-            Debug.Log("Server started!");
         }
 
         private async void InitializeNetworkRunner(NetworkRunner runner, GameMode gameMode, string sessionName)

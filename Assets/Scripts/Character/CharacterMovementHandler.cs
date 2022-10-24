@@ -1,9 +1,11 @@
 using Fusion;
 using GDT.Data;
+using Projectiles;
 using UnityEngine;
 
 namespace GDT.Character
 {
+    [OrderAfter(typeof(Arrow))]
     public class CharacterMovementHandler : NetworkBehaviour
     {
         [SerializeField] private float acceleration;
@@ -19,10 +21,12 @@ namespace GDT.Character
         [SerializeField] private Vector2 verticalVelocityReduction;
 
         private NetworkRigidbody2D _rb;
+        private CharacterAnimationHandler _animationHandler;
 
         private void Awake()
         {
             _rb = GetComponent<NetworkRigidbody2D>();
+            _animationHandler = GetComponent<CharacterAnimationHandler>();
         }
 
         public override void Spawned()
@@ -36,15 +40,17 @@ namespace GDT.Character
         public void Move(NetworkInputData input)
         {
             _rb.Rigidbody.drag = 0f;
-            
+            _animationHandler.SetMovementAnimation(true);
+
             if (input.GetButton(InputButton.Left))
             {
                 if (_rb.Rigidbody.velocity.x > 0f)
                 {
                     _rb.Rigidbody.velocity *= Vector2.up;
                 }
-                
+
                 _rb.Rigidbody.AddForce(Vector2.left * acceleration * Runner.DeltaTime, ForceMode2D.Force);
+                _animationHandler.SetSpriteDirection(Vector2.left);
             }
 
             if (input.GetButton(InputButton.Right))
@@ -53,8 +59,9 @@ namespace GDT.Character
                 {
                     _rb.Rigidbody.velocity *= Vector2.up;
                 }
-                
+
                 _rb.Rigidbody.AddForce(Vector2.right * acceleration * Runner.DeltaTime, ForceMode2D.Force);
+                _animationHandler.SetSpriteDirection(Vector2.right);
             }
         }
 
@@ -62,18 +69,12 @@ namespace GDT.Character
         {
             if (pressedButtons.IsSet(InputButton.Jump))
             {
-                if (touchDetector.IsGrounded)
+                if (touchDetector.IsGrounded || touchDetector.IsSliding)
                 {
                     _rb.Rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 }
-                else if (touchDetector.IsSlidingLeft)
-                {
-                    _rb.Rigidbody.AddForce(Vector2.up + (Vector2.right * jumpForce), ForceMode2D.Impulse);
-                }
-                else if (touchDetector.IsSlidingRight)
-                {
-                    _rb.Rigidbody.AddForce(Vector2.up + (Vector2.left * jumpForce), ForceMode2D.Impulse);
-                }
+
+                _animationHandler.SetJumpAnimation(pressedButtons);
             }
         }
 
@@ -85,11 +86,13 @@ namespace GDT.Character
             {
                 if (touchDetector.IsSliding && input.AxisPressed())
                 {
-                    _rb.Rigidbody.velocity += Vector2.up * Physics2D.gravity.y * (wallSlidingMultiplier - 1) * Runner.DeltaTime;
+                    _rb.Rigidbody.velocity += Vector2.up * Physics2D.gravity.y * (wallSlidingMultiplier - 1) *
+                                              Runner.DeltaTime;
                 }
                 else
                 {
-                    _rb.Rigidbody.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Runner.DeltaTime;
+                    _rb.Rigidbody.velocity +=
+                        Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Runner.DeltaTime;
                 }
             }
             else if (_rb.Rigidbody.velocity.y > 0f && !input.GetButton(InputButton.Jump))
@@ -111,9 +114,19 @@ namespace GDT.Character
             }
         }
 
+        public void Slide(CharacterTouchDetector touchDetector)
+        {
+            if (touchDetector.IsSliding)
+            {
+                _rb.Rigidbody.velocity = new Vector2(_rb.Rigidbody.velocity.x,
+                    Mathf.Clamp(_rb.Rigidbody.velocity.y, -wallSlidingMultiplier, float.MaxValue));
+            }
+        }
+
         public void SetDrag()
         {
             _rb.Rigidbody.drag = drag;
+            _animationHandler.SetMovementAnimation(false);
         }
 
         public bool IsFallingDown()

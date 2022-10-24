@@ -10,7 +10,15 @@ namespace GDT.Character
     public class CharacterInputHandler : NetworkBehaviour, INetworkRunnerCallbacks
     {
         public NetworkButtons PreviousButtons { get; set; }
-        
+
+        private float _shootingAngle;
+        private Camera _mainCamera;
+
+        private void Awake()
+        {
+            _mainCamera = Camera.main;
+        }
+
         public override void Spawned()
         {
             if (Object.HasInputAuthority)
@@ -18,7 +26,16 @@ namespace GDT.Character
                 Runner.AddCallbacks(this);
             }
         }
-        
+
+        private void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Vector2 shootDirection = (GetMousePosition() - transform.position).normalized;
+                _shootingAngle = Vector3.SignedAngle(shootDirection, transform.right, Vector3.back);
+            }
+        }
+
         public void OnInput(NetworkRunner runner, NetworkInput input)
         {
             NetworkInputData inputData = new NetworkInputData();
@@ -26,8 +43,21 @@ namespace GDT.Character
             inputData.Buttons.Set(InputButton.Left, Input.GetKey(KeyCode.A));
             inputData.Buttons.Set(InputButton.Right, Input.GetKey(KeyCode.D));
             inputData.Buttons.Set(InputButton.Jump, Input.GetKey(KeyCode.Space));
+            inputData.Buttons.Set(InputButton.Shoot, Input.GetMouseButton(0));
+
+            inputData.ShootingAngle = _shootingAngle;
 
             input.Set(inputData);
+        }
+        
+        private Vector3 GetMousePosition()
+        {
+            Vector3 screenPosition = Input.mousePosition;
+            Vector3 worldPosition =
+                _mainCamera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y,
+                    _mainCamera.nearClipPlane));
+
+            return worldPosition;
         }
 
         #region Useless code

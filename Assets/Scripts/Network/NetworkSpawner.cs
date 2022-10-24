@@ -30,8 +30,6 @@ namespace GDT.Network
                 var networkObject = runner.Spawn(networkPlayerPrefab, temporarySpawnPositions[_spawnIndex], Quaternion.identity, player);
                 _spawnedCharacters.Add(player, networkObject);
                 _spawnIndex++;
-                
-                Debug.Log("Player joined!");
             }
         }
 
@@ -42,7 +40,6 @@ namespace GDT.Network
                 runner.Despawn(networkPlayer.Object);
                 _spawnedCharacters.Remove(player);
                 _spawnIndex--;
-                Debug.Log("Player left!");
             }
         }
 

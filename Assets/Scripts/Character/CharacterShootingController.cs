@@ -31,7 +31,7 @@ namespace GDT.Character
 
         public void ReleaseArrow(float angle)
         {
-            if (Object.HasStateAuthority) 
+            if (Object.HasStateAuthority)
             {
                 var arrow = Runner.Spawn(arrowPrefab, transform.position, Quaternion.identity, Object.InputAuthority);
                 arrow.Release(angle, _releaseTimer);

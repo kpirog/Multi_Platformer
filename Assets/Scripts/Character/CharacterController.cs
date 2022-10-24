@@ -24,8 +24,6 @@ namespace GDT.Character
 
         public override void FixedUpdateNetwork()
         {
-            if (!Object.HasInputAuthority) return;
-            
             _movementHandler.LimitSpeed();
             HandleFallDown();
             HandleSlide();

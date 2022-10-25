@@ -8,6 +8,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5532032566527658202, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
+      propertyPath: Flags
+      value: 2305
+      objectReference: {fileID: 0}
+    - target: {fileID: 5532032566527658202, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
       propertyPath: NetworkedBehaviours.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -29,11 +33,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5532032566527658205, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 2.2503483
       objectReference: {fileID: 0}
     - target: {fileID: 5532032566527658205, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -3.5060863
       objectReference: {fileID: 0}
     - target: {fileID: 5532032566527658205, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
       propertyPath: m_LocalPosition.z
@@ -91,5 +95,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  speed: 1000
+  speed: 2000
   lifeTime: 2
+  collisionOrigin: 0.15
+  collisionDistance: 0.37
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 1024

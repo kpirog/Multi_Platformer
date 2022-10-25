@@ -36,7 +36,7 @@ namespace GDT.Character
                 var arrow = Runner.Spawn(arrowPrefab, transform.position, Quaternion.identity, Object.InputAuthority);
                 arrow.Release(angle, _releaseTimer);
             }
-
+            
             _releaseTimer = 0f;
             _animationHandler.StopShootAnimation();
         }

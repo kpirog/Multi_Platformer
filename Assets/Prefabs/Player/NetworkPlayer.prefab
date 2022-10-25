@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 8774837033957304556}
   - component: {fileID: 7364302895507760177}
   - component: {fileID: 8219087795995188947}
+  - component: {fileID: 3875811940942592569}
   - component: {fileID: 8408755885801751688}
   - component: {fileID: 5872625924751504148}
   - component: {fileID: 3032775604980960168}
@@ -176,6 +177,7 @@ Transform:
   m_Children:
   - {fileID: 451250082444480747}
   - {fileID: 451250083032043617}
+  - {fileID: 7389453236435977721}
   - {fileID: 2971342199193193284}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -203,6 +205,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 8219087795995188947}
+  - {fileID: 3875811940942592569}
   - {fileID: 8408755885801751688}
   - {fileID: 5872625924751504148}
   - {fileID: 3032775604980960168}
@@ -258,6 +261,25 @@ MonoBehaviour:
     RotBlendStart: 0.1
     RotBlendEnd: 0.5
     RotTeleportRadians: 1.5
+--- !u!114 &3875811940942592569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451250082508976847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1039544458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  Config: 1
+  BroadRadius: 0.7106335
+  Offset: {x: 0, y: 0, z: 0}
+  GizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  Hitboxes:
+  - {fileID: 0}
 --- !u!114 &8408755885801751688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,6 +447,56 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32886475, y: 0.382581}
   m_EdgeRadius: 0
+--- !u!1 &3508875781539221942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7389453236435977721}
+  - component: {fileID: 4032060282195932559}
+  m_Layer: 10
+  m_Name: Hitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7389453236435977721
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3508875781539221942}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 451250082508976846}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4032060282195932559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3508875781539221942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1014831617, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 1
+  SphereRadius: 0
+  BoxExtents: {x: 0.3, y: 0.55, z: 0}
+  Offset: {x: 0, y: 0, z: 0}
+  Root: {fileID: 3875811940942592569}
+  GizmosColor: {r: 1, g: 0, b: 0.009047508, a: 1}
 --- !u!1 &6233519628570413932
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,7 +595,7 @@ Transform:
   m_Children:
   - {fileID: 7458935282120730237}
   m_Father: {fileID: 451250082508976846}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1987405267421752049
 MonoBehaviour:

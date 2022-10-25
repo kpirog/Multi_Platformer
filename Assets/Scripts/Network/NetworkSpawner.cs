@@ -29,6 +29,7 @@ namespace GDT.Network
             {
                 var networkObject = runner.Spawn(networkPlayerPrefab, temporarySpawnPositions[_spawnIndex], Quaternion.identity, player);
                 _spawnedCharacters.Add(player, networkObject);
+                networkObject.name = "Player_" + _spawnIndex;
                 _spawnIndex++;
             }
         }

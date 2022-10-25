@@ -1,7 +1,5 @@
 using Cinemachine;
 using Fusion;
-using GDT.Character;
-using UnityEngine;
 
 namespace GDT.Network
 {

@@ -96,9 +96,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   speed: 2000
-  lifeTime: 2
+  lifeTime: 10
+  pushMultiplier: 700
   collisionOrigin: 0.15
   collisionDistance: 0.37
-  collisionLayer:
+  hitBoxLayer:
     serializedVersion: 2
     m_Bits: 1024
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 384

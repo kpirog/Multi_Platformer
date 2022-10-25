@@ -155,6 +155,7 @@ GameObject:
   - component: {fileID: 5313378900914907410}
   - component: {fileID: 3473388298916993735}
   - component: {fileID: 1884619130283848126}
+  - component: {fileID: 7420148636743425346}
   - component: {fileID: 2404496963435984385}
   m_Layer: 6
   m_Name: NetworkPlayer
@@ -213,7 +214,8 @@ MonoBehaviour:
   - {fileID: 1884619130283848126}
   - {fileID: 2404496963435984385}
   - {fileID: 2169294605145577788}
-  SimulationBehaviours: []
+  SimulationBehaviours:
+  - {fileID: 7420148636743425346}
 --- !u!50 &7364302895507760177
 Rigidbody2D:
   serializedVersion: 4
@@ -375,6 +377,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   groundCheckMultiplier: 0.03
+--- !u!114 &7420148636743425346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451250082508976847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f049996b54ad743af96a240cd922e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 451250082444480744}
 --- !u!114 &2404496963435984385
 MonoBehaviour:
   m_ObjectHideFlags: 0

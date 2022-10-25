@@ -372,7 +372,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   groundLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2176
   wallLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -389,7 +389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f049996b54ad743af96a240cd922e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 451250082444480744}
+  collider2D: {fileID: 451250083032043616}
 --- !u!114 &2404496963435984385
 MonoBehaviour:
   m_ObjectHideFlags: 0

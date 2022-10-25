@@ -97,9 +97,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   speed: 2000
   lifeTime: 10
-  pushMultiplier: 700
+  pushMultiplier: 1500
   collisionOrigin: 0.15
-  collisionDistance: 0.37
+  collisionDistance: 0.25
   hitBoxLayer:
     serializedVersion: 2
     m_Bits: 1024

@@ -29,7 +29,7 @@ namespace GDT.Character
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
             {
                 Vector2 shootDirection = (GetMousePosition() - transform.position).normalized;
                 _shootingAngle = Vector3.SignedAngle(shootDirection, transform.right, Vector3.back);

@@ -9,7 +9,6 @@ namespace GDT.Character
         [SerializeField] private Arrow arrowPrefab;
 
         private CharacterAnimationHandler _animationHandler;
-
         private float _releaseTimer;
 
         private void Awake()

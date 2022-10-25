@@ -14,11 +14,10 @@ namespace GDT.Character
         
         public void PushOff(Vector2 hitPoint, float pushForce)
         {
-            float horizontalPush = hitPoint.x > transform.position.x ? -1f : 1f;
-            float verticalPush = hitPoint.y > transform.position.y ? -1f : 1f;
-            Vector2 pushDirection = new Vector2(horizontalPush, verticalPush);
-
-            _rb.Rigidbody.AddForce(pushDirection * pushForce * Runner.DeltaTime, ForceMode2D.Impulse);
+            Vector2 direction = hitPoint - (Vector2)transform.position;
+            direction = -direction.normalized;
+            
+            _rb.Rigidbody.AddForce(direction * pushForce * Runner.DeltaTime, ForceMode2D.Impulse);
         }
     }
 }

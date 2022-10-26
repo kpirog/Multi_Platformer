@@ -1,6 +1,6 @@
 using Fusion;
 using GDT.Data;
-using Projectiles;
+using GDT.Projectiles;
 using UnityEngine;
 
 namespace GDT.Character

@@ -404,7 +404,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   arrowPrefabs:
   - {fileID: 2847973654369247365, guid: f8cd4e996e2fdb541bc09b483ce113e6, type: 3}
-  _amountsOfArrows: 
+  - {fileID: 8602294605345346304, guid: b079c20a29973c44c9065962f202ddce, type: 3}
 --- !u!1 &451250083032043622
 GameObject:
   m_ObjectHideFlags: 0

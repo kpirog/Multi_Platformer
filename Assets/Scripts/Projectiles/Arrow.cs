@@ -1,8 +1,9 @@
 using Fusion;
 using GDT.Character;
 using UnityEngine;
+using CharacterController = GDT.Character.CharacterController;
 
-namespace Projectiles
+namespace GDT.Projectiles
 {
     public abstract class Arrow : NetworkBehaviour
     {
@@ -69,7 +70,7 @@ namespace Projectiles
             {
                 var networkObject = hit.GameObject.GetComponentInParent<NetworkObject>();
                 RPC_SetAfterCollision(networkObject);
-                RPC_PushPlayer(networkObject, hit.Point);
+                RPC_AdditionalEffect(networkObject, hit.Point);
                 return;
             }
 
@@ -81,7 +82,7 @@ namespace Projectiles
                 RPC_SetAfterCollision(null);
             }
         }
-
+        
         [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
         private void RPC_SetAfterCollision(NetworkObject networkObject)
         {
@@ -95,9 +96,10 @@ namespace Projectiles
         }
 
         [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-        private void RPC_PushPlayer(NetworkObject networkObject, Vector2 point)
+        protected virtual void RPC_AdditionalEffect(NetworkObject networkObject, Vector2 point)
         {
-            networkObject.GetComponent<CharacterCollisionHandler>().PushOff(point, PushForce);
+            var characterController = networkObject.GetComponent<CharacterController>();
+            characterController.collisionHandler.PushOff(point, PushForce);
         }
     }
 }

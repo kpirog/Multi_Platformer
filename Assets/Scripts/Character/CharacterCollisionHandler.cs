@@ -16,7 +16,7 @@ namespace GDT.Character
         
         public void PushOff(Vector2 hitPoint, float pushForce)
         {
-            Vector2 direction = hitPoint - (Vector2)transform.position;
+            var direction = hitPoint - (Vector2)transform.position;
             direction = -direction.normalized;
             
             _rb.Rigidbody.AddForce(direction * pushForce * Runner.DeltaTime, ForceMode2D.Impulse);

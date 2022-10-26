@@ -1,6 +1,6 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Fusion;
 using Fusion.Sockets;
 using GDT.Data;
@@ -14,13 +14,13 @@ namespace GDT.Character
 
         private bool _inputAllowed;
         private float _shootingAngle;
-        
+
         private Camera _mainCamera;
 
         private void Awake()
         {
             _mainCamera = Camera.main;
-            _inputAllowed = false; 
+            _inputAllowed = false;
         }
 
         public override void Spawned()
@@ -52,6 +52,8 @@ namespace GDT.Character
             inputData.Buttons.Set(InputButton.Right, Input.GetKey(KeyCode.D));
             inputData.Buttons.Set(InputButton.Jump, Input.GetKey(KeyCode.Space));
             inputData.Buttons.Set(InputButton.Shoot, Input.GetMouseButton(0));
+            inputData.Buttons.Set(InputButton.StandardArrow, Input.GetKey(KeyCode.Alpha1));
+            inputData.Buttons.Set(InputButton.IceArrow, Input.GetKey(KeyCode.Alpha2));
             inputData.ShootingAngle = _shootingAngle;
 
             input.Set(inputData);
@@ -60,6 +62,13 @@ namespace GDT.Character
         private void SetInputAllowed(GameState state)
         {
             if (state != GameState.Playing && _inputAllowed) return;
+            _inputAllowed = true;
+        }
+
+        public IEnumerator TurnOffInputForSeconds(float time)
+        {
+            _inputAllowed = false;
+            yield return new WaitForSeconds(time);
             _inputAllowed = true;
         }
 

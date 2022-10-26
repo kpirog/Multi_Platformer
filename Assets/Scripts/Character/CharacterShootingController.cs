@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Fusion;
-using Projectiles;
+using GDT.Data;
+using GDT.Projectiles;
 using UnityEngine;
 
 namespace GDT.Character
@@ -35,6 +36,19 @@ namespace GDT.Character
         private bool CheckIfPlayerHasArrow()
         {
             return _amountsOfArrows[_currentArrowIndex] > 0;
+        }
+
+        public void SetCurrentArrow(NetworkButtons pressed)
+        {
+            if (pressed.IsSet(InputButton.StandardArrow))
+            {
+                _currentArrowIndex = 0;
+            }
+            
+            if (pressed.IsSet(InputButton.IceArrow))
+            {
+                _currentArrowIndex = 1;
+            }
         }
 
         public void StretchBow()

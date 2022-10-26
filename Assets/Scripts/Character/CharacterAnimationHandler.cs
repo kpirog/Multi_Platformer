@@ -13,6 +13,7 @@ namespace GDT.Character
         private static readonly int JumpKey = Animator.StringToHash("Jump");
         private static readonly int FallDownKey = Animator.StringToHash("IsFallingDown");
         private static readonly int ShootKey = Animator.StringToHash("IsShooting");
+        private static readonly int GetHitKey = Animator.StringToHash("GetHit");
 
         public void SetSpriteDirection(Vector2 direction)
         {
@@ -46,6 +47,11 @@ namespace GDT.Character
         public void StopShootAnimation()
         {
             animator.SetBool(ShootKey, false);
+        }
+
+        public void SetGetHitAnimation()
+        {
+            animator.SetTrigger(GetHitKey);
         }
     }
 }

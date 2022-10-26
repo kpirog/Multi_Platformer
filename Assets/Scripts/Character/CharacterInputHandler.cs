@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Fusion;
 using Fusion.Sockets;
 using GDT.Data;
@@ -11,12 +12,14 @@ namespace GDT.Character
     {
         public NetworkButtons PreviousButtons { get; set; }
 
+        private bool _inputAllowed;
         private float _shootingAngle;
         private Camera _mainCamera;
 
         private void Awake()
         {
             _mainCamera = Camera.main;
+            _inputAllowed = false; 
         }
 
         public override void Spawned()
@@ -24,12 +27,14 @@ namespace GDT.Character
             if (Object.HasInputAuthority)
             {
                 Runner.AddCallbacks(this);
+
+                GameManager.OnGameStateChanged += SetInputAllowed;
             }
         }
 
         private void Update()
         {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) && _inputAllowed)
             {
                 Vector2 shootDirection = (GetMousePosition() - transform.position).normalized;
                 _shootingAngle = Vector3.SignedAngle(shootDirection, transform.right, Vector3.back);
@@ -38,18 +43,26 @@ namespace GDT.Character
 
         public void OnInput(NetworkRunner runner, NetworkInput input)
         {
+            if (!_inputAllowed) return;
+
             NetworkInputData inputData = new NetworkInputData();
-            
+
             inputData.Buttons.Set(InputButton.Left, Input.GetKey(KeyCode.A));
             inputData.Buttons.Set(InputButton.Right, Input.GetKey(KeyCode.D));
             inputData.Buttons.Set(InputButton.Jump, Input.GetKey(KeyCode.Space));
             inputData.Buttons.Set(InputButton.Shoot, Input.GetMouseButton(0));
-
             inputData.ShootingAngle = _shootingAngle;
 
             input.Set(inputData);
         }
-        
+
+        private async void SetInputAllowed(GameState state)
+        {
+            if (state != GameState.Playing && _inputAllowed) return;
+            await Task.Delay(3000);
+            _inputAllowed = true;
+        }
+
         private Vector3 GetMousePosition()
         {
             Vector3 screenPosition = Input.mousePosition;
@@ -61,7 +74,7 @@ namespace GDT.Character
         }
 
         #region Useless code
-        
+
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
         }
@@ -122,6 +135,7 @@ namespace GDT.Character
         public void OnSceneLoadStart(NetworkRunner runner)
         {
         }
+
         #endregion
     }
 }

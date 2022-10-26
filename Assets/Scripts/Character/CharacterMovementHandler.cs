@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace GDT.Character
 {
-    [OrderAfter(typeof(Arrow))]
     public class CharacterMovementHandler : NetworkBehaviour
     {
         [SerializeField] private float acceleration;

@@ -99,7 +99,7 @@ MonoBehaviour:
   lifeTime: 10
   pushMultiplier: 1500
   collisionOrigin: 0.15
-  collisionDistance: 0.25
+  collisionDistance: 0.4
   hitBoxLayer:
     serializedVersion: 2
     m_Bits: 1024

@@ -134,8 +134,8 @@ MonoBehaviour:
     _value: 0
     _inverse: 0
     _hash: -814817977
-  StateHashes: 000000002b1a167c7940695546980c4f14c2736628a981077af3fe2e26e66c193c7756f3f3529d9dd0e29e3bedae2e02ce1e2da4
-  TriggerHashes: 0000000028a98107
+  StateHashes: 000000002b1a167c7940695546980c4f14c2736628a981077af3fe2e26e66c193c7756f3f3529d9dd0e29e3bedae2e02ce1e2da432edce8b7143fd88
+  TriggerHashes: 0000000028a98107c46979fd
 --- !u!1 &451250082508976847
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,7 +389,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f049996b54ad743af96a240cd922e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider2D: {fileID: 451250083032043616}
 --- !u!114 &2404496963435984385
 MonoBehaviour:
   m_ObjectHideFlags: 0

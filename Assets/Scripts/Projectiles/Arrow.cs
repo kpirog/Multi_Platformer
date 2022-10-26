@@ -11,9 +11,12 @@ namespace Projectiles
         [SerializeField] private float pushMultiplier;
         [SerializeField] private float collisionOrigin;
         [SerializeField] private float collisionDistance;
+
         [SerializeField] private LayerMask hitBoxLayer;
         [SerializeField] private LayerMask collisionLayer;
 
+        [field: SerializeField] public int Amount { get; private set; }
+        
         [Networked] private TickTimer LifeTimer { get; set; }
 
         private NetworkRigidbody2D _rb;

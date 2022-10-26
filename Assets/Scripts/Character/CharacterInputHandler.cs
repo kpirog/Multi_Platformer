@@ -14,6 +14,7 @@ namespace GDT.Character
 
         private bool _inputAllowed;
         private float _shootingAngle;
+        
         private Camera _mainCamera;
 
         private void Awake()
@@ -56,10 +57,9 @@ namespace GDT.Character
             input.Set(inputData);
         }
 
-        private async void SetInputAllowed(GameState state)
+        private void SetInputAllowed(GameState state)
         {
             if (state != GameState.Playing && _inputAllowed) return;
-            await Task.Delay(3000);
             _inputAllowed = true;
         }
 

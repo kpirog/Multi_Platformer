@@ -22,7 +22,6 @@ public class CountDown : MonoBehaviour
         if (_isCounting)
         {
             _currentTime = Time.time - _startTime;
-            Debug.Log($"Current time = {_currentTime}");
         }
 
         if (Input.GetKeyDown(KeyCode.P))
@@ -53,6 +52,5 @@ public class CountDown : MonoBehaviour
     private void StopCounting()
     {
         _isCounting = false;
-        Debug.Log($"Finish time = {_currentTime}");
     }
 }

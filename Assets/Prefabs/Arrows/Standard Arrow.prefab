@@ -100,6 +100,7 @@ MonoBehaviour:
   pushMultiplier: 1500
   collisionOrigin: 0.15
   collisionDistance: 0.4
+  <Amount>k__BackingField: 5
   hitBoxLayer:
     serializedVersion: 2
     m_Bits: 1024

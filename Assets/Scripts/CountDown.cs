@@ -31,7 +31,7 @@ public class CountDown : MonoBehaviour
         }
     }
 
-    public void HandleCounting(GameState state)
+    private void HandleCounting(GameState state)
     {
         switch (state)
         {
@@ -44,13 +44,13 @@ public class CountDown : MonoBehaviour
         }
     }
     
-    public void StartCounting()
+    private void StartCounting()
     {
         _isCounting = true;
         _startTime = Time.time;
     }
 
-    public void StopCounting()
+    private void StopCounting()
     {
         _isCounting = false;
         Debug.Log($"Finish time = {_currentTime}");

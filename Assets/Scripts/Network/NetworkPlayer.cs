@@ -16,5 +16,10 @@ namespace GDT.Network
         {
             _virtualCamera.gameObject.SetActive(Object.HasInputAuthority);
         }
+
+        public float GetCurrentHeight()
+        {
+            return transform.position.y;
+        }
     }
 }

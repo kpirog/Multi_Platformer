@@ -1,15 +1,18 @@
 using System;
 using Fusion;
+using UnityEngine;
+using NetworkPlayer = GDT.Network.NetworkPlayer;
 
 public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance;
-    
     public static event Action<GameState> OnGameStateChanged;
 
     [Networked(OnChanged = nameof(OnStateChanged))]
     public GameState State { get; private set; }
-    
+
+    public NetworkPlayer Winner { get; private set; }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -25,6 +28,13 @@ public class GameManager : NetworkBehaviour
     public void SetGameState(GameState state)
     {
         State = state;
+    }
+
+    public void SetWinner(NetworkPlayer winner)
+    {
+        Debug.Log($"The winner is {winner.gameObject.name}");
+        
+        Winner = winner;
     }
 
     public static void OnStateChanged(Changed<GameManager> changed)

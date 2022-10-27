@@ -357,6 +357,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  inputHandler: {fileID: 0}
+  collisionHandler: {fileID: 0}
 --- !u!114 &1884619130283848126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,6 +407,8 @@ MonoBehaviour:
   arrowPrefabs:
   - {fileID: 2847973654369247365, guid: f8cd4e996e2fdb541bc09b483ce113e6, type: 3}
   - {fileID: 8602294605345346304, guid: b079c20a29973c44c9065962f202ddce, type: 3}
+  _StandardArrowsCount: 5
+  _IceArrowsCount: 3
 --- !u!1 &451250083032043622
 GameObject:
   m_ObjectHideFlags: 0

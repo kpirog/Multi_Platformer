@@ -15,8 +15,6 @@ namespace GDT.Projectiles
 
         [SerializeField] private LayerMask hitBoxLayer;
         [SerializeField] private LayerMask collisionLayer;
-
-        [field: SerializeField] public int Amount { get; private set; }
         
         [Networked] private TickTimer LifeTimer { get; set; }
 

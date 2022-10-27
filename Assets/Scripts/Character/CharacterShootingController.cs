@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Fusion;
 using GDT.Data;
 using GDT.Projectiles;
@@ -11,8 +10,17 @@ namespace GDT.Character
         [SerializeField] private Arrow[] arrowPrefabs;
 
         private float _releaseTimer;
+        
         private int _currentArrowIndex;
-        private List<int> _amountsOfArrows;
+
+        [Networked][UnitySerializeField]
+        private int StandardArrowsCount { get; set; } 
+        
+        [Networked][UnitySerializeField]
+        private int IceArrowsCount { get; set; }
+
+        [Networked]
+        private int ArrowsCount { get; set; }
 
         private CharacterAnimationHandler _animationHandler;
 
@@ -20,22 +28,11 @@ namespace GDT.Character
         {
             _animationHandler = GetComponent<CharacterAnimationHandler>();
             _currentArrowIndex = 0;
-            GetAmountOfArrows();
         }
-
-        private void GetAmountOfArrows()
-        {
-            _amountsOfArrows = new List<int>();
-
-            foreach (var arrow in arrowPrefabs)
-            {
-                _amountsOfArrows.Add(arrow.Amount);
-            }
-        }
-
+        
         private bool PlayerHasArrow()
         {
-            return _amountsOfArrows[_currentArrowIndex] > 0;
+            return ArrowsCount > 0;
         }
 
         public void SetCurrentArrow(NetworkButtons pressed)
@@ -43,11 +40,13 @@ namespace GDT.Character
             if (pressed.IsSet(InputButton.StandardArrow))
             {
                 _currentArrowIndex = 0;
+                ArrowsCount = StandardArrowsCount;
             }
 
             if (pressed.IsSet(InputButton.IceArrow))
             {
                 _currentArrowIndex = 1;
+                ArrowsCount = IceArrowsCount;
             }
         }
 
@@ -74,18 +73,26 @@ namespace GDT.Character
                 var arrow = Runner.Spawn(arrowPrefabs[_currentArrowIndex], transform.position, Quaternion.identity,
                     Object.InputAuthority);
                 arrow.Release(angle, _releaseTimer);
-                RPC_RemoveArrow();
+                RemoveArrow();
             }
 
             _releaseTimer = 0f;
             _animationHandler.StopShootAnimation();
         }
 
-        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-        private void RPC_RemoveArrow()
+        private void RemoveArrow()
         {
-            if (_amountsOfArrows.Count < 0) return;
-            _amountsOfArrows[_currentArrowIndex]--;
+            ArrowsCount--;
+            
+            switch (_currentArrowIndex)
+            {
+                case 0:
+                    StandardArrowsCount = ArrowsCount;
+                    break;
+                case 1:
+                    IceArrowsCount = ArrowsCount;
+                    break;
+            }
         }
     }
 }

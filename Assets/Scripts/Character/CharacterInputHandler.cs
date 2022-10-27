@@ -13,6 +13,7 @@ namespace GDT.Character
         public NetworkButtons PreviousButtons { get; set; }
 
         private bool _inputAllowed;
+        private bool _reversedControl;
         private float _shootingAngle;
 
         private Camera _mainCamera;
@@ -20,7 +21,8 @@ namespace GDT.Character
         private void Awake()
         {
             _mainCamera = Camera.main;
-            _inputAllowed = false;
+            //_inputAllowed = false;
+            _inputAllowed = true;
         }
 
         public override void Spawned()
@@ -48,8 +50,8 @@ namespace GDT.Character
 
             NetworkInputData inputData = new NetworkInputData();
 
-            inputData.Buttons.Set(InputButton.Left, Input.GetKey(KeyCode.A));
-            inputData.Buttons.Set(InputButton.Right, Input.GetKey(KeyCode.D));
+            inputData.Buttons.Set(_reversedControl ? InputButton.Right : InputButton.Left, Input.GetKey(KeyCode.A));
+            inputData.Buttons.Set(_reversedControl ? InputButton.Left : InputButton.Right, Input.GetKey(KeyCode.D));
             inputData.Buttons.Set(InputButton.Jump, Input.GetKey(KeyCode.Space));
             inputData.Buttons.Set(InputButton.Shoot, Input.GetMouseButton(0));
             inputData.Buttons.Set(InputButton.StandardArrow, Input.GetKey(KeyCode.Alpha1));
@@ -70,6 +72,13 @@ namespace GDT.Character
             _inputAllowed = false;
             yield return new WaitForSeconds(time);
             _inputAllowed = true;
+        }
+
+        public IEnumerator ReverseControlForSeconds(float time)
+        {
+            _reversedControl = true;
+            yield return new WaitForSeconds(time);
+            _reversedControl = false;
         }
 
         private Vector3 GetMousePosition()

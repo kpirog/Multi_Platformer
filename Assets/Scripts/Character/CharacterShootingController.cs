@@ -33,7 +33,7 @@ namespace GDT.Character
             }
         }
 
-        private bool CheckIfPlayerHasArrow()
+        private bool PlayerHasArrow()
         {
             return _amountsOfArrows[_currentArrowIndex] > 0;
         }
@@ -44,7 +44,7 @@ namespace GDT.Character
             {
                 _currentArrowIndex = 0;
             }
-            
+
             if (pressed.IsSet(InputButton.IceArrow))
             {
                 _currentArrowIndex = 1;
@@ -53,7 +53,7 @@ namespace GDT.Character
 
         public void StretchBow()
         {
-            if (!CheckIfPlayerHasArrow()) return;
+            if (!PlayerHasArrow()) return;
 
             _releaseTimer += Runner.DeltaTime;
 
@@ -67,7 +67,7 @@ namespace GDT.Character
 
         public void ReleaseArrow(float angle)
         {
-            if (!CheckIfPlayerHasArrow()) return;
+            if (!PlayerHasArrow()) return;
 
             if (Object.HasStateAuthority)
             {
@@ -84,6 +84,7 @@ namespace GDT.Character
         [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
         private void RPC_RemoveArrow()
         {
+            if (_amountsOfArrows.Count < 0) return;
             _amountsOfArrows[_currentArrowIndex]--;
         }
     }

@@ -10,6 +10,7 @@ namespace GDT.Character
         private CharacterTouchDetector _touchDetector;
         private CharacterShootingController _shootingController;
         private CharacterAnimationHandler _animationHandler;
+        private CharacterInputHandler _inputHandler;
 
         [HideInInspector] public CharacterInputHandler inputHandler;
         [HideInInspector] public CharacterCollisionHandler collisionHandler;
@@ -21,7 +22,21 @@ namespace GDT.Character
             _touchDetector = GetComponent<CharacterTouchDetector>();
             _shootingController = GetComponent<CharacterShootingController>();
             _animationHandler = GetComponent<CharacterAnimationHandler>();
+            _inputHandler = GetComponent<CharacterInputHandler>();
             collisionHandler = GetComponent<CharacterCollisionHandler>();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.M)) //temp
+            {
+                EnableDoubleJump();
+            }
+            
+            if (Input.GetKeyDown(KeyCode.N)) //temp
+            {
+                ReverseControl();
+            }
         }
 
         public override void FixedUpdateNetwork()
@@ -104,6 +119,16 @@ namespace GDT.Character
             }
             
             return Vector2.zero;
+        }
+
+        private void EnableDoubleJump()
+        {
+            _movementHandler.DoubleJump = true;
+        }
+
+        private void ReverseControl()
+        {
+            StartCoroutine(_inputHandler.ReverseControlForSeconds(5f));
         }
     }
 }

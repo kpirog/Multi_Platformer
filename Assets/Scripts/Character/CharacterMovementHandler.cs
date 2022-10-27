@@ -1,6 +1,5 @@
 using Fusion;
 using GDT.Data;
-using GDT.Projectiles;
 using UnityEngine;
 
 namespace GDT.Character
@@ -21,6 +20,8 @@ namespace GDT.Character
 
         private NetworkRigidbody2D _rb;
         private CharacterAnimationHandler _animationHandler;
+        
+        public bool DoubleJump { get; set; }
 
         private void Awake()
         {
@@ -66,11 +67,15 @@ namespace GDT.Character
 
         public void Jump(NetworkButtons pressedButtons, CharacterTouchDetector touchDetector)
         {
+            bool canJumpAgain = DoubleJump && !touchDetector.IsGrounded;
+            
             if (pressedButtons.IsSet(InputButton.Jump))
             {
-                if (touchDetector.IsGrounded || touchDetector.IsSliding)
+                if ((touchDetector.IsGrounded || touchDetector.IsSliding) || canJumpAgain)
                 {
                     _rb.Rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+                    if (canJumpAgain) DoubleJump = false;
                 }
 
                 _animationHandler.SetJumpAnimation(pressedButtons);

@@ -24,7 +24,7 @@ public class CountDown : MonoBehaviour
             _currentTime = Time.time - _startTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P)) //Temp
         {
             GameManager.Instance.SetGameState(GameState.Finished);
         }

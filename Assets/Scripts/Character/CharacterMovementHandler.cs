@@ -20,8 +20,8 @@ namespace GDT.Character
 
         private NetworkRigidbody2D _rb;
         private CharacterAnimationHandler _animationHandler;
-        
-        public bool DoubleJump { get; set; }
+
+        private bool _doubleJump;
 
         private void Awake()
         {
@@ -67,7 +67,7 @@ namespace GDT.Character
 
         public void Jump(NetworkButtons pressedButtons, CharacterTouchDetector touchDetector)
         {
-            bool canJumpAgain = DoubleJump && !touchDetector.IsGrounded;
+            bool canJumpAgain = _doubleJump && !touchDetector.IsGrounded;
             
             if (pressedButtons.IsSet(InputButton.Jump))
             {
@@ -75,7 +75,7 @@ namespace GDT.Character
                 {
                     _rb.Rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
-                    if (canJumpAgain) DoubleJump = false;
+                    if (canJumpAgain) _doubleJump = false;
                 }
 
                 _animationHandler.SetJumpAnimation(pressedButtons);
@@ -136,6 +136,12 @@ namespace GDT.Character
         public bool IsFallingDown()
         {
             return _rb.Rigidbody.velocity.y < 0f;
+        }
+        
+        public void EnableDoubleJump()
+        {
+            _doubleJump = true;
+            Debug.Log("Enable double jump");
         }
     }
 }

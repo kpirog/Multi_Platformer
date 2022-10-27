@@ -28,9 +28,12 @@ namespace GDT.Character
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.M)) //temp
+            if (Object.HasStateAuthority)
             {
-                EnableDoubleJump();
+                if (Input.GetKeyDown(KeyCode.M)) //temp
+                {
+                    RPC_DoubleJump();
+                }
             }
             
             if (Input.GetKeyDown(KeyCode.N)) //temp
@@ -121,11 +124,12 @@ namespace GDT.Character
             return Vector2.zero;
         }
 
-        private void EnableDoubleJump()
+        [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
+        private void RPC_DoubleJump()
         {
-            _movementHandler.DoubleJump = true;
+            _movementHandler.EnableDoubleJump();
         }
-
+        
         private void ReverseControl()
         {
             StartCoroutine(_inputHandler.ReverseControlForSeconds(5f));

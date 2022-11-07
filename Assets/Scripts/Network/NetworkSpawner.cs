@@ -11,8 +11,7 @@ namespace GDT.Network
     {
         [SerializeField] private NetworkPlayer networkPlayerPrefab;
         [SerializeField] private Vector2[] temporarySpawnPositions;
-        [SerializeField] private int requiredPlayersCount;
-        
+
         private static Dictionary<PlayerRef, NetworkPlayer> _spawnedCharacters;
         private CharacterInputHandler _characterInputHandler;
         
@@ -33,11 +32,6 @@ namespace GDT.Network
                 _spawnedCharacters.Add(player, networkObject);
                 networkObject.name = "Player_" + _spawnIndex;
                 _spawnIndex++;
-
-                if (_spawnedCharacters.Count >= requiredPlayersCount)
-                {
-                    GameManager.Instance.SetGameState(GameState.Playing);
-                }
             }
         }
 
@@ -50,7 +44,7 @@ namespace GDT.Network
                 _spawnIndex--;
             }
         }
-
+        
         public void OnInput(NetworkRunner runner, NetworkInput input) { }
         public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) {}
         public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) {}

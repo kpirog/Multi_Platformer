@@ -135,7 +135,7 @@ MonoBehaviour:
     _inverse: 0
     _hash: -814817977
   StateHashes: 000000002b1a167c7940695546980c4f14c2736628a981077af3fe2e26e66c193c7756f3f3529d9dd0e29e3bedae2e02ce1e2da432edce8b7143fd88
-  TriggerHashes: 0000000028a98107c46979fd
+  TriggerHashes: 0000000028a9810732edce8b
 --- !u!1 &451250082508976847
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,6 +308,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  _InputAllowed:
+    _value: 0
 --- !u!114 &3032775604980960168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,8 +325,8 @@ MonoBehaviour:
   _interpolationDataSource: 0
   acceleration: 1500
   maxVelocity: 10
-  jumpForce: 14
-  drag: 5
+  jumpForce: 1000
+  drag: 200
   wallSlidingMultiplier: 1
   fallMultiplier: 2
   lowJumpMultiplier: 4

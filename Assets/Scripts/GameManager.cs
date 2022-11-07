@@ -1,5 +1,6 @@
 using System;
 using Fusion;
+using GDT.Network;
 using UnityEngine;
 using NetworkPlayer = GDT.Network.NetworkPlayer;
 
@@ -12,7 +13,9 @@ public class GameManager : NetworkBehaviour
     public GameState State { get; private set; }
 
     public NetworkPlayer Winner { get; private set; }
-
+    
+    [SerializeField] private int requiredPlayersCount;
+    
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -23,6 +26,11 @@ public class GameManager : NetworkBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Update()
+    {
+        EnableInputs();
     }
 
     public void SetGameState(GameState state)
@@ -40,6 +48,15 @@ public class GameManager : NetworkBehaviour
     public static void OnStateChanged(Changed<GameManager> changed)
     {
         OnGameStateChanged?.Invoke(changed.Behaviour.State);
+    }
+
+    private void EnableInputs()
+    {
+        if (NetworkSpawner.SpawnedCharacters.Count >= requiredPlayersCount && State != GameState.Playing)
+        {
+            Debug.Log("Wykonuje sie");
+            SetGameState(GameState.Playing);            
+        }
     }
 }
 

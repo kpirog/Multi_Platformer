@@ -10,7 +10,6 @@ namespace GDT.Character
         [SerializeField] private Arrow[] arrowPrefabs;
 
         private float _releaseTimer;
-        
         private int _currentArrowIndex;
 
         [Networked][UnitySerializeField]
@@ -23,7 +22,7 @@ namespace GDT.Character
         private int ArrowsCount { get; set; }
 
         private CharacterAnimationHandler _animationHandler;
-
+        
         private void Awake()
         {
             _animationHandler = GetComponent<CharacterAnimationHandler>();

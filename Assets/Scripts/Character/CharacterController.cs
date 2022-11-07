@@ -14,7 +14,7 @@ namespace GDT.Character
 
         [HideInInspector] public CharacterInputHandler inputHandler;
         [HideInInspector] public CharacterCollisionHandler collisionHandler;
-        
+
         private void Awake()
         {
             _movementHandler = GetComponent<CharacterMovementHandler>();
@@ -25,23 +25,7 @@ namespace GDT.Character
             _inputHandler = GetComponent<CharacterInputHandler>();
             collisionHandler = GetComponent<CharacterCollisionHandler>();
         }
-
-        private void Update()
-        {
-            if (Object.HasStateAuthority)
-            {
-                if (Input.GetKeyDown(KeyCode.M)) //temp
-                {
-                    RPC_DoubleJump();
-                }
-            }
-            
-            if (Input.GetKeyDown(KeyCode.N)) //temp
-            {
-                ReverseControl();
-            }
-        }
-
+        
         public override void FixedUpdateNetwork()
         {
             _movementHandler.LimitSpeed();
@@ -53,8 +37,9 @@ namespace GDT.Character
                 var pressedButtons = input.Buttons.GetPressed(inputHandler.PreviousButtons);
                 var releasedButtons = input.Buttons.GetReleased(inputHandler.PreviousButtons);
                 inputHandler.PreviousButtons = input.Buttons;
-                
+
                 HandleMovement(input);
+                HandleDrag(releasedButtons);
                 HandleJump(pressedButtons, input);
                 HandleShoot(input, releasedButtons, input.ShootingAngle);
                 SwitchArrow(pressedButtons);
@@ -65,12 +50,12 @@ namespace GDT.Character
         {
             _shootingController.SetCurrentArrow(pressedButtons);
         }
-        
+
         private void HandleFallDown()
         {
             _animationHandler.SetFallDownAnimation(!_touchDetector.IsGrounded && _movementHandler.IsFallingDown());
         }
-        
+
         private void HandleJump(NetworkButtons pressedButtons, NetworkInputData input)
         {
             _movementHandler.Jump(pressedButtons, _touchDetector);
@@ -85,9 +70,17 @@ namespace GDT.Character
             {
                 _movementHandler.Move(input);
             }
-            else
+        }
+
+        private void HandleDrag(NetworkButtons releasedButtons)
+        {
+            if (releasedButtons.IsSet(InputButton.Left) || releasedButtons.IsSet(InputButton.Right))
             {
                 _movementHandler.SetDrag();
+            }
+            else
+            {
+                _movementHandler.ResetDrag();
             }
         }
 
@@ -115,21 +108,15 @@ namespace GDT.Character
             {
                 return Vector2.left;
             }
-            
+
             if (input.GetButton(InputButton.Right))
             {
                 return Vector2.right;
             }
-            
+
             return Vector2.zero;
         }
 
-        [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
-        private void RPC_DoubleJump()
-        {
-            _movementHandler.EnableDoubleJump();
-        }
-        
         private void ReverseControl()
         {
             StartCoroutine(_inputHandler.ReverseControlForSeconds(5f));

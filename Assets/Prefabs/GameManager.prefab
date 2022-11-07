@@ -71,3 +71,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   _State: 0
+  requiredPlayersCount: 1

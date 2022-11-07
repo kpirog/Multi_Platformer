@@ -16,6 +16,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8602294605345346304}
     - target: {fileID: 5532032566527658202, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[2]
+      value: 
+      objectReference: {fileID: 8602294605345346304}
+    - target: {fileID: 5532032566527658202, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
       value: 4916971095711709616
       objectReference: {fileID: 0}
@@ -114,5 +118,4 @@ MonoBehaviour:
   collisionLayer:
     serializedVersion: 2
     m_Bits: 384
-  <Amount>k__BackingField: 3
   freezeTime: 3

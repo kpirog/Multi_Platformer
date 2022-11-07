@@ -20,9 +20,12 @@ namespace GDT.Character
 
         private NetworkRigidbody2D _rb;
         private CharacterAnimationHandler _animationHandler;
+        
+        [Networked]
+        private NetworkBool DoubleJump { get; set; }
 
-        private bool _doubleJump;
-
+        private bool _canJumpAgain;
+        
         private void Awake()
         {
             _rb = GetComponent<NetworkRigidbody2D>();
@@ -67,15 +70,19 @@ namespace GDT.Character
 
         public void Jump(NetworkButtons pressedButtons, CharacterTouchDetector touchDetector)
         {
-            bool canJumpAgain = _doubleJump && !touchDetector.IsGrounded;
+            _canJumpAgain = DoubleJump && !touchDetector.IsGrounded;
             
             if (pressedButtons.IsSet(InputButton.Jump))
             {
-                if ((touchDetector.IsGrounded || touchDetector.IsSliding) || canJumpAgain)
+                if ((touchDetector.IsGrounded || touchDetector.IsSliding) || _canJumpAgain)
                 {
-                    _rb.Rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                    _rb.Rigidbody.drag = 0f;
+                    _rb.Rigidbody.AddForce(Vector2.up * jumpForce * Runner.DeltaTime, ForceMode2D.Impulse);
 
-                    if (canJumpAgain) _doubleJump = false;
+                    if (_canJumpAgain)
+                    {
+                        DoubleJump = false;
+                    }
                 }
 
                 _animationHandler.SetJumpAnimation(pressedButtons);
@@ -133,15 +140,19 @@ namespace GDT.Character
             _animationHandler.SetMovementAnimation(false);
         }
 
+        public void ResetDrag()
+        {
+            _rb.Rigidbody.drag = 0f;
+        }
+        
         public bool IsFallingDown()
         {
             return _rb.Rigidbody.velocity.y < 0f;
         }
-        
+
         public void EnableDoubleJump()
         {
-            _doubleJump = true;
-            Debug.Log("Enable double jump");
+            DoubleJump = true;
         }
     }
 }

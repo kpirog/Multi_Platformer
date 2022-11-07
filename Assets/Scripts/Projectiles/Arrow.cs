@@ -68,7 +68,7 @@ namespace GDT.Projectiles
             {
                 var networkObject = hit.GameObject.GetComponentInParent<NetworkObject>();
                 RPC_SetAfterCollision(networkObject);
-                RPC_AdditionalEffect(networkObject, hit.Point);
+                AdditionalEffect(networkObject, hit.Point);
                 return;
             }
 
@@ -92,9 +92,8 @@ namespace GDT.Projectiles
             _rb.Rigidbody.simulated = false;
             _collisionActive = false;
         }
-
-        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-        protected virtual void RPC_AdditionalEffect(NetworkObject networkObject, Vector2 point)
+        
+        protected virtual void AdditionalEffect(NetworkObject networkObject, Vector2 point)
         {
             var characterController = networkObject.GetComponent<CharacterController>();
             characterController.collisionHandler.PushOff(point, PushForce);

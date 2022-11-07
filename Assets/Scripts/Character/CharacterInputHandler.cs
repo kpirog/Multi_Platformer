@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Fusion;
 using Fusion.Sockets;
 using GDT.Data;
+using GDT.Network;
 using UnityEngine;
 
 namespace GDT.Character
@@ -12,7 +14,9 @@ namespace GDT.Character
     {
         public NetworkButtons PreviousButtons { get; set; }
 
-        private bool _inputAllowed;
+        [Networked][UnitySerializeField]
+        private NetworkBool InputAllowed { get; set; }
+        
         private bool _reversedControl;
         private float _shootingAngle;
 
@@ -21,8 +25,16 @@ namespace GDT.Character
         private void Awake()
         {
             _mainCamera = Camera.main;
-            //_inputAllowed = false;
-            _inputAllowed = true;
+        }
+
+        private void OnEnable()
+        {
+            GameManager.OnGameStateChanged += SetInputAllowed;
+        }
+
+        private void OnDisable()
+        {
+            GameManager.OnGameStateChanged -= SetInputAllowed;
         }
 
         public override void Spawned()
@@ -30,14 +42,12 @@ namespace GDT.Character
             if (Object.HasInputAuthority)
             {
                 Runner.AddCallbacks(this);
-
-                GameManager.OnGameStateChanged += SetInputAllowed;
             }
         }
 
         private void Update()
         {
-            if (Input.GetMouseButton(0) && _inputAllowed)
+            if (Input.GetMouseButton(0) && InputAllowed)
             {
                 Vector2 shootDirection = (GetMousePosition() - transform.position).normalized;
                 _shootingAngle = Vector3.SignedAngle(shootDirection, transform.right, Vector3.back);
@@ -46,7 +56,7 @@ namespace GDT.Character
 
         public void OnInput(NetworkRunner runner, NetworkInput input)
         {
-            if (!_inputAllowed) return;
+            if (!InputAllowed) return;
 
             NetworkInputData inputData = new NetworkInputData();
 
@@ -63,15 +73,15 @@ namespace GDT.Character
 
         private void SetInputAllowed(GameState state)
         {
-            if (state != GameState.Playing && _inputAllowed) return;
-            _inputAllowed = true;
+            if (state != GameState.Playing && InputAllowed) return;
+            InputAllowed = true;
         }
 
         public IEnumerator TurnOffInputForSeconds(float time)
         {
-            _inputAllowed = false;
+            InputAllowed = false;
             yield return new WaitForSeconds(time);
-            _inputAllowed = true;
+            InputAllowed = true;
         }
 
         public IEnumerator ReverseControlForSeconds(float time)

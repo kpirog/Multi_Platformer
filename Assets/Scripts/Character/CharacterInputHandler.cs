@@ -73,8 +73,7 @@ namespace GDT.Character
 
         private void SetInputAllowed(GameState state)
         {
-            if (state != GameState.Playing && InputAllowed) return;
-            InputAllowed = true;
+            InputAllowed = state == GameState.Playing;
         }
 
         public IEnumerator TurnOffInputForSeconds(float time)

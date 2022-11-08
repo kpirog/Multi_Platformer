@@ -1,44 +1,48 @@
-using System;
 using Fusion;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace GDT.Network
 {
     public class NetworkRunnerHandler : MonoBehaviour
     {
-        private NetworkRunner _networkRunner;
-        private NetworkSceneManagerDefault _sceneManager;
-
-        private bool _initialized;
-
+        public static NetworkRunnerHandler Instance;
+        
         [SerializeField] private GameManager gameManager;
 
+        private NetworkRunner _networkRunner;
+        
         private void Awake()
         {
-            _networkRunner = GetComponent<NetworkRunner>();
-            _sceneManager = GetComponent<NetworkSceneManagerDefault>();
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
 
+            Instance = this;
             DontDestroyOnLoad(gameObject);
+            
+            _networkRunner = GetComponent<NetworkRunner>();
         }
-
-        public void StartGame()
+        
+        public void JoinGameAsHost(string sessionName)
         {
-            InitializeNetworkRunner(_networkRunner, GameMode.AutoHostOrClient, "TestSession",
-                SceneManager.GetActiveScene().buildIndex + 1);
+            InitializeNetworkRunner(_networkRunner, GameMode.Host, sessionName);
+        }
+        
+        public void JoinGameAsClient(string sessionName)
+        {
+            InitializeNetworkRunner(_networkRunner, GameMode.Client, sessionName);
         }
 
-        private async void InitializeNetworkRunner(NetworkRunner runner, GameMode gameMode, string sessionName,
-            SceneRef sceneRef)
+        private async void InitializeNetworkRunner(NetworkRunner runner, GameMode gameMode, string sessionName)
         {
             runner.ProvideInput = true;
 
             await runner.StartGame(new StartGameArgs()
                 {
                     GameMode = gameMode,
-                    SessionName = sessionName,
-                    Scene = sceneRef,
-                    SceneManager = _sceneManager,
+                    SessionName = sessionName
                 }
             );
 

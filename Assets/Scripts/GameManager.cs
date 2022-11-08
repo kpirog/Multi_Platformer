@@ -15,6 +15,8 @@ public class GameManager : NetworkBehaviour
     public NetworkPlayer Winner { get; private set; }
     
     [SerializeField] private int requiredPlayersCount;
+
+    private bool _gameStarted;
     
     private void Awake()
     {
@@ -27,12 +29,7 @@ public class GameManager : NetworkBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-
-    private void Update()
-    {
-        EnableInputs();
-    }
-
+    
     public void SetGameState(GameState state)
     {
         State = state;
@@ -48,15 +45,6 @@ public class GameManager : NetworkBehaviour
     public static void OnStateChanged(Changed<GameManager> changed)
     {
         OnGameStateChanged?.Invoke(changed.Behaviour.State);
-    }
-
-    private void EnableInputs()
-    {
-        if (NetworkSpawner.SpawnedCharacters.Count >= requiredPlayersCount && State != GameState.Playing)
-        {
-            Debug.Log("Wykonuje sie");
-            SetGameState(GameState.Playing);            
-        }
     }
 }
 

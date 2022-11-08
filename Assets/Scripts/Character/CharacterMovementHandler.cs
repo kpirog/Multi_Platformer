@@ -154,5 +154,10 @@ namespace GDT.Character
         {
             DoubleJump = true;
         }
+
+        public void EnablePhysics(bool enable)
+        {
+            _rb.Rigidbody.simulated = enable;
+        }
     }
 }

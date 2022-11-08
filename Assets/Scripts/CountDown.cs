@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class CountDown : MonoBehaviour
 {
+    [SerializeField] private float gameplayTime;
+
     private bool _isCounting;
-    
+
     private float _currentTime;
     private float _startTime;
-    
+
     private void OnEnable()
     {
         GameManager.OnGameStateChanged += HandleCounting;
@@ -19,12 +21,11 @@ public class CountDown : MonoBehaviour
 
     private void Update()
     {
-        if (_isCounting)
-        {
-            _currentTime = Time.time - _startTime;
-        }
+        if (!_isCounting) return;
 
-        if (Input.GetKeyDown(KeyCode.P)) //Temp
+        _currentTime = Time.time - _startTime;
+        
+        if (_currentTime >= gameplayTime)
         {
             GameManager.Instance.SetGameState(GameState.Finished);
         }
@@ -42,7 +43,7 @@ public class CountDown : MonoBehaviour
                 break;
         }
     }
-    
+
     private void StartCounting()
     {
         _isCounting = true;

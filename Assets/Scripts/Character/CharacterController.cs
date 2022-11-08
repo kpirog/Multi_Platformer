@@ -6,6 +6,8 @@ namespace GDT.Character
 {
     public class CharacterController : NetworkBehaviour
     {
+        [SerializeField] private GameObject model;
+        
         private CharacterMovementHandler _movementHandler;
         private CharacterTouchDetector _touchDetector;
         private CharacterShootingController _shootingController;
@@ -74,7 +76,7 @@ namespace GDT.Character
 
         private void HandleDrag(NetworkButtons releasedButtons)
         {
-            if (releasedButtons.IsSet(InputButton.Left) || releasedButtons.IsSet(InputButton.Right))
+            if ((releasedButtons.IsSet(InputButton.Left) || releasedButtons.IsSet(InputButton.Right)) && _touchDetector.IsGrounded)
             {
                 _movementHandler.SetDrag();
             }
@@ -117,6 +119,16 @@ namespace GDT.Character
             return Vector2.zero;
         }
 
+        public void SetMovementEnabled(bool enable)
+        {
+            _inputHandler.enabled = enable;
+            _movementHandler.EnablePhysics(enable);
+        }
+
+        public void SetModelVisible(bool visible)
+        {
+            model.gameObject.SetActive(visible);
+        }
         private void ReverseControl()
         {
             StartCoroutine(_inputHandler.ReverseControlForSeconds(5f));

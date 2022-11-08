@@ -1,8 +1,9 @@
 using System.Linq;
+using Fusion;
 using GDT.Network;
 using UnityEngine;
 
-public class ResultChecker : MonoBehaviour
+public class ResultChecker : NetworkBehaviour
 {
     private void OnEnable()
     {
@@ -17,10 +18,11 @@ public class ResultChecker : MonoBehaviour
     private void CheckWinner(GameState state)
     {
         if (state != GameState.Finished) return;
+        if (!Object.HasStateAuthority) return;
 
-        var winner = NetworkSpawner.SpawnedCharacters.Select(x => x.Value)
-            .OrderByDescending(x => x.GetCurrentHeight()).First();
-        
-        GameManager.Instance.SetWinner(winner);
+        //var winner = NetworkSpawner.SpawnedCharacters.Select(x => x.Value)
+            //.OrderByDescending(x => x.GetCurrentHeight()).First();
+
+        //ameManager.Instance.SetWinner(winner);
     }
 }

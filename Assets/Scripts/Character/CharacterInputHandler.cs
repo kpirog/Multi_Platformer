@@ -1,11 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Fusion;
 using Fusion.Sockets;
 using GDT.Data;
-using GDT.Network;
 using UnityEngine;
 
 namespace GDT.Character
@@ -14,9 +12,8 @@ namespace GDT.Character
     {
         public NetworkButtons PreviousButtons { get; set; }
 
-        [Networked][UnitySerializeField]
-        private NetworkBool InputAllowed { get; set; }
-        
+        [Networked] [UnitySerializeField] private NetworkBool InputAllowed { get; set; }
+
         private bool _reversedControl;
         private float _shootingAngle;
 
@@ -56,17 +53,26 @@ namespace GDT.Character
 
         public void OnInput(NetworkRunner runner, NetworkInput input)
         {
-            if (!InputAllowed) return;
+            //if (!InputAllowed) return;
 
-            NetworkInputData inputData = new NetworkInputData();
+            var inputData = new NetworkInputData();
 
-            inputData.Buttons.Set(_reversedControl ? InputButton.Right : InputButton.Left, Input.GetKey(KeyCode.A));
-            inputData.Buttons.Set(_reversedControl ? InputButton.Left : InputButton.Right, Input.GetKey(KeyCode.D));
-            inputData.Buttons.Set(InputButton.Jump, Input.GetKey(KeyCode.Space));
-            inputData.Buttons.Set(InputButton.Shoot, Input.GetMouseButton(0));
-            inputData.Buttons.Set(InputButton.StandardArrow, Input.GetKey(KeyCode.Alpha1));
-            inputData.Buttons.Set(InputButton.IceArrow, Input.GetKey(KeyCode.Alpha2));
-            inputData.ShootingAngle = _shootingAngle;
+            if (!GameManager.Instance) return;
+            
+            if (GameManager.Instance.State == GameState.Lobby)
+            {
+                inputData.Buttons.Set(InputButton.Ready, Input.GetKey(KeyCode.R));
+            }
+            else
+            {
+                inputData.Buttons.Set(_reversedControl ? InputButton.Right : InputButton.Left, Input.GetKey(KeyCode.A));
+                inputData.Buttons.Set(_reversedControl ? InputButton.Left : InputButton.Right, Input.GetKey(KeyCode.D));
+                inputData.Buttons.Set(InputButton.Jump, Input.GetKey(KeyCode.Space));
+                inputData.Buttons.Set(InputButton.Shoot, Input.GetMouseButton(0));
+                inputData.Buttons.Set(InputButton.StandardArrow, Input.GetKey(KeyCode.Alpha1));
+                inputData.Buttons.Set(InputButton.IceArrow, Input.GetKey(KeyCode.Alpha2));
+                inputData.ShootingAngle = _shootingAngle;
+            }
 
             input.Set(inputData);
         }

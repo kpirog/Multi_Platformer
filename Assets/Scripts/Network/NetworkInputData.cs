@@ -11,7 +11,8 @@ namespace GDT.Data
         Jump = 1 << 2,
         Shoot = 1 << 3,
         StandardArrow = 1 << 4,
-        IceArrow = 1 << 5
+        IceArrow = 1 << 5,
+        Ready = 1 << 6
     }
 
     public struct NetworkInputData : INetworkInput

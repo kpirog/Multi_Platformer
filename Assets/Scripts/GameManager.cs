@@ -1,22 +1,20 @@
 using System;
 using Fusion;
-using GDT.Network;
 using UnityEngine;
 using NetworkPlayer = GDT.Network.NetworkPlayer;
 
 public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance;
+    
+    [SerializeField] private int requiredPlayersCount;
+    
     public static event Action<GameState> OnGameStateChanged;
 
     [Networked(OnChanged = nameof(OnStateChanged))]
-    public GameState State { get; private set; }
+    public GameState State { get; private set; } = GameState.Lobby;
 
     public NetworkPlayer Winner { get; private set; }
-    
-    [SerializeField] private int requiredPlayersCount;
-
-    private bool _gameStarted;
     
     private void Awake()
     {

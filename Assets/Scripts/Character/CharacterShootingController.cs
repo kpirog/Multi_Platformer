@@ -23,7 +23,7 @@ namespace GDT.Character
 
         private CharacterAnimationHandler _animationHandler;
         
-        private void Awake()
+        private void Start()
         {
             _animationHandler = GetComponent<CharacterAnimationHandler>();
             _currentArrowIndex = 0;

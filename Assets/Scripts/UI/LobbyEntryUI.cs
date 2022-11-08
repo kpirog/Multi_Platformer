@@ -4,9 +4,10 @@ using NetworkPlayer = GDT.Network.NetworkPlayer;
 
 namespace GDT.UI
 {
-    public class ClientEntryUI : MonoBehaviour
+    public class LobbyEntryUI : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI nicknameText;
+        [SerializeField] private TextMeshProUGUI readyText;
 
         private NetworkPlayer _displayedPlayer;
         
@@ -18,6 +19,7 @@ namespace GDT.UI
         private void Update()
         {
             nicknameText.text = _displayedPlayer.NickName.Value;
+            readyText.text = _displayedPlayer.Ready ? "<color=green>Ready</color>" : "<color=red>Not Ready</color>";
         }
     }
 }

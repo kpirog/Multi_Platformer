@@ -1979,8 +1979,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lobbyPanel: {fileID: 222774130}
-  clientEntryParent: {fileID: 829504059}
-  clientEntryPrefab: {fileID: 749486095277338448, guid: 08221d93f03bdef4eb559e08d3250a33, type: 3}
+  lobbyEntryParent: {fileID: 829504059}
+  lobbyEntryPrefab: {fileID: 749486095277338448, guid: 08221d93f03bdef4eb559e08d3250a33, type: 3}
 --- !u!114 &1008819362993276848
 MonoBehaviour:
   m_ObjectHideFlags: 0

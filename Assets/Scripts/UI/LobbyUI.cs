@@ -7,10 +7,10 @@ namespace GDT.UI
     public class LobbyUI : MonoBehaviour
     {
         [SerializeField] private GameObject lobbyPanel;
-        [SerializeField] private Transform clientEntryParent;
-        [SerializeField] private ClientEntryUI clientEntryPrefab;
+        [SerializeField] private Transform lobbyEntryParent;
+        [SerializeField] private LobbyEntryUI lobbyEntryPrefab;
 
-        private readonly Dictionary<NetworkPlayer, ClientEntryUI> _clientEntries = new();
+        private readonly Dictionary<NetworkPlayer, LobbyEntryUI> _clientEntries = new();
 
         private void OnEnable()
         {
@@ -31,7 +31,7 @@ namespace GDT.UI
                 lobbyPanel.SetActive(true);
             }
 
-            var clientEntry = Instantiate(clientEntryPrefab, clientEntryParent);
+            var clientEntry = Instantiate(lobbyEntryPrefab, lobbyEntryParent);
             clientEntry.SetPlayer(player);
             
             _clientEntries.Add(player, clientEntry);

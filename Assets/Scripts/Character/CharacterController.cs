@@ -1,6 +1,8 @@
+using System;
 using Fusion;
 using GDT.Data;
 using UnityEngine;
+using NetworkPlayer = GDT.Network.NetworkPlayer;
 
 namespace GDT.Character
 {
@@ -8,43 +10,55 @@ namespace GDT.Character
     {
         [SerializeField] private GameObject model;
         
-        private CharacterMovementHandler _movementHandler;
         private CharacterTouchDetector _touchDetector;
         private CharacterShootingController _shootingController;
         private CharacterAnimationHandler _animationHandler;
         private CharacterInputHandler _inputHandler;
+        private NetworkPlayer _player;
 
+        [HideInInspector] public CharacterMovementHandler movementHandler;
         [HideInInspector] public CharacterInputHandler inputHandler;
         [HideInInspector] public CharacterCollisionHandler collisionHandler;
 
         private void Awake()
         {
-            _movementHandler = GetComponent<CharacterMovementHandler>();
+            movementHandler = GetComponent<CharacterMovementHandler>();
             inputHandler = GetComponent<CharacterInputHandler>();
             _touchDetector = GetComponent<CharacterTouchDetector>();
             _shootingController = GetComponent<CharacterShootingController>();
             _animationHandler = GetComponent<CharacterAnimationHandler>();
             _inputHandler = GetComponent<CharacterInputHandler>();
             collisionHandler = GetComponent<CharacterCollisionHandler>();
+            _player = GetComponent<NetworkPlayer>();
+        }
+        
+        public override void Spawned()
+        {
+            movementHandler.EnablePhysics(false);
+            SetModelVisible(false);
         }
         
         public override void FixedUpdateNetwork()
         {
-            _movementHandler.LimitSpeed();
+            movementHandler.LimitSpeed();
             HandleFallDown();
             HandleSlide();
 
-            if (GetInput(out NetworkInputData input))
-            {
-                var pressedButtons = input.Buttons.GetPressed(inputHandler.PreviousButtons);
-                var releasedButtons = input.Buttons.GetReleased(inputHandler.PreviousButtons);
-                inputHandler.PreviousButtons = input.Buttons;
+            if (!GetInput(out NetworkInputData input)) return;
+            
+            var pressedButtons = input.Buttons.GetPressed(inputHandler.PreviousButtons);
+            var releasedButtons = input.Buttons.GetReleased(inputHandler.PreviousButtons);
+            inputHandler.PreviousButtons = input.Buttons;
 
-                HandleMovement(input);
-                HandleDrag(releasedButtons);
-                HandleJump(pressedButtons, input);
-                HandleShoot(input, releasedButtons, input.ShootingAngle);
-                SwitchArrow(pressedButtons);
+            HandleMovement(input);
+            HandleDrag(releasedButtons);
+            HandleJump(pressedButtons, input);
+            HandleShoot(input, releasedButtons, input.ShootingAngle);
+            SwitchArrow(pressedButtons);
+
+            if (pressedButtons.IsSet(InputButton.Ready))
+            {
+                _player.ToggleReady();
             }
         }
 
@@ -55,13 +69,13 @@ namespace GDT.Character
 
         private void HandleFallDown()
         {
-            _animationHandler.SetFallDownAnimation(!_touchDetector.IsGrounded && _movementHandler.IsFallingDown());
+            _animationHandler.SetFallDownAnimation(!_touchDetector.IsGrounded && movementHandler.IsFallingDown());
         }
 
         private void HandleJump(NetworkButtons pressedButtons, NetworkInputData input)
         {
-            _movementHandler.Jump(pressedButtons, _touchDetector);
-            _movementHandler.BetterJumpLogic(input, _touchDetector);
+            movementHandler.Jump(pressedButtons, _touchDetector);
+            movementHandler.BetterJumpLogic(input, _touchDetector);
         }
 
         private void HandleMovement(NetworkInputData input)
@@ -70,25 +84,26 @@ namespace GDT.Character
 
             if (direction != Vector2.zero)
             {
-                _movementHandler.Move(input);
+                movementHandler.Move(input);
             }
         }
 
         private void HandleDrag(NetworkButtons releasedButtons)
         {
-            if ((releasedButtons.IsSet(InputButton.Left) || releasedButtons.IsSet(InputButton.Right)) && _touchDetector.IsGrounded)
+            if ((releasedButtons.IsSet(InputButton.Left) || releasedButtons.IsSet(InputButton.Right)) &&
+                _touchDetector.IsGrounded)
             {
-                _movementHandler.SetDrag();
+                movementHandler.SetDrag();
             }
             else
             {
-                _movementHandler.ResetDrag();
+                movementHandler.ResetDrag();
             }
         }
 
         private void HandleSlide()
         {
-            _movementHandler.Slide(_touchDetector);
+            movementHandler.Slide(_touchDetector);
         }
 
         private void HandleShoot(NetworkInputData input, NetworkButtons releasedButtons, float angle)
@@ -118,17 +133,12 @@ namespace GDT.Character
 
             return Vector2.zero;
         }
-
-        public void SetMovementEnabled(bool enable)
-        {
-            _inputHandler.enabled = enable;
-            _movementHandler.EnablePhysics(enable);
-        }
-
-        public void SetModelVisible(bool visible)
+        
+        private void SetModelVisible(bool visible)
         {
             model.gameObject.SetActive(visible);
         }
+
         private void ReverseControl()
         {
             StartCoroutine(_inputHandler.ReverseControlForSeconds(5f));

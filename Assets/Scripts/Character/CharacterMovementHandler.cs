@@ -20,9 +20,7 @@ namespace GDT.Character
 
         private NetworkRigidbody2D _rb;
         private CharacterAnimationHandler _animationHandler;
-        
-        [Networked]
-        private NetworkBool DoubleJump { get; set; }
+        [Networked] private NetworkBool DoubleJump { get; set; }
 
         private bool _canJumpAgain;
         

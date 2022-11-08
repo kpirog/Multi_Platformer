@@ -1,34 +1,23 @@
 using Cinemachine;
 using Fusion;
 using GDT.Data;
-using UnityEngine;
-using CharacterController = GDT.Character.CharacterController;
+
 
 namespace GDT.Network
 {
     public class NetworkPlayer : NetworkBehaviour
     {
-        private CinemachineVirtualCamera _virtualCamera;
-        private CharacterController _characterController;
-
-        [Networked(nameof(OnStateChanged))] 
-        private PlayerState State { get; set; } = PlayerState.Inactive;
-        
         public static NetworkPlayer Local { get; private set; }
         
-        [Networked] public NetworkString<_16> NickName { get; set; }
+        [Networked] public NetworkString<_16> NickName { get; private set; }
+        [Networked] public bool Ready { get; private set; }
         
-        public enum PlayerState
-        {
-            Inactive,
-            Active,
-            Dead
-        }
+        private CinemachineVirtualCamera _virtualCamera;
         
         private void Awake()
         {
             _virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
-            _characterController = GetComponent<CharacterController>();
+            DontDestroyOnLoad(gameObject);
         }
 
         public override void Spawned()
@@ -40,8 +29,6 @@ namespace GDT.Network
             }
 
             _virtualCamera.gameObject.SetActive(Object.HasInputAuthority);
-            _characterController.SetMovementEnabled(false);
-            _characterController.SetModelVisible(false);
             PlayerManager.RegisterPlayer(this);
         }
 
@@ -49,10 +36,10 @@ namespace GDT.Network
         {
             PlayerManager.UnregisterPlayer(this);
         }
-
-        private static void OnStateChanged(Changed<NetworkPlayer> changed)
+        
+        public void ToggleReady()
         {
-
+            Ready = !Ready;
         }
         
         public float GetCurrentHeight()

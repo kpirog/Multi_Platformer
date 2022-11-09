@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: -320073481, guid: 193f33026b2b6364ab9de0e2a5bead59, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -173,7 +173,7 @@ Transform:
   m_GameObject: {fileID: 451250082508976847}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 2}
+  m_LocalScale: {x: 4, y: 4, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 451250082444480747}
@@ -299,6 +299,7 @@ MonoBehaviour:
     _length: 0
     _data:
       Data: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  _Ready: 0
 --- !u!114 &5872625924751504148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,8 +313,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  _InputAllowed:
-    _value: 0
 --- !u!114 &3032775604980960168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,7 +328,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   acceleration: 1500
   maxVelocity: 10
-  jumpForce: 1000
+  jumpForce: 1500
   drag: 200
   wallSlidingMultiplier: 1
   fallMultiplier: 2
@@ -364,6 +363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   model: {fileID: 451250082444480750}
+  movementHandler: {fileID: 0}
   inputHandler: {fileID: 0}
   collisionHandler: {fileID: 0}
 --- !u!114 &1884619130283848126

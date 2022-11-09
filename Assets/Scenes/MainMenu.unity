@@ -581,8 +581,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   networkPlayerPrefab: {fileID: 8408755885801751688, guid: 92b5084e2c46f014bbcac4e4de258b1a, type: 3}
   temporarySpawnPositions:
-  - {x: -4, y: -4.15}
-  - {x: 4, y: -4.15}
+  - {x: -8, y: -3}
+  - {x: 2.3, y: -3}
 --- !u!4 &231838561
 Transform:
   m_ObjectHideFlags: 0

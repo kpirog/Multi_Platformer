@@ -72,8 +72,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  requiredPlayersCount: 2
-  timeToStartGame: 5
+  requiredPlayersCount: 1
+  timeToStartGame: 1
   _State: 0
 --- !u!114 &1130414492018023768
 MonoBehaviour:
@@ -88,4 +88,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  gameplayTime: 30
+  gameplayTime: 9999999

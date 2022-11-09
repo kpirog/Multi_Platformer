@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Fusion;
 using Fusion.Sockets;
+using GDT.Common;
 using GDT.Data;
 using UnityEngine;
 
@@ -11,29 +12,12 @@ namespace GDT.Character
     public class CharacterInputHandler : NetworkBehaviour, INetworkRunnerCallbacks
     {
         public NetworkButtons PreviousButtons { get; set; }
-
-        [Networked] [UnitySerializeField] private NetworkBool InputAllowed { get; set; }
-
+        
         private bool _reversedControl;
         private float _shootingAngle;
 
         private Camera _mainCamera;
-
-        private void Awake()
-        {
-            _mainCamera = Camera.main;
-        }
-
-        private void OnEnable()
-        {
-            GameManager.OnGameStateChanged += SetInputAllowed;
-        }
-
-        private void OnDisable()
-        {
-            GameManager.OnGameStateChanged -= SetInputAllowed;
-        }
-
+        
         public override void Spawned()
         {
             if (Object.HasInputAuthority)
@@ -44,7 +28,7 @@ namespace GDT.Character
 
         private void Update()
         {
-            if (Input.GetMouseButton(0) && InputAllowed)
+            if (Input.GetMouseButton(0))
             {
                 Vector2 shootDirection = (GetMousePosition() - transform.position).normalized;
                 _shootingAngle = Vector3.SignedAngle(shootDirection, transform.right, Vector3.back);
@@ -53,42 +37,29 @@ namespace GDT.Character
 
         public void OnInput(NetworkRunner runner, NetworkInput input)
         {
-            //if (!InputAllowed) return;
-
             var inputData = new NetworkInputData();
 
             if (!GameManager.Instance) return;
-            
-            if (GameManager.Instance.State == GameState.Lobby)
+
+            switch (GameManager.Instance.State)
             {
-                inputData.Buttons.Set(InputButton.Ready, Input.GetKey(KeyCode.R));
-            }
-            else
-            {
-                inputData.Buttons.Set(_reversedControl ? InputButton.Right : InputButton.Left, Input.GetKey(KeyCode.A));
-                inputData.Buttons.Set(_reversedControl ? InputButton.Left : InputButton.Right, Input.GetKey(KeyCode.D));
-                inputData.Buttons.Set(InputButton.Jump, Input.GetKey(KeyCode.Space));
-                inputData.Buttons.Set(InputButton.Shoot, Input.GetMouseButton(0));
-                inputData.Buttons.Set(InputButton.StandardArrow, Input.GetKey(KeyCode.Alpha1));
-                inputData.Buttons.Set(InputButton.IceArrow, Input.GetKey(KeyCode.Alpha2));
-                inputData.ShootingAngle = _shootingAngle;
+                case GameState.Lobby:
+                    inputData.Buttons.Set(InputButton.Ready, Input.GetKey(KeyCode.R));
+                    break;
+                case GameState.Playing:
+                    inputData.Buttons.Set(_reversedControl ? InputButton.Right : InputButton.Left, Input.GetKey(KeyCode.A));
+                    inputData.Buttons.Set(_reversedControl ? InputButton.Left : InputButton.Right, Input.GetKey(KeyCode.D));
+                    inputData.Buttons.Set(InputButton.Jump, Input.GetKey(KeyCode.Space));
+                    inputData.Buttons.Set(InputButton.Shoot, Input.GetMouseButton(0));
+                    inputData.Buttons.Set(InputButton.StandardArrow, Input.GetKey(KeyCode.Alpha1));
+                    inputData.Buttons.Set(InputButton.IceArrow, Input.GetKey(KeyCode.Alpha2));
+                    inputData.ShootingAngle = _shootingAngle;
+                    break;
             }
 
             input.Set(inputData);
         }
-
-        private void SetInputAllowed(GameState state)
-        {
-            InputAllowed = state == GameState.Playing;
-        }
-
-        public IEnumerator TurnOffInputForSeconds(float time)
-        {
-            InputAllowed = false;
-            yield return new WaitForSeconds(time);
-            InputAllowed = true;
-        }
-
+        
         public IEnumerator ReverseControlForSeconds(float time)
         {
             _reversedControl = true;
@@ -98,6 +69,11 @@ namespace GDT.Character
 
         private Vector3 GetMousePosition()
         {
+            if (!_mainCamera)
+            {
+                _mainCamera = Camera.main;
+            }
+            
             Vector3 screenPosition = Input.mousePosition;
             Vector3 worldPosition =
                 _mainCamera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y,
@@ -105,6 +81,7 @@ namespace GDT.Character
 
             return worldPosition;
         }
+        
 
         #region Useless code
 

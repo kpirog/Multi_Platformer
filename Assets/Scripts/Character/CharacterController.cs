@@ -1,5 +1,6 @@
 using System;
 using Fusion;
+using GDT.Common;
 using GDT.Data;
 using UnityEngine;
 using NetworkPlayer = GDT.Network.NetworkPlayer;
@@ -9,7 +10,7 @@ namespace GDT.Character
     public class CharacterController : NetworkBehaviour
     {
         [SerializeField] private GameObject model;
-        
+
         private CharacterTouchDetector _touchDetector;
         private CharacterShootingController _shootingController;
         private CharacterAnimationHandler _animationHandler;
@@ -31,13 +32,20 @@ namespace GDT.Character
             collisionHandler = GetComponent<CharacterCollisionHandler>();
             _player = GetComponent<NetworkPlayer>();
         }
-        
+
         public override void Spawned()
         {
             movementHandler.EnablePhysics(false);
             SetModelVisible(false);
+
+            GameManager.OnGameStateChanged += SetInteractable;
         }
-        
+
+        public override void Despawned(NetworkRunner runner, bool hasState)
+        {
+            GameManager.OnGameStateChanged -= SetInteractable;
+        }
+
         public override void FixedUpdateNetwork()
         {
             movementHandler.LimitSpeed();
@@ -45,7 +53,7 @@ namespace GDT.Character
             HandleSlide();
 
             if (!GetInput(out NetworkInputData input)) return;
-            
+
             var pressedButtons = input.Buttons.GetPressed(inputHandler.PreviousButtons);
             var releasedButtons = input.Buttons.GetReleased(inputHandler.PreviousButtons);
             inputHandler.PreviousButtons = input.Buttons;
@@ -133,10 +141,18 @@ namespace GDT.Character
 
             return Vector2.zero;
         }
-        
+
         private void SetModelVisible(bool visible)
         {
             model.gameObject.SetActive(visible);
+        }
+
+        private void SetInteractable(GameState state)
+        {
+            if (state != GameState.Preparing) return;
+
+            movementHandler.EnablePhysics(true);
+            SetModelVisible(true);
         }
 
         private void ReverseControl()

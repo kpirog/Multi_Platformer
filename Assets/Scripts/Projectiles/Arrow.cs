@@ -1,5 +1,4 @@
 using Fusion;
-using GDT.Character;
 using UnityEngine;
 using CharacterController = GDT.Character.CharacterController;
 

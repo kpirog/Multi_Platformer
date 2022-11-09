@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Fusion;
 using UnityEngine;
 using NetworkPlayer = GDT.Network.NetworkPlayer;
@@ -11,7 +12,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private NetworkPlayer networkPlayerPrefab;
     [SerializeField] private Vector2[] temporarySpawnPositions;
 
-    private static readonly HashSet<NetworkPlayer> Players = new();
+    public static readonly HashSet<NetworkPlayer> Players = new();
     private static readonly Dictionary<PlayerRef, NetworkPlayer> PlayersByRef = new();
 
     public static event Action<NetworkPlayer> OnPlayerRegistered;
@@ -32,6 +33,7 @@ public class PlayerManager : MonoBehaviour
     public static void SpawnPlayer(NetworkRunner runner, PlayerRef playerRef)
     {
         var player = runner.Spawn(Instance.networkPlayerPrefab, Instance.temporarySpawnPositions[Players.Count], Quaternion.identity, playerRef);
+        player.gameObject.name = $"Player_{Players.Count}";
     }
 
     public static void DespawnPlayer(NetworkRunner runner, PlayerRef playerRef)
@@ -61,5 +63,12 @@ public class PlayerManager : MonoBehaviour
         }
         
         OnPlayerUnregistered?.Invoke(player);
+    }
+    
+    public static NetworkPlayer GetWinner()
+    {
+        return Players.Select(x => x).
+            OrderByDescending(x => x.GetCurrentHeight()).
+            First();
     }
 }

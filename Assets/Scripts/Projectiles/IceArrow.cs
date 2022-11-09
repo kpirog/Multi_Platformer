@@ -19,7 +19,8 @@ namespace GDT.Projectiles
         {
             var characterController = networkObject.GetComponent<CharacterController>();
             Debug.Log("Freeze effect");
-            yield return characterController.inputHandler.TurnOffInputForSeconds(freezeTime);
+            yield return null;
+            //yield return characterController.inputHandler.TurnOffInputForSeconds(freezeTime);
         }
     }
 }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4149026337728199318}
   - component: {fileID: 3352653529281181042}
   - component: {fileID: 4149026337728199317}
+  - component: {fileID: 1130414492018023768}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -56,6 +57,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 4149026337728199317}
+  - {fileID: 1130414492018023768}
   SimulationBehaviours: []
 --- !u!114 &4149026337728199317
 MonoBehaviour:
@@ -70,5 +72,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  _State: 0
   requiredPlayersCount: 2
+  timeToStartGame: 10
+  _State: 0
+--- !u!114 &1130414492018023768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4149026337728199316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d9d548c093ec7f4c97d642c7d41df99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  gameplayTime: 10

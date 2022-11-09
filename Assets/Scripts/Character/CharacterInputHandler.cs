@@ -11,13 +11,15 @@ namespace GDT.Character
 {
     public class CharacterInputHandler : NetworkBehaviour, INetworkRunnerCallbacks
     {
+        [Networked] private TickTimer FreezeInputTimer { get; set; }
+        [Networked] private NetworkBool InputFrozen { get; set; }
         public NetworkButtons PreviousButtons { get; set; }
-        
+
         private bool _reversedControl;
         private float _shootingAngle;
 
         private Camera _mainCamera;
-        
+
         public override void Spawned()
         {
             if (Object.HasInputAuthority)
@@ -26,8 +28,18 @@ namespace GDT.Character
             }
         }
 
+        public override void FixedUpdateNetwork()
+        {
+            if (InputFrozen && FreezeInputTimer.Expired(Runner))
+            {
+                InputFrozen = false;
+            }
+        }
+
         private void Update()
         {
+            if (InputFrozen) return;
+
             if (Input.GetMouseButton(0))
             {
                 Vector2 shootDirection = (GetMousePosition() - transform.position).normalized;
@@ -39,7 +51,7 @@ namespace GDT.Character
         {
             var inputData = new NetworkInputData();
 
-            if (!GameManager.Instance) return;
+            if (!GameManager.Instance || InputFrozen) return;
 
             switch (GameManager.Instance.State)
             {
@@ -47,8 +59,10 @@ namespace GDT.Character
                     inputData.Buttons.Set(InputButton.Ready, Input.GetKey(KeyCode.R));
                     break;
                 case GameState.Playing:
-                    inputData.Buttons.Set(_reversedControl ? InputButton.Right : InputButton.Left, Input.GetKey(KeyCode.A));
-                    inputData.Buttons.Set(_reversedControl ? InputButton.Left : InputButton.Right, Input.GetKey(KeyCode.D));
+                    inputData.Buttons.Set(_reversedControl ? InputButton.Right : InputButton.Left,
+                        Input.GetKey(KeyCode.A));
+                    inputData.Buttons.Set(_reversedControl ? InputButton.Left : InputButton.Right,
+                        Input.GetKey(KeyCode.D));
                     inputData.Buttons.Set(InputButton.Jump, Input.GetKey(KeyCode.Space));
                     inputData.Buttons.Set(InputButton.Shoot, Input.GetMouseButton(0));
                     inputData.Buttons.Set(InputButton.StandardArrow, Input.GetKey(KeyCode.Alpha1));
@@ -59,12 +73,18 @@ namespace GDT.Character
 
             input.Set(inputData);
         }
-        
+
         public IEnumerator ReverseControlForSeconds(float time)
         {
             _reversedControl = true;
             yield return new WaitForSeconds(time);
             _reversedControl = false;
+        }
+
+        public void FreezeInputForSeconds(float freezeTime)
+        {
+            FreezeInputTimer = TickTimer.CreateFromSeconds(Runner, freezeTime);
+            InputFrozen = true;
         }
 
         private Vector3 GetMousePosition()
@@ -73,7 +93,7 @@ namespace GDT.Character
             {
                 _mainCamera = Camera.main;
             }
-            
+
             Vector3 screenPosition = Input.mousePosition;
             Vector3 worldPosition =
                 _mainCamera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y,
@@ -81,7 +101,7 @@ namespace GDT.Character
 
             return worldPosition;
         }
-        
+
 
         #region Useless code
 

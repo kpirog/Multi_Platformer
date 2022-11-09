@@ -56,7 +56,7 @@ namespace GDT.Common
                 }
                 case GameState.Preparing:
                 {
-                    Debug.Log($"Time to start: {StartGameTimer.RemainingTime(Runner)}");
+                    //Debug.Log($"Time to start: {StartGameTimer.RemainingTime(Runner)}");
                     
                     if (StartGameTimer.Expired(Runner))
                     {
@@ -68,7 +68,7 @@ namespace GDT.Common
                 }
                 case GameState.Playing:
                 {
-                    Debug.Log($"Time to finish: {_gameTimer.RemainingTime}");
+                    //Debug.Log($"Time to finish: {_gameTimer.RemainingTime}");
                     
                     if (_gameTimer.Finished)
                     {
@@ -79,7 +79,7 @@ namespace GDT.Common
                 }
                 case GameState.Finished:
                 {
-                    Debug.Log($"The winner is {PlayerManager.GetWinner()}");
+                    //Debug.Log($"The winner is {PlayerManager.GetWinner()}");
                     break;
                 }
             }

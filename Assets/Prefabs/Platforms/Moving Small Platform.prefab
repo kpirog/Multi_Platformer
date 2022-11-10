@@ -55,8 +55,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6867392741010207656, guid: 6223cad9a53d1b24dbae0ce182230ed6, type: 3}
+      propertyPath: m_Color.b
+      value: 0.015686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 6867392741010207656, guid: 6223cad9a53d1b24dbae0ce182230ed6, type: 3}
+      propertyPath: m_Color.g
+      value: 0.92156863
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6223cad9a53d1b24dbae0ce182230ed6, type: 3}
+--- !u!212 &3804435060831002750 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6867392741010207656, guid: 6223cad9a53d1b24dbae0ce182230ed6, type: 3}
+  m_PrefabInstance: {fileID: 7746737644270113750}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3911388268386733865 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6758207868447464703, guid: 6223cad9a53d1b24dbae0ce182230ed6, type: 3}
@@ -131,5 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  movementSpeed: 3
-  movementRange: 5
+  movementSpeed: 10
+  spriteRenderers:
+  - {fileID: 3804435060831002750}
+  destination: {x: 0, y: 0, z: 0}

@@ -356,6 +356,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'SessionName Labeled Input Field '
       objectReference: {fileID: 0}
+    - target: {fileID: 521557469817546332, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2014361189194972383, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
       propertyPath: m_Pivot.x
       value: 1
@@ -380,6 +384,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -50
       objectReference: {fileID: 0}
+    - target: {fileID: 3089652608259227571, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3091661747572393276, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4355964239709558048, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
       propertyPath: m_text
       value: 'Session name:'
@@ -392,9 +404,21 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 4811741314153650365, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5588013357347353469, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
       propertyPath: m_Name
       value: SessionNameInputField
+      objectReference: {fileID: 0}
+    - target: {fileID: 5588013357347353469, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6110646623949257994, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6582636920937209907, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
       propertyPath: m_SizeDelta.x
@@ -449,7 +473,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &222774131
 RectTransform:
   m_ObjectHideFlags: 0
@@ -470,7 +494,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 300}
-  m_SizeDelta: {x: 700, y: 120}
+  m_SizeDelta: {x: 700, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &222774132
 MonoBehaviour:
@@ -930,7 +954,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 350, y: -100}
-  m_SizeDelta: {x: 700, y: 20}
+  m_SizeDelta: {x: 700, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &829504060
 MonoBehaviour:
@@ -1570,10 +1594,10 @@ RectTransform:
   m_Father: {fileID: 222774131}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 350, y: 0}
-  m_SizeDelta: {x: 700, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1429699669
 MonoBehaviour:
@@ -1780,6 +1804,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NickName Labeled Input Field
       objectReference: {fileID: 0}
+    - target: {fileID: 521557469817546332, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2014361189194972383, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
       propertyPath: m_Pivot.x
       value: 1
@@ -1804,6 +1832,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -50
       objectReference: {fileID: 0}
+    - target: {fileID: 3089652608259227571, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3091661747572393276, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4355964239709558048, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
       propertyPath: m_text
       value: 'Nickname:'
@@ -1816,9 +1852,21 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 4811741314153650365, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5588013357347353469, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
       propertyPath: m_Name
       value: NickNameInputField
+      objectReference: {fileID: 0}
+    - target: {fileID: 5588013357347353469, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6110646623949257994, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6582636920937209907, guid: fd9161916981d3d43b20425efa0b4a23, type: 3}
       propertyPath: m_SizeDelta.x

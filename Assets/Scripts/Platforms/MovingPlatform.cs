@@ -1,40 +1,56 @@
 using Fusion;
+using UnityEditor;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace GDT.Platforms
 {
     public class MovingPlatform : NetworkBehaviour
     {
         [SerializeField] private float movementSpeed;
-        [SerializeField] private float movementRange;
+        [SerializeField] private SpriteRenderer[] spriteRenderers;
 
-        private float _startXPos;
-        private Vector3 _direction;
-        
-        public override void Spawned()
+        public Vector3 destination;
+
+        private Vector3 _startPosition;
+        private Vector3 _targetPosition;
+
+        private void Awake()
         {
-            _startXPos = transform.position.x;
-            _direction = Random.value > 0.5f ? Vector3.right : Vector3.left;
+            _startPosition = transform.position;
+            _targetPosition = destination;
         }
 
         public override void FixedUpdateNetwork()
         {
-            SetMovementDirection();
-
-            transform.position += _direction * movementSpeed * Runner.DeltaTime;
+            if (HasReachedTarget(_targetPosition))
+            {
+                SetTargetPosition();
+            }
+            
+            transform.position = Vector3.MoveTowards(transform.position, _targetPosition, movementSpeed * Runner.DeltaTime);
         }
 
-        private void SetMovementDirection()
+        private bool HasReachedTarget(Vector3 target)
         {
-            if (transform.position.x >= _startXPos + movementRange)
+            return transform.position == target;
+        }
+
+        private void SetTargetPosition()
+        {
+            if (transform.position == destination)
             {
-                _direction = Vector3.left;
+                _targetPosition = _startPosition;
             }
-            else if (transform.position.x <= _startXPos - movementRange)
+            else if (transform.position == _startPosition)
             {
-                _direction = Vector3.right;
+                _targetPosition = destination;
             }
+        }
+        
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, destination);
         }
     }
 }

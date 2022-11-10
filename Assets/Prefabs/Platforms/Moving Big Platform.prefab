@@ -7,6 +7,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1514251382394129935, guid: 18e5c93e792358247b54492d32671d5d, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1514251382394129935, guid: 18e5c93e792358247b54492d32671d5d, type: 3}
+      propertyPath: m_Color.g
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1514251382394129935, guid: 18e5c93e792358247b54492d32671d5d, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1514251382486040925, guid: 18e5c93e792358247b54492d32671d5d, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1514251382486040925, guid: 18e5c93e792358247b54492d32671d5d, type: 3}
+      propertyPath: m_Color.g
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1514251382486040925, guid: 18e5c93e792358247b54492d32671d5d, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1514251382855218396, guid: 18e5c93e792358247b54492d32671d5d, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -55,8 +79,35 @@ PrefabInstance:
       propertyPath: m_Name
       value: Moving Big Platform
       objectReference: {fileID: 0}
+    - target: {fileID: 1514251384094009723, guid: 18e5c93e792358247b54492d32671d5d, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1514251384094009723, guid: 18e5c93e792358247b54492d32671d5d, type: 3}
+      propertyPath: m_Color.g
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1514251384094009723, guid: 18e5c93e792358247b54492d32671d5d, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18e5c93e792358247b54492d32671d5d, type: 3}
+--- !u!212 &2657879841033892892 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1514251384094009723, guid: 18e5c93e792358247b54492d32671d5d, type: 3}
+  m_PrefabInstance: {fileID: 3594185031539367271}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &2657879841568169018 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1514251382486040925, guid: 18e5c93e792358247b54492d32671d5d, type: 3}
+  m_PrefabInstance: {fileID: 3594185031539367271}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &2657879841660015464 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1514251382394129935, guid: 18e5c93e792358247b54492d32671d5d, type: 3}
+  m_PrefabInstance: {fileID: 3594185031539367271}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2657879841802856838 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1514251382855218401, guid: 18e5c93e792358247b54492d32671d5d, type: 3}
@@ -100,8 +151,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  movementSpeed: 3
-  movementRange: 5
+  movementSpeed: 10
+  spriteRenderers:
+  - {fileID: 2657879841033892892}
+  - {fileID: 2657879841568169018}
+  - {fileID: 2657879841660015464}
+  destination: {x: 0, y: 0, z: 0}
 --- !u!114 &-921214493774306220
 MonoBehaviour:
   m_ObjectHideFlags: 0

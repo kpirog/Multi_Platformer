@@ -126,7 +126,7 @@ namespace GDT.Character
                 _shootingController.ReleaseArrow(angle);
             }
         }
-
+        
         private Vector2 GetMovementDirection(NetworkInputData input)
         {
             if (input.GetButton(InputButton.Left))
@@ -154,7 +154,7 @@ namespace GDT.Character
             movementHandler.EnablePhysics(true);
             SetModelVisible(true);
         }
-
+        
         private void ReverseControl()
         {
             StartCoroutine(_inputHandler.ReverseControlForSeconds(5f));

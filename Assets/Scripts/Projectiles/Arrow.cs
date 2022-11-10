@@ -12,6 +12,8 @@ namespace GDT.Projectiles
         [SerializeField] private float collisionOrigin;
         [SerializeField] private float collisionDistance;
 
+        [SerializeField] private int damage;
+
         [SerializeField] private LayerMask hitBoxLayer;
         [SerializeField] private LayerMask collisionLayer;
         
@@ -76,6 +78,13 @@ namespace GDT.Projectiles
 
             if (colliderHits)
             {
+                var damageable = colliderHits.collider.gameObject.GetComponent<IDamageable>();
+
+                if (damageable != null)
+                {
+                    damageable.TakeDamage(damage);
+                }
+                
                 RPC_SetAfterCollision(null);
             }
         }

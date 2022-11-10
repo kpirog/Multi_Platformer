@@ -1,3 +1,4 @@
+using System;
 using Fusion;
 using GDT.Data;
 using UnityEngine;
@@ -23,7 +24,10 @@ namespace GDT.Character
         [Networked] private NetworkBool DoubleJump { get; set; }
 
         private bool _canJumpAgain;
-        
+        private float _currentAcceleration;
+        [Networked] private TickTimer SlowTimer { get; set; }
+        private int _slowMultiplier;
+
         private void Awake()
         {
             _rb = GetComponent<NetworkRigidbody2D>();
@@ -35,6 +39,19 @@ namespace GDT.Character
             if (Object.HasInputAuthority)
             {
                 _rb.InterpolationDataSource = InterpolationDataSources.Predicted;
+            }
+        }
+
+        private void Update()
+        {
+            Debug.Log($"Player: {gameObject.name} - Current acceleration = {_currentAcceleration}");
+        }
+
+        public override void FixedUpdateNetwork()
+        {
+            if (SlowTimer.ExpiredOrNotRunning(Runner))
+            {
+                _currentAcceleration = acceleration;
             }
         }
 
@@ -50,7 +67,7 @@ namespace GDT.Character
                     _rb.Rigidbody.velocity *= Vector2.up;
                 }
 
-                _rb.Rigidbody.AddForce(Vector2.left * acceleration * Runner.DeltaTime, ForceMode2D.Force);
+                _rb.Rigidbody.AddForce(Vector2.left * _currentAcceleration * Runner.DeltaTime, ForceMode2D.Force);
                 _animationHandler.SetSpriteDirection(Vector2.left);
             }
 
@@ -61,7 +78,7 @@ namespace GDT.Character
                     _rb.Rigidbody.velocity *= Vector2.up;
                 }
 
-                _rb.Rigidbody.AddForce(Vector2.right * acceleration * Runner.DeltaTime, ForceMode2D.Force);
+                _rb.Rigidbody.AddForce(Vector2.right * _currentAcceleration * Runner.DeltaTime, ForceMode2D.Force);
                 _animationHandler.SetSpriteDirection(Vector2.right);
             }
         }
@@ -156,6 +173,12 @@ namespace GDT.Character
         public void EnablePhysics(bool enable)
         {
             _rb.Rigidbody.simulated = enable;
+        }
+
+        public void SetSlow(float slowTime, float slowMultiplier)
+        {
+            SlowTimer = TickTimer.CreateFromSeconds(Runner, slowTime);
+            _currentAcceleration = acceleration * slowMultiplier;
         }
     }
 }

@@ -17,8 +17,9 @@ namespace GDT.Character
 
         private bool _reversedControl;
         private float _shootingAngle;
-
         private Camera _mainCamera;
+
+        private Vector2 _shootDirection;
 
         public override void Spawned()
         {
@@ -42,8 +43,8 @@ namespace GDT.Character
 
             if (Input.GetMouseButton(0))
             {
-                Vector2 shootDirection = (GetMousePosition() - transform.position).normalized;
-                _shootingAngle = Vector3.SignedAngle(shootDirection, transform.right, Vector3.back);
+                _shootDirection = (GetMousePosition() - transform.position).normalized;
+                _shootingAngle = Vector3.SignedAngle(_shootDirection, transform.right, Vector3.back);
             }
         }
 

@@ -99,11 +99,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  speed: 2000
+  speed: 30
   lifeTime: 10
   pushMultiplier: 1500
   collisionOrigin: 0.15
   collisionDistance: 0.4
+  damage: 0
   hitBoxLayer:
     serializedVersion: 2
     m_Bits: 1024

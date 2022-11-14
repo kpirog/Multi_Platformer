@@ -24,6 +24,8 @@ namespace GDT.Projectiles
         private float _stretchStrength;
         private float PushForce => _stretchStrength * pushMultiplier;
 
+        public float Speed => speed;
+
         private void Awake()
         {
             _rb = GetComponent<NetworkRigidbody2D>();
@@ -53,12 +55,11 @@ namespace GDT.Projectiles
             }
         }
 
-        public void Release(float angle, float stretchStrength)
+        public void Release(Vector2 direction, float stretchStrength)
         {
             _stretchStrength = stretchStrength;
             _collisionActive = true;
-            var direction = Quaternion.Euler(0f, 0f, angle) * transform.right;
-            _rb.Rigidbody.AddForce(direction * (stretchStrength * speed) * Runner.DeltaTime, ForceMode2D.Impulse);
+            _rb.Rigidbody.AddForce(direction * (stretchStrength * speed) , ForceMode2D.Impulse);
         }
 
         private void CheckCollision()

@@ -88,7 +88,7 @@ namespace GDT.Character
 
         private void HandleMovement(NetworkInputData input)
         {
-            Vector2 direction = GetMovementDirection(input);
+            var direction = GetMovementDirection(input);
 
             if (direction != Vector2.zero)
             {
@@ -118,7 +118,7 @@ namespace GDT.Character
         {
             if (input.GetButton(InputButton.Shoot))
             {
-                _shootingController.StretchBow();
+                _shootingController.StretchBow(angle);
             }
 
             if (releasedButtons.IsSet(InputButton.Shoot))

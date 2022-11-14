@@ -7,6 +7,54 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3459994747372070345, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
+      propertyPath: m_Parameters.colorGradient.ctime1
+      value: 32575
+      objectReference: {fileID: 0}
+    - target: {fileID: 3459994747372070345, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
+      propertyPath: m_Parameters.colorGradient.ctime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 3459994747372070345, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.b
+      value: 0.8962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 3459994747372070345, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.g
+      value: 0.28324133
+      objectReference: {fileID: 0}
+    - target: {fileID: 3459994747372070345, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.r
+      value: 0.2901459
+      objectReference: {fileID: 0}
+    - target: {fileID: 3459994747372070345, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.b
+      value: 0.8018868
+      objectReference: {fileID: 0}
+    - target: {fileID: 3459994747372070345, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.g
+      value: 0.48294953
+      objectReference: {fileID: 0}
+    - target: {fileID: 3459994747372070345, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.r
+      value: 0.28368637
+      objectReference: {fileID: 0}
+    - target: {fileID: 3459994747372070345, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
+      propertyPath: m_Parameters.colorGradient.key2.b
+      value: 0.7075472
+      objectReference: {fileID: 0}
+    - target: {fileID: 3459994747372070345, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
+      propertyPath: m_Parameters.colorGradient.key2.g
+      value: 0.59652513
+      objectReference: {fileID: 0}
+    - target: {fileID: 3459994747372070345, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
+      propertyPath: m_Parameters.colorGradient.key2.r
+      value: 0.103462085
+      objectReference: {fileID: 0}
+    - target: {fileID: 3459994747372070345, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
+      propertyPath: m_Parameters.colorGradient.m_NumColorKeys
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5532032566527658202, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
       propertyPath: NetworkedBehaviours.Array.size
       value: 2
@@ -87,6 +135,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5532032567352107085, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
 --- !u!1 &2226545935893781408 stripped
@@ -107,11 +159,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  speed: 2000
+  speed: 30
   lifeTime: 10
   pushMultiplier: 1500
   collisionOrigin: 0.15
   collisionDistance: 0.4
+  damage: 0
   hitBoxLayer:
     serializedVersion: 2
     m_Bits: 1024

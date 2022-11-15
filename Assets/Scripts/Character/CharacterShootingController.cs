@@ -60,7 +60,12 @@ namespace GDT.Character
             }
 
             _animationHandler.SetShootAnimation();
-            _trajectoryPrediction.DisplayTrajectory(ReleaseTimer, CurrentArrowPrefab.Speed ,CalculateShootDirection(angle));
+
+            if (Object.HasInputAuthority)
+            {
+                _trajectoryPrediction.DisplayTrajectory(ReleaseTimer, CurrentArrowPrefab.Speed,
+                    CalculateShootDirection(angle));
+            }
         }
 
         public void ReleaseArrow(float angle)

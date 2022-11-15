@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8b374f474b5d454f9be6379f1a37a79, type: 3}
+  m_Script: {fileID: 11500000, guid: 183103e7d5d650e4f9afcadd049f1e29, type: 3}
   m_Name: Push Effect
   m_EditorClassIdentifier: 
-  force: 2500
+  force: 500

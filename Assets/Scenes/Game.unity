@@ -20167,6 +20167,14 @@ PrefabInstance:
       value: 2561
       objectReference: {fileID: 0}
     - target: {fileID: 3309387061905401180, guid: a13b8d2260f8d304494ca50d43f4a574, type: 3}
+      propertyPath: NetworkedBehaviours.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3309387061905401180, guid: a13b8d2260f8d304494ca50d43f4a574, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[2]
+      value: 
+      objectReference: {fileID: 1287453940}
+    - target: {fileID: 3309387061905401180, guid: a13b8d2260f8d304494ca50d43f4a574, type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
       value: 3118880089689566014
       objectReference: {fileID: 0}
@@ -20195,6 +20203,10 @@ PrefabInstance:
       value: 19.884493
       objectReference: {fileID: 0}
     - target: {fileID: 8577925948130837634, guid: a13b8d2260f8d304494ca50d43f4a574, type: 3}
+      propertyPath: movementSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8577925948130837634, guid: a13b8d2260f8d304494ca50d43f4a574, type: 3}
       propertyPath: <Destination>k__BackingField.x
       value: -22.942993
       objectReference: {fileID: 0}
@@ -20217,6 +20229,34 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3060911421712073007, guid: a13b8d2260f8d304494ca50d43f4a574, type: 3}
   m_PrefabInstance: {fileID: 1287453936}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1287453938 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9171730316252831590, guid: a13b8d2260f8d304494ca50d43f4a574, type: 3}
+  m_PrefabInstance: {fileID: 1287453936}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &1287453939 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 4430731332094452246, guid: a13b8d2260f8d304494ca50d43f4a574, type: 3}
+  m_PrefabInstance: {fileID: 1287453936}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1287453940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287453938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00e1817b1e9a134aa02de4a5c28d51d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  _collider: {fileID: 1287453939}
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  offset: {x: 0, y: 0.1}
 --- !u!4 &1351914592 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1514251382855218396, guid: 18e5c93e792358247b54492d32671d5d, type: 3}

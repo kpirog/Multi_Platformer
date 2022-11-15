@@ -1,4 +1,3 @@
-using System;
 using Fusion;
 using GDT.Data;
 using GDT.Projectiles;
@@ -78,7 +77,7 @@ namespace GDT.Character
 
             ReleaseTimer = 0f;
             _animationHandler.StopShootAnimation();
-            _trajectoryPrediction.HideWithDelay();
+            _trajectoryPrediction.SetVisible(false);
         }
 
         private void RemoveArrow()

@@ -24,13 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3069694019341622223}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.1293, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5532032566527658205}
-  m_RootOrder: 1
+  m_Father: {fileID: 5532032567352107086}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!96 &3459994747372070345
 TrailRenderer:
@@ -170,6 +170,7 @@ GameObject:
   - component: {fileID: 5532032566527658203}
   - component: {fileID: 5532032566527658204}
   - component: {fileID: 5532032566527658202}
+  - component: {fileID: 3320710225548115782}
   m_Layer: 9
   m_Name: Arrow
   m_TagString: Untagged
@@ -190,7 +191,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5532032567352107086}
-  - {fileID: 4677679178293021656}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -264,7 +264,33 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 5532032566527658204}
+  - {fileID: 3320710225548115782}
   SimulationBehaviours: []
+--- !u!114 &3320710225548115782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5532032566527658206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4a22885edae89f4e8a40a55a9bf37df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  speed: 30
+  lifeTime: 10
+  collisionOrigin: 0.15
+  collisionDistance: 0.4
+  damage: 0
+  hitBoxLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 384
+  characterEffect: {fileID: 0}
 --- !u!1 &5532032567352107087
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,7 +319,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4677679178293021656}
   m_Father: {fileID: 5532032566527658205}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

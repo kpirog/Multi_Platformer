@@ -14,7 +14,7 @@ namespace GDT.Character
             _animationHandler = GetComponent<CharacterAnimationHandler>();
         }
         
-        public void PushOff(Vector2 hitPoint, float pushForce)
+        public void PushPlayerInOppositeDirection(Vector2 hitPoint, float pushForce)
         {
             var direction = hitPoint - (Vector2)transform.position;
             direction = -direction.normalized;

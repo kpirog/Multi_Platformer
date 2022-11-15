@@ -215,7 +215,6 @@ MonoBehaviour:
   - {fileID: 3473388298916993735}
   - {fileID: 1884619130283848126}
   - {fileID: 2404496963435984385}
-  - {fileID: 8152397563048699374}
   - {fileID: 2169294605145577788}
   SimulationBehaviours:
   - {fileID: 7420148636743425346}
@@ -415,8 +414,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   arrowPrefabs:
-  - {fileID: 2847973654369247365, guid: f8cd4e996e2fdb541bc09b483ce113e6, type: 3}
-  - {fileID: 8602294605345346304, guid: b079c20a29973c44c9065962f202ddce, type: 3}
+  - {fileID: 3581215261586648179, guid: f8cd4e996e2fdb541bc09b483ce113e6, type: 3}
+  - {fileID: 8950470706056047672, guid: b079c20a29973c44c9065962f202ddce, type: 3}
   _StandardArrowsCount: 99
   _IceArrowsCount: 99
 --- !u!114 &8152397563048699374
@@ -431,11 +430,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1ac79c8781a1f42b4bad3dc0faedd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
   predictionPointPrefab: {fileID: 1006240674505102713, guid: 03e50ca174f141449adeca9b84ba60d4, type: 3}
-  amountOfPoints: 50
   spaceBetweenPoints: 0.1
-  hideTime: 1
+  amountOfPoints: 50
 --- !u!1 &451250083032043622
 GameObject:
   m_ObjectHideFlags: 0

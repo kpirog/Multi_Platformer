@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3320710225548115782, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
+      propertyPath: characterEffect
+      value: 
+      objectReference: {fileID: 11400000, guid: 1ed57b199be5abc4abead9ad482ef7e6, type: 2}
     - target: {fileID: 3459994747372070345, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
       propertyPath: m_Parameters.colorGradient.ctime1
       value: 32575
@@ -62,11 +66,11 @@ PrefabInstance:
     - target: {fileID: 5532032566527658202, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
       propertyPath: NetworkedBehaviours.Array.data[1]
       value: 
-      objectReference: {fileID: 8602294605345346304}
+      objectReference: {fileID: 8950470706056047672}
     - target: {fileID: 5532032566527658202, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
       propertyPath: NetworkedBehaviours.Array.data[2]
       value: 
-      objectReference: {fileID: 8602294605345346304}
+      objectReference: {fileID: 0}
     - target: {fileID: 5532032566527658202, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
       value: 4916971095711709616
@@ -141,34 +145,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
---- !u!1 &2226545935893781408 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5532032566527658206, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
+--- !u!114 &8950470706056047672 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3320710225548115782, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
   m_PrefabInstance: {fileID: 5918853560997499774}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8602294605345346304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2226545935893781408}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fab67534c720b24c9fb1d2f968d879a, type: 3}
+  m_Script: {fileID: 11500000, guid: d4a22885edae89f4e8a40a55a9bf37df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  speed: 30
-  lifeTime: 10
-  pushMultiplier: 1500
-  collisionOrigin: 0.15
-  collisionDistance: 0.4
-  damage: 0
-  hitBoxLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  collisionLayer:
-    serializedVersion: 2
-    m_Bits: 384
-  freezeTime: 3

@@ -1,5 +1,4 @@
 using UnityEngine;
-using NetworkPlayer = GDT.Network.NetworkPlayer;
 
 namespace GDT.Character.Effects
 {
@@ -8,9 +7,9 @@ namespace GDT.Character.Effects
     public class SlowEffect : CharacterEffect
     {
         [SerializeField] private float slowTime;
-        [SerializeField] private float slowMultiplier;
+        [SerializeField][Range(0.01f, 1f)] private float slowMultiplier;
         
-        public override void ApplyTo(CharacterController character)
+        public override void ApplyTo(CharacterController character, Vector2? sourcePosition)
         {
             character.movementHandler.SetSlow(slowTime, slowMultiplier);
         }

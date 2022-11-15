@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6859784906637411072}
   - component: {fileID: 1868430221559592954}
-  - component: {fileID: 155422224843719075}
   m_Layer: 0
   m_Name: PredictionPoint
   m_TagString: Untagged
@@ -85,26 +84,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &155422224843719075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1006240674505102713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObjectInterest: 1
-  DefaultInterestGroups: []
-  DestroyWhenStateAuthorityLeaves: 0
-  AllowStateAuthorityOverride: 1
-  AoiPositionSource: {fileID: 0}
-  Flags: 2305
-  NetworkGuid:
-    RawGuidValue: 03e50ca174f141449adeca9b84ba60d4
-  NestedObjects: []
-  NetworkedBehaviours: []
-  SimulationBehaviours: []

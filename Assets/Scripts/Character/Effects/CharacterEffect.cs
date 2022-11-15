@@ -4,6 +4,6 @@ namespace GDT.Character.Effects
 {
     public abstract class CharacterEffect : ScriptableObject
     {
-        public abstract void ApplyTo(CharacterController character);
+        public abstract void ApplyTo(CharacterController character, Vector2? sourcePosition);
     }
 }

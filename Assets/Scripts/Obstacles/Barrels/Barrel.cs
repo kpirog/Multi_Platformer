@@ -34,16 +34,16 @@ namespace GDT.Obstacles.Barrels
 
         private void Explode()
         {
-            var collision = Runner.GetPhysicsScene2D().OverlapCircle(transform.position, explosionRange, explosionLayer);
+            var collider = Runner.GetPhysicsScene2D().OverlapCircle(transform.position, explosionRange, explosionLayer);
 
-            if (collision != null)
+            if (collider != null)
             {
-                var player = collision.gameObject.GetComponentInParent<CharacterController>();
+                var player = collider.gameObject.GetComponentInParent<CharacterController>();
 
                 if (player)
                 {
                     Debug.Log($"Collision with = {player.gameObject.name}");
-                    characterEffect.ApplyTo(player);
+                    characterEffect.ApplyTo(player, transform.position);
                 }
             }
 

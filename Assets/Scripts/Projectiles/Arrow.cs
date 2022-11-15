@@ -1,14 +1,14 @@
 using Fusion;
+using GDT.Character.Effects;
 using UnityEngine;
 using CharacterController = GDT.Character.CharacterController;
 
 namespace GDT.Projectiles
 {
-    public abstract class Arrow : NetworkBehaviour
+    public class Arrow : NetworkBehaviour
     {
         [SerializeField] private float speed;
         [SerializeField] private float lifeTime;
-        [SerializeField] private float pushMultiplier;
         [SerializeField] private float collisionOrigin;
         [SerializeField] private float collisionDistance;
 
@@ -16,14 +16,12 @@ namespace GDT.Projectiles
 
         [SerializeField] private LayerMask hitBoxLayer;
         [SerializeField] private LayerMask collisionLayer;
-        
+
+        [SerializeField] private CharacterEffect characterEffect;
         [Networked] private TickTimer LifeTimer { get; set; }
 
         private NetworkRigidbody2D _rb;
         private bool _collisionActive;
-        private float _stretchStrength;
-        private float PushForce => _stretchStrength * pushMultiplier;
-
         public float Speed => speed;
 
         private void Awake()
@@ -57,7 +55,6 @@ namespace GDT.Projectiles
 
         public void Release(Vector2 direction, float stretchStrength)
         {
-            _stretchStrength = stretchStrength;
             _collisionActive = true;
             _rb.Rigidbody.AddForce(direction * (stretchStrength * speed) , ForceMode2D.Impulse);
         }
@@ -68,9 +65,9 @@ namespace GDT.Projectiles
                     transform.right, collisionDistance, Object.InputAuthority, out var hit, hitBoxLayer,
                     HitOptions.IncludePhysX))
             {
-                var networkObject = hit.GameObject.GetComponentInParent<NetworkObject>();
-                RPC_SetAfterCollision(networkObject);
-                AdditionalEffect(networkObject, hit.Point);
+                var character = hit.GameObject.GetComponentInParent<CharacterController>();
+                RPC_SetAfterCollision(character);
+                characterEffect.ApplyTo(character, hit.Point);
                 return;
             }
 
@@ -91,21 +88,15 @@ namespace GDT.Projectiles
         }
         
         [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-        private void RPC_SetAfterCollision(NetworkObject networkObject)
+        private void RPC_SetAfterCollision(CharacterController character)
         {
-            if (networkObject)
+            if (character)
             {
-                transform.SetParent(networkObject.transform);
+                transform.SetParent(character.transform);
             }
             
             _rb.Rigidbody.simulated = false;
             _collisionActive = false;
-        }
-        
-        protected virtual void AdditionalEffect(NetworkObject networkObject, Vector2 point)
-        {
-            var characterController = networkObject.GetComponent<CharacterController>();
-            characterController.collisionHandler.PushOff(point, PushForce);
         }
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Fusion;
 using Fusion.Sockets;
@@ -12,13 +11,13 @@ namespace GDT.Character
     public class CharacterInputHandler : NetworkBehaviour, INetworkRunnerCallbacks
     {
         [Networked] private TickTimer FreezeInputTimer { get; set; }
+        [Networked] private TickTimer InvertInputTimer { get; set; }
         [Networked] private NetworkBool InputFrozen { get; set; }
-        public NetworkButtons PreviousButtons { get; set; }
-
-        private bool _reversedControl;
+        [Networked] private NetworkBool InputInverted { get; set; }
+        [Networked] public NetworkButtons PreviousButtons { get; set; }
+        
         private float _shootingAngle;
         private Camera _mainCamera;
-
         private Vector2 _shootDirection;
 
         public override void Spawned()
@@ -34,6 +33,11 @@ namespace GDT.Character
             if (InputFrozen && FreezeInputTimer.Expired(Runner))
             {
                 InputFrozen = false;
+            }
+            
+            if (InputInverted && InvertInputTimer.Expired(Runner))
+            {
+                InputInverted = false;
             }
         }
 
@@ -60,14 +64,15 @@ namespace GDT.Character
                     inputData.Buttons.Set(InputButton.Ready, Input.GetKey(KeyCode.R));
                     break;
                 case GameState.Playing:
-                    inputData.Buttons.Set(_reversedControl ? InputButton.Right : InputButton.Left,
+                    inputData.Buttons.Set(InputInverted ? InputButton.Right : InputButton.Left,
                         Input.GetKey(KeyCode.A));
-                    inputData.Buttons.Set(_reversedControl ? InputButton.Left : InputButton.Right,
+                    inputData.Buttons.Set(InputInverted ? InputButton.Left : InputButton.Right,
                         Input.GetKey(KeyCode.D));
                     inputData.Buttons.Set(InputButton.Jump, Input.GetKey(KeyCode.Space));
                     inputData.Buttons.Set(InputButton.Shoot, Input.GetMouseButton(0));
                     inputData.Buttons.Set(InputButton.StandardArrow, Input.GetKey(KeyCode.Alpha1));
                     inputData.Buttons.Set(InputButton.IceArrow, Input.GetKey(KeyCode.Alpha2));
+                    inputData.Buttons.Set(InputButton.InvertedArrow, Input.GetKey(KeyCode.Alpha3));
                     inputData.ShootingAngle = _shootingAngle;
                     break;
             }
@@ -75,11 +80,10 @@ namespace GDT.Character
             input.Set(inputData);
         }
 
-        public IEnumerator ReverseControlForSeconds(float time)
+        public void InvertControlForSeconds(float time)
         {
-            _reversedControl = true;
-            yield return new WaitForSeconds(time);
-            _reversedControl = false;
+            InvertInputTimer = TickTimer.CreateFromSeconds(Runner, time);
+            InputInverted = true;
         }
 
         public void FreezeInputForSeconds(float freezeTime)

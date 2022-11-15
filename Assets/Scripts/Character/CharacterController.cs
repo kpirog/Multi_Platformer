@@ -14,7 +14,6 @@ namespace GDT.Character
         private CharacterTouchDetector _touchDetector;
         private CharacterShootingController _shootingController;
         private CharacterAnimationHandler _animationHandler;
-        private CharacterInputHandler _inputHandler;
         private NetworkPlayer _player;
 
         [HideInInspector] public CharacterMovementHandler movementHandler;
@@ -28,7 +27,6 @@ namespace GDT.Character
             _touchDetector = GetComponent<CharacterTouchDetector>();
             _shootingController = GetComponent<CharacterShootingController>();
             _animationHandler = GetComponent<CharacterAnimationHandler>();
-            _inputHandler = GetComponent<CharacterInputHandler>();
             collisionHandler = GetComponent<CharacterCollisionHandler>();
             _player = GetComponent<NetworkPlayer>();
         }
@@ -153,11 +151,6 @@ namespace GDT.Character
 
             movementHandler.EnablePhysics(true);
             SetModelVisible(true);
-        }
-        
-        private void ReverseControl()
-        {
-            StartCoroutine(_inputHandler.ReverseControlForSeconds(5f));
         }
     }
 }

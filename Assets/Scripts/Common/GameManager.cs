@@ -88,7 +88,6 @@ namespace GDT.Common
         public void SetGameState(GameState state)
         {
             State = state;
-            Debug.Log($"Stan = {state}");
         }
 
         public static void OnStateChanged(Changed<GameManager> changed)

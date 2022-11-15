@@ -10,9 +10,10 @@ namespace GDT.Character
         [SerializeField] private Arrow[] arrowPrefabs;
         [Networked] [UnitySerializeField] private int StandardArrowsCount { get; set; }
         [Networked] [UnitySerializeField] private int IceArrowsCount { get; set; }
+        [Networked] [UnitySerializeField] private int InvertedArrowsCount { get; set; }
         
         [Networked] private float ReleaseTimer { get; set; }
-        [Networked] private int CurrentArrowIndex { get; set; }
+        [Networked(OnChanged = nameof(OnArrowSwitched))] private int CurrentArrowIndex { get; set; }
         [Networked] private int ArrowsCount { get; set; }
 
         private CharacterAnimationHandler _animationHandler;
@@ -24,8 +25,6 @@ namespace GDT.Character
         {
             _animationHandler = GetComponent<CharacterAnimationHandler>();
             _trajectoryPrediction = GetComponent<TrajectoryPrediction>();
-            CurrentArrowIndex = 0;
-            ArrowsCount = StandardArrowsCount;
         }
 
         private bool PlayerHasArrow()
@@ -37,17 +36,32 @@ namespace GDT.Character
         {
             if (pressed.IsSet(InputButton.StandardArrow))
             {
+                Debug.Log($"Standard arrow");
+                
                 CurrentArrowIndex = 0;
                 ArrowsCount = StandardArrowsCount;
             }
-
-            if (pressed.IsSet(InputButton.IceArrow))
+            else if (pressed.IsSet(InputButton.IceArrow))
             {
+                Debug.Log($"Ice arrow");
+                
                 CurrentArrowIndex = 1;
                 ArrowsCount = IceArrowsCount;
             }
+            else if (pressed.IsSet(InputButton.InvertedArrow))
+            {
+                Debug.Log($"Inverted arrow");
+                
+                CurrentArrowIndex = 2;
+                ArrowsCount = InvertedArrowsCount;
+            }
         }
 
+        private static void OnArrowSwitched(Changed<CharacterShootingController> changed)
+        {
+            Debug.Log($"Current arrow = {changed.Behaviour.CurrentArrowIndex}");
+        }
+        
         public void StretchBow(float angle)
         {
             if (!PlayerHasArrow()) return;
@@ -96,6 +110,9 @@ namespace GDT.Character
                     break;
                 case 1:
                     IceArrowsCount = ArrowsCount;
+                    break;
+                case 2:
+                    InvertedArrowsCount = ArrowsCount;
                     break;
             }
         }

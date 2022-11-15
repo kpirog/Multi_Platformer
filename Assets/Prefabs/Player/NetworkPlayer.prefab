@@ -416,8 +416,10 @@ MonoBehaviour:
   arrowPrefabs:
   - {fileID: 3581215261586648179, guid: f8cd4e996e2fdb541bc09b483ce113e6, type: 3}
   - {fileID: 8950470706056047672, guid: b079c20a29973c44c9065962f202ddce, type: 3}
+  - {fileID: 3415762264432427315, guid: 34957c641eb7057438073b2184e71eb0, type: 3}
   _StandardArrowsCount: 99
   _IceArrowsCount: 99
+  _InvertedArrowsCount: 99
 --- !u!114 &8152397563048699374
 MonoBehaviour:
   m_ObjectHideFlags: 0

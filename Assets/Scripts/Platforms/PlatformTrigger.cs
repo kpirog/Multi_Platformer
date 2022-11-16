@@ -1,3 +1,4 @@
+using System;
 using Fusion;
 using UnityEngine;
 using CharacterController = GDT.Character.CharacterController;
@@ -6,27 +7,25 @@ namespace GDT.Platforms
 {
     public class PlatformTrigger : NetworkBehaviour
     {
-        [SerializeField] private Collider2D _collider;
         [SerializeField] private LayerMask collisionLayer;
-        [SerializeField] private Vector2 offset;
+        
+        private Collider2D _collider;
+        private PlatformDurability _platformDurability;
 
-        public override void Spawned()
+        private void Awake()
         {
             _collider = GetComponent<Collider2D>();
-            Debug.Log("Spawned");
+            _platformDurability = GetComponent<PlatformDurability>();
         }
 
         public override void FixedUpdateNetwork()
         {
-            Debug.Log("Fixed Update Network");
-            
-            var characterCollider = Runner.GetPhysicsScene2D().OverlapBox((Vector2)_collider.bounds.center + offset, _collider.bounds.size, 0f, collisionLayer);
-            
-            Debug.Log(characterCollider);
-            
+            var characterCollider = Runner.GetPhysicsScene2D().OverlapBox(_collider.bounds.center, _collider.bounds.size, 0f, collisionLayer);
+
             if (characterCollider != null)
             {
                 var character = characterCollider.GetComponentInParent<CharacterController>();
+                _platformDurability.DecreaseDurability(Runner.DeltaTime);
                 Debug.Log($"Player: {character.name} in Trigger!");
             }
         }
@@ -34,7 +33,7 @@ namespace GDT.Platforms
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.magenta;
-            Gizmos.DrawWireCube((Vector2)_collider.bounds.center + offset, _collider.bounds.size);
+            Gizmos.DrawWireCube((Vector2)_collider.bounds.center, _collider.bounds.size);
         }
     }
 }

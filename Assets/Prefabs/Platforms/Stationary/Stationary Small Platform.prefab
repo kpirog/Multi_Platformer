@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6268146997844455872}
   - component: {fileID: 549274980438230345}
   m_Layer: 11
-  m_Name: Small Platform
+  m_Name: Stationary Small Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

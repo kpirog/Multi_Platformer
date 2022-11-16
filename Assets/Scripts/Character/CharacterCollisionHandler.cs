@@ -5,13 +5,44 @@ namespace GDT.Character
 {
     public class CharacterCollisionHandler : SimulationBehaviour
     {
-        private NetworkRigidbody2D _rb;
         private CharacterAnimationHandler _animationHandler;
+        private CharacterTouchDetector _touchDetector;
+        
+        private NetworkRigidbody2D _rb;
+        private Collider2D _collider;
+        private Collider2D _platformCollider;
 
         private void Awake()
         {
-            _rb = GetComponent<NetworkRigidbody2D>();
             _animationHandler = GetComponent<CharacterAnimationHandler>();
+            _touchDetector = GetComponent<CharacterTouchDetector>();
+            _rb = GetComponent<NetworkRigidbody2D>();
+            _collider = GetComponentInChildren<BoxCollider2D>();
+        }
+
+        public override void FixedUpdateNetwork()
+        {
+            if (_touchDetector.IsGrounded && _platformCollider && Physics2D.GetIgnoreCollision(_collider, _platformCollider))
+            {
+                IncludePlatformCollider();
+            }
+            
+            if (_touchDetector.IsStayingOnPlatform)
+            {
+                _platformCollider = _touchDetector.GroundCollider;
+            }
+        }
+        
+        public void ExcludePlatformCollider()
+        {
+            if (!_touchDetector.IsStayingOnPlatform) return;
+            Physics2D.IgnoreCollision(_collider, _platformCollider);
+        }
+
+        private void IncludePlatformCollider()
+        {
+            Physics2D.IgnoreCollision(_collider, _platformCollider, false);
+            _platformCollider = null;
         }
         
         public void Push(Vector2 hitPoint, float pushForce)

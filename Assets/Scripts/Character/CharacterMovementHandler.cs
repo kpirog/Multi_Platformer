@@ -152,11 +152,11 @@ namespace GDT.Character
             }
         }
 
-        public void JumpDown(NetworkButtons pressedButtons, CharacterTouchDetector touchDetector)
+        public void JumpDown(NetworkButtons pressedButtons, CharacterCollisionHandler collisionHandler)
         {
-            if (pressedButtons.IsSet(InputButton.JumpDown) && touchDetector.IsGrounded)
+            if (pressedButtons.IsSet(InputButton.JumpDown))
             {
-                Physics2D.IgnoreCollision(_collider, touchDetector.GroundCollider);
+                collisionHandler.ExcludePlatformCollider();
             }
         }
         

@@ -58,7 +58,7 @@ namespace GDT.Character
             HandleMovement(input);
             HandleDrag(releasedButtons);
             HandleJump(pressedButtons, input);
-            //HandleJumpDown(pressedButtons);
+            HandleJumpDown(pressedButtons);
             HandleShoot(input, releasedButtons, input.ShootingAngle);
             SwitchArrow(pressedButtons);
 
@@ -86,7 +86,7 @@ namespace GDT.Character
 
         private void HandleJumpDown(NetworkButtons pressedButtons)
         {
-            movementHandler.JumpDown(pressedButtons, _touchDetector);
+            movementHandler.JumpDown(pressedButtons, collisionHandler);
         }
 
         private void HandleMovement(NetworkInputData input)

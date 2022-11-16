@@ -72,7 +72,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  requiredPlayersCount: 2
+  requiredPlayersCount: 1
   timeToStartGame: 1
   _State: 0
 --- !u!114 &1130414492018023768

@@ -1,7 +1,5 @@
-using System;
 using Fusion;
 using UnityEngine;
-using CharacterController = GDT.Character.CharacterController;
 
 namespace GDT.Platforms
 {
@@ -11,7 +9,7 @@ namespace GDT.Platforms
         
         private Collider2D _collider;
         private PlatformDurability _platformDurability;
-
+        
         private void Awake()
         {
             _collider = GetComponent<Collider2D>();
@@ -22,12 +20,14 @@ namespace GDT.Platforms
         {
             var characterCollider = Runner.GetPhysicsScene2D().OverlapBox(_collider.bounds.center, _collider.bounds.size, 0f, collisionLayer);
 
-            if (characterCollider != null)
+            if (characterCollider)
             {
-                var character = characterCollider.GetComponentInParent<CharacterController>();
-                _platformDurability.DecreaseDurability(Runner.DeltaTime);
-                Debug.Log($"Player: {character.name} in Trigger!");
+                //_platformDurability.DecreaseDurability(Runner.DeltaTime); //different solution
+                _platformDurability.StartDestroying();
+                return;
             }
+            
+            _platformDurability.StopDestroying();
         }
 
         private void OnDrawGizmosSelected()

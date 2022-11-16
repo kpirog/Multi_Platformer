@@ -21,6 +21,8 @@ namespace GDT.Character
 
         private NetworkRigidbody2D _rb;
         private CharacterAnimationHandler _animationHandler;
+        private Collider2D _collider;
+        
         [Networked] private NetworkBool DoubleJump { get; set; }
 
         private bool _canJumpAgain;
@@ -32,6 +34,7 @@ namespace GDT.Character
         {
             _rb = GetComponent<NetworkRigidbody2D>();
             _animationHandler = GetComponent<CharacterAnimationHandler>();
+            _collider = GetComponentInChildren<Collider2D>();
         }
 
         public override void Spawned()
@@ -149,6 +152,14 @@ namespace GDT.Character
             }
         }
 
+        public void JumpDown(NetworkButtons pressedButtons, CharacterTouchDetector touchDetector)
+        {
+            if (pressedButtons.IsSet(InputButton.JumpDown) && touchDetector.IsGrounded)
+            {
+                Physics2D.IgnoreCollision(_collider, touchDetector.GroundCollider);
+            }
+        }
+        
         public void SetDrag()
         {
             _rb.Rigidbody.drag = drag;

@@ -74,6 +74,7 @@ namespace GDT.Character
                     inputData.Buttons.Set(InputButton.IceArrow, Input.GetKey(KeyCode.Alpha2));
                     inputData.Buttons.Set(InputButton.InvertedArrow, Input.GetKey(KeyCode.Alpha3));
                     inputData.ShootingAngle = _shootingAngle;
+                    inputData.Buttons.Set(InputButton.JumpDown, Input.GetKey(KeyCode.S));
                     break;
             }
 

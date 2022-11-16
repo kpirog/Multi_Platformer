@@ -11,7 +11,8 @@ namespace GDT.Data
         StandardArrow = 5,
         IceArrow = 6,
         InvertedArrow = 7,
-        Ready = 8
+        Ready = 8,
+        JumpDown = 9
     }
 
     public struct NetworkInputData : INetworkInput

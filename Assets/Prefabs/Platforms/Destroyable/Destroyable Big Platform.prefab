@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 702104171257120081}
   - component: {fileID: -1923549594520552520}
   - component: {fileID: 1946068816445929647}
+  - component: {fileID: 376298274940297593}
   m_Layer: 11
   m_Name: Destroyable Big Platform
   m_TagString: Untagged
@@ -264,7 +265,9 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: -1923549594520552520}
-  SimulationBehaviours: []
+  - {fileID: 376298274940297593}
+  SimulationBehaviours:
+  - {fileID: 1946068816445929647}
 --- !u!114 &-1923549594520552520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,7 +297,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   durability: 300
+  durabilityTime: 3
   damageSpeed: 50
+  spriteRenderers:
+  - {fileID: 875272352104130205}
+  - {fileID: 875272353713196731}
+  - {fileID: 875272353520353769}
+  destroyedColor: {r: 0.23584908, g: 0.19046357, b: 0.02336241, a: 1}
+  untouchableLayer:
+    serializedVersion: 2
+    m_Bits: 4096
+--- !u!114 &376298274940297593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875272353411021575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1779252708, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  InterpolationSpace: 0
+  InterpolationTarget: {fileID: 5135437125010692155}
+  InterpolateErrorCorrection: 1
+  InterpolatedErrorCorrectionSettings:
+    MinRate: 3.3
+    MaxRate: 10
+    PosBlendStart: 0.25
+    PosBlendEnd: 1
+    PosMinCorrection: 0.025
+    PosTeleportDistance: 2
+    RotBlendStart: 0.1
+    RotBlendEnd: 0.5
+    RotTeleportRadians: 1.5
 --- !u!1 &875272353520353771
 GameObject:
   m_ObjectHideFlags: 0

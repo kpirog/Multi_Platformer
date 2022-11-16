@@ -13,8 +13,9 @@ namespace GDT.Character
         private bool _isSlidingLeft, _isSlidingRight;
         
         public bool IsSliding => _isSlidingLeft || _isSlidingRight;
-        public bool IsGrounded { get; private set; }
-        
+        public bool IsGrounded => GroundCollider;
+
+        public Collider2D GroundCollider { get; private set; }
 
         private void Awake()
         {
@@ -23,7 +24,7 @@ namespace GDT.Character
 
         public override void FixedUpdateNetwork()
         {
-            IsGrounded = Runner.GetPhysicsScene2D()
+            GroundCollider = Runner.GetPhysicsScene2D()
                 .OverlapBox(
                     (Vector2)transform.position + Vector2.down * _collider.bounds.extents.y * groundCheckMultiplier,
                     _collider.bounds.size, 0f, groundLayer);

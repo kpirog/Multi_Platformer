@@ -18,13 +18,13 @@ namespace GDT.Obstacles.Barrels
         
         private Collider2D _collider;
         private SpriteRenderer _spriteRenderer;
-        private Rigidbody2D _rb;
+        private NetworkRigidbody2D _rb;
 
         private void Awake()
         {
-            _collider = GetComponent<Collider2D>();
-            _spriteRenderer = GetComponent<SpriteRenderer>();
-            _rb = GetComponent<Rigidbody2D>();
+            _collider = GetComponentInChildren<Collider2D>();
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            _rb = GetComponent<NetworkRigidbody2D>();
         }
 
         public void TakeDamage(int damage)
@@ -67,7 +67,7 @@ namespace GDT.Obstacles.Barrels
         {
             _collider.enabled = false;
             _spriteRenderer.enabled = false;
-            _rb.simulated = false;
+            _rb.Rigidbody.simulated = false;
         }
         private void OnDrawGizmosSelected()
         {

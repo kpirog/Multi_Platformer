@@ -76,7 +76,7 @@ namespace GDT.Projectiles
 
             if (colliderHits)
             {
-                var damageable = colliderHits.collider.gameObject.GetComponent<IDamageable>();
+                var damageable = colliderHits.collider.gameObject.GetComponentInParent<IDamageable>();
 
                 if (damageable != null)
                 {

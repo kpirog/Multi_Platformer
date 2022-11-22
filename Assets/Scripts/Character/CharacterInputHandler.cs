@@ -19,6 +19,7 @@ namespace GDT.Character
         private float _shootingAngle;
         private Camera _mainCamera;
         private Vector2 _shootDirection;
+        private Vector2 _mousePosition;
 
         public override void Spawned()
         {
@@ -50,6 +51,11 @@ namespace GDT.Character
                 _shootDirection = (GetMousePosition() - transform.position).normalized;
                 _shootingAngle = Vector3.SignedAngle(_shootDirection, transform.right, Vector3.back);
             }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                _mousePosition = GetMousePosition();
+            }
         }
 
         public void OnInput(NetworkRunner runner, NetworkInput input)
@@ -73,8 +79,12 @@ namespace GDT.Character
                     inputData.Buttons.Set(InputButton.StandardArrow, Input.GetKey(KeyCode.Alpha1));
                     inputData.Buttons.Set(InputButton.IceArrow, Input.GetKey(KeyCode.Alpha2));
                     inputData.Buttons.Set(InputButton.InvertedArrow, Input.GetKey(KeyCode.Alpha3));
-                    inputData.ShootingAngle = _shootingAngle;
                     inputData.Buttons.Set(InputButton.JumpDown, Input.GetKey(KeyCode.S));
+                    inputData.Buttons.Set(InputButton.GrapplingHook, Input.GetKey(KeyCode.E));
+                    inputData.Buttons.Set(InputButton.DecreaseRope, Input.GetKey(KeyCode.W));
+                    inputData.Buttons.Set(InputButton.IncreaseRope, Input.GetKey(KeyCode.S));
+                    inputData.ShootingAngle = _shootingAngle;
+                    inputData.MousePosition = _mousePosition;
                     break;
             }
 
@@ -93,7 +103,7 @@ namespace GDT.Character
             InputFrozen = true;
         }
 
-        private Vector3 GetMousePosition()
+        public Vector3 GetMousePosition()
         {
             if (!_mainCamera)
             {
@@ -108,6 +118,16 @@ namespace GDT.Character
             return worldPosition;
         }
 
+        public RaycastHit2D GetMouseRaycastHit()
+        {
+            if (!_mainCamera)
+            {
+                _mainCamera = Camera.main;
+            }
+
+            var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+            return Runner.GetPhysicsScene2D().Raycast(ray.origin, ray.direction, Mathf.Infinity);
+        }
 
         #region Useless code
 

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5555628397965532552}
   - component: {fileID: 6268146997844455872}
   - component: {fileID: 549274980438230345}
+  - component: {fileID: 7662343670805243517}
   m_Layer: 11
   m_Name: Stationary Small Platform
   m_TagString: Untagged
@@ -132,6 +133,29 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!114 &7662343670805243517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1497861353819573424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: 6223cad9a53d1b24dbae0ce182230ed6
+  NestedObjects: []
+  NetworkedBehaviours: []
+  SimulationBehaviours: []
 --- !u!1 &6867392741010207663
 GameObject:
   m_ObjectHideFlags: 0

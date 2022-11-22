@@ -1,4 +1,5 @@
 using Fusion;
+using UnityEngine;
 
 namespace GDT.Data
 {
@@ -12,13 +13,17 @@ namespace GDT.Data
         IceArrow = 6,
         InvertedArrow = 7,
         Ready = 8,
-        JumpDown = 9
+        JumpDown = 9,
+        GrapplingHook = 10,
+        IncreaseRope = 11,
+        DecreaseRope = 12
     }
 
     public struct NetworkInputData : INetworkInput
     {
         public NetworkButtons Buttons;
         public float ShootingAngle;
+        public Vector2 MousePosition;
 
         public bool GetButton(InputButton button) 
         {

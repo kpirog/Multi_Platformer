@@ -1,6 +1,7 @@
 using Fusion;
 using GDT.Common;
 using GDT.Data;
+using GDT.Grappling;
 using UnityEngine;
 using NetworkPlayer = GDT.Network.NetworkPlayer;
 
@@ -18,7 +19,7 @@ namespace GDT.Character
         [HideInInspector] public CharacterMovementHandler movementHandler;
         [HideInInspector] public CharacterInputHandler inputHandler;
         [HideInInspector] public CharacterCollisionHandler collisionHandler;
-
+        
         private void Awake()
         {
             movementHandler = GetComponent<CharacterMovementHandler>();
@@ -67,7 +68,6 @@ namespace GDT.Character
                 _player.ToggleReady();
             }
         }
-
         private void SwitchArrow(NetworkButtons pressedButtons)
         {
             _shootingController.SetCurrentArrow(pressedButtons);

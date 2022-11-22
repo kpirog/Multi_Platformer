@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8576387168055997982}
   - component: {fileID: 8691659482244393358}
   - component: {fileID: 8618023499708634269}
+  - component: {fileID: 3433707056372207214}
   m_Layer: 0
   m_Name: Spikes
   m_TagString: Untagged
@@ -111,3 +112,26 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.56, y: 1.7065637}
   m_EdgeRadius: 0
+--- !u!114 &3433707056372207214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5140280895805809782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: a9d21c27dd4413342a637c0b0b4ff789
+  NestedObjects: []
+  NetworkedBehaviours: []
+  SimulationBehaviours: []

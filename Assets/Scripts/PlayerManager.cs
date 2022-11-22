@@ -5,10 +5,8 @@ using Fusion;
 using UnityEngine;
 using NetworkPlayer = GDT.Network.NetworkPlayer;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : MonoBehaviourSingleton<PlayerManager>
 {
-    public static PlayerManager Instance;
-
     [SerializeField] private NetworkPlayer networkPlayerPrefab;
     [SerializeField] private Vector2[] temporarySpawnPositions;
 
@@ -18,18 +16,6 @@ public class PlayerManager : MonoBehaviour
     public static event Action<NetworkPlayer> OnPlayerRegistered;
     public static event Action<NetworkPlayer> OnPlayerUnregistered;
     
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
-
     public static void SpawnPlayer(NetworkRunner runner, PlayerRef playerRef)
     {
         var player = runner.Spawn(Instance.networkPlayerPrefab, Instance.temporarySpawnPositions[Players.Count], Quaternion.identity, playerRef);

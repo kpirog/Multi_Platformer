@@ -2,6 +2,7 @@ using Fusion;
 using GDT.Character.Effects;
 using UnityEngine;
 using CharacterController = GDT.Character.CharacterController;
+using Medicine;
 
 namespace GDT.Projectiles
 {
@@ -19,16 +20,11 @@ namespace GDT.Projectiles
 
         [SerializeField] private CharacterEffect characterEffect;
         [Networked] private TickTimer LifeTimer { get; set; }
-
-        private NetworkRigidbody2D _rb;
+        [Inject] private NetworkRigidbody2D Rb { get; }
+        
         private bool _collisionActive;
         public float Speed => speed;
-
-        private void Awake()
-        {
-            _rb = GetComponent<NetworkRigidbody2D>();
-        }
-
+        
         public override void Spawned()
         {
             LifeTimer = TickTimer.CreateFromSeconds(Runner, lifeTime);
@@ -36,8 +32,8 @@ namespace GDT.Projectiles
 
         private void Update()
         {
-            if (_rb.Rigidbody.velocity == Vector2.zero) return;
-            transform.right = _rb.Rigidbody.velocity;
+            if (Rb.Rigidbody.velocity == Vector2.zero) return;
+            transform.right = Rb.Rigidbody.velocity;
         }
 
         public override void FixedUpdateNetwork()
@@ -56,7 +52,7 @@ namespace GDT.Projectiles
         public void Release(Vector2 direction, float stretchStrength)
         {
             _collisionActive = true;
-            _rb.Rigidbody.AddForce(direction * (stretchStrength * speed) , ForceMode2D.Impulse);
+            Rb.Rigidbody.AddForce(direction * (stretchStrength * speed) , ForceMode2D.Impulse);
         }
 
         private void CheckCollision()
@@ -95,7 +91,7 @@ namespace GDT.Projectiles
                 transform.SetParent(character.transform);
             }
             
-            _rb.Rigidbody.simulated = false;
+            Rb.Rigidbody.simulated = false;
             _collisionActive = false;
         }
     }

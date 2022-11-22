@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 252b7d928cd8e6845857fc445d7980e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 1
   networkRunner: {fileID: 1008819362993276851}
 --- !u!4 &154385426
 Transform:
@@ -603,6 +604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d2b95024abb34d48badc645751efae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 1
   networkPlayerPrefab: {fileID: 8408755885801751688, guid: 92b5084e2c46f014bbcac4e4de258b1a, type: 3}
   temporarySpawnPositions:
   - {x: -8, y: -3}
@@ -2086,6 +2088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 194c8ce7ad274284a8d0d2580020e8c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 1
   gameManager: {fileID: 4149026337728199317, guid: 77086c4ed2bcab541aa69f355f09bff3, type: 3}
 --- !u!1 &1008819362993276849
 GameObject:

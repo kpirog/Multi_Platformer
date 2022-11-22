@@ -1,5 +1,6 @@
 using Fusion;
 using UnityEngine;
+using Medicine;
 
 namespace GDT.Platforms
 {
@@ -13,23 +14,16 @@ namespace GDT.Platforms
         [SerializeField] private SpriteRenderer[] spriteRenderers;
         [SerializeField] private Color destroyedColor;
         
-        private LayerMask _untouchableLayer;
-        private NetworkRigidbody2D _rb;
-        private Collider2D _collider;
-        private PlatformEffector2D _platformEffector;
-
+        [Inject] private NetworkRigidbody2D Rb { get; }
+        [Inject] private Collider2D Collider { get; }
+        [Inject] private PlatformEffector2D PlatformEffector { get; }
         private TickTimer DurabilityTimer { get; set; }
-
-        private void Awake()
-        {
-            _rb = GetComponent<NetworkRigidbody2D>();
-            _collider = GetComponent<Collider2D>();
-            _platformEffector = GetComponent<PlatformEffector2D>();
-        }
-
+        
+        private LayerMask _untouchableLayer;
+        
         private void Start()
         {
-            _rb.Rigidbody.isKinematic = true;
+            Rb.Rigidbody.isKinematic = true;
             _untouchableLayer = LayerMask.NameToLayer("Untouchable");
         }
 
@@ -57,9 +51,9 @@ namespace GDT.Platforms
         {
             Debug.Log($"Set platform destroyed!");
             gameObject.layer = _untouchableLayer;
-            _rb.Rigidbody.isKinematic = false;
-            _collider.usedByEffector = false;
-            _platformEffector.enabled = false;
+            Rb.Rigidbody.isKinematic = false;
+            Collider.usedByEffector = false;
+            PlatformEffector.enabled = false;
 
             foreach (var sprite in spriteRenderers)
             {

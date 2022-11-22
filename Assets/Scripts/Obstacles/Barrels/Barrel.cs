@@ -1,5 +1,6 @@
 using Fusion;
 using GDT.Character.Effects;
+using Medicine;
 using UnityEngine;
 using CharacterController = GDT.Character.CharacterController;
 
@@ -16,17 +17,11 @@ namespace GDT.Obstacles.Barrels
         [Networked(OnChanged = nameof(OnExploded))]
         private NetworkBool Exploded { get; set; }
         
-        private Collider2D _collider;
-        private SpriteRenderer _spriteRenderer;
-        private NetworkRigidbody2D _rb;
+        [Inject.FromChildren] private Collider2D Collider { get; }
+        [Inject.FromChildren] private SpriteRenderer SpriteRenderer { get; }
+        [Inject] private NetworkRigidbody2D Rb { get; }
 
-        private void Awake()
-        {
-            _collider = GetComponentInChildren<Collider2D>();
-            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-            _rb = GetComponent<NetworkRigidbody2D>();
-        }
-
+        
         public void TakeDamage(int damage)
         {
             Explode();
@@ -65,9 +60,9 @@ namespace GDT.Obstacles.Barrels
 
         private void DisableComponents()
         {
-            _collider.enabled = false;
-            _spriteRenderer.enabled = false;
-            _rb.Rigidbody.simulated = false;
+            Collider.enabled = false;
+            SpriteRenderer.enabled = false;
+            Rb.Rigidbody.simulated = false;
         }
         private void OnDrawGizmosSelected()
         {

@@ -9,7 +9,7 @@ namespace GDT.Character.Effects
         
         public override void ApplyTo(CharacterController character, Vector2? sourcePosition)
         {
-            character.inputHandler.InvertControlForSeconds(duration);
+            character.InputHandler.InvertControlForSeconds(duration);
         }
     }
 }

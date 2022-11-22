@@ -1,51 +1,32 @@
-using System;
 using Fusion;
 using GDT.Common;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Medicine;
 
 namespace GDT.Network
 {
-    public class NetworkRunnerHandler : MonoBehaviour
+    public class NetworkRunnerHandler : MonoBehaviourSingleton<NetworkRunnerHandler>
     {
-        public static NetworkRunnerHandler Instance;
-        
         [SerializeField] private GameManager gameManager;
-
-        private NetworkRunner _networkRunner;
-        private NetworkSceneManagerDefault _sceneManager;
+        [Inject] private NetworkRunner NetworkRunner { get; }
+        [Inject] private NetworkSceneManagerDefault SceneManager { get; }
         
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-            
-            _networkRunner = GetComponent<NetworkRunner>();
-            _sceneManager = GetComponent<NetworkSceneManagerDefault>();
-        }
-
         private void Update()
         {
-            if (_networkRunner != null && Input.GetKeyDown(KeyCode.G))
+            if (NetworkRunner != null && Input.GetKeyDown(KeyCode.G))
             {
-                _networkRunner.SetActiveScene(SceneManager.GetActiveScene().buildIndex + 1);
+                NetworkRunner.SetActiveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex + 1);
             }
         }
 
         public void JoinGameAsHost(string sessionName)
         {
-            InitializeNetworkRunner(_networkRunner, GameMode.Host, sessionName, _sceneManager);
+            InitializeNetworkRunner(NetworkRunner, GameMode.Host, sessionName, SceneManager);
         }
         
         public void JoinGameAsClient(string sessionName)
         {
-            InitializeNetworkRunner(_networkRunner, GameMode.Client, sessionName, _sceneManager);
+            InitializeNetworkRunner(NetworkRunner, GameMode.Client, sessionName, SceneManager);
         }
 
         private async void InitializeNetworkRunner(NetworkRunner runner, GameMode gameMode, string sessionName, INetworkSceneManager sceneManager)

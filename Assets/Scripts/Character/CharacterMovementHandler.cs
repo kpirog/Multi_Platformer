@@ -1,4 +1,4 @@
-using System;
+using Medicine;
 using Fusion;
 using GDT.Data;
 using UnityEngine;
@@ -19,37 +19,26 @@ namespace GDT.Character
         [SerializeField] private Vector2 horizontalVelocityReduction;
         [SerializeField] private Vector2 verticalVelocityReduction;
 
-        private NetworkRigidbody2D _rb;
-        private CharacterAnimationHandler _animationHandler;
-        private Collider2D _collider;
+        [Inject] private NetworkRigidbody2D Rb { get; }
+        [Inject] private CharacterAnimationHandler AnimationHandler { get; }
         
+        [Inject.FromChildren] private Collider2D Collider { get; }
         [Networked] private NetworkBool DoubleJump { get; set; }
-
+        [Networked] private TickTimer SlowTimer { get; set; }
+        
         private bool _canJumpAgain;
         private float _currentAcceleration;
-        [Networked] private TickTimer SlowTimer { get; set; }
         private int _slowMultiplier;
 
-        private void Awake()
-        {
-            _rb = GetComponent<NetworkRigidbody2D>();
-            _animationHandler = GetComponent<CharacterAnimationHandler>();
-            _collider = GetComponentInChildren<Collider2D>();
-        }
-
+        
         public override void Spawned()
         {
             if (Object.HasInputAuthority)
             {
-                _rb.InterpolationDataSource = InterpolationDataSources.Predicted;
+                Rb.InterpolationDataSource = InterpolationDataSources.Predicted;
             }
         }
-
-        private void Update()
-        {
-            Debug.Log($"Player: {gameObject.name} - Current acceleration = {_currentAcceleration}");
-        }
-
+        
         public override void FixedUpdateNetwork()
         {
             if (SlowTimer.ExpiredOrNotRunning(Runner))
@@ -60,29 +49,29 @@ namespace GDT.Character
 
         public void Move(NetworkInputData input)
         {
-            _rb.Rigidbody.drag = 0f;
-            _animationHandler.SetMovementAnimation(true);
+            Rb.Rigidbody.drag = 0f;
+            AnimationHandler.SetMovementAnimation(true);
 
             if (input.GetButton(InputButton.Left))
             {
-                if (_rb.Rigidbody.velocity.x > 0f)
+                if (Rb.Rigidbody.velocity.x > 0f)
                 {
-                    _rb.Rigidbody.velocity *= Vector2.up;
+                    Rb.Rigidbody.velocity *= Vector2.up;
                 }
 
-                _rb.Rigidbody.AddForce(Vector2.left * _currentAcceleration * Runner.DeltaTime, ForceMode2D.Force);
-                _animationHandler.SetSpriteDirection(Vector2.left);
+                Rb.Rigidbody.AddForce(Vector2.left * _currentAcceleration * Runner.DeltaTime, ForceMode2D.Force);
+                AnimationHandler.SetSpriteDirection(Vector2.left);
             }
 
             if (input.GetButton(InputButton.Right))
             {
-                if (_rb.Rigidbody.velocity.x < 0f)
+                if (Rb.Rigidbody.velocity.x < 0f)
                 {
-                    _rb.Rigidbody.velocity *= Vector2.up;
+                    Rb.Rigidbody.velocity *= Vector2.up;
                 }
 
-                _rb.Rigidbody.AddForce(Vector2.right * _currentAcceleration * Runner.DeltaTime, ForceMode2D.Force);
-                _animationHandler.SetSpriteDirection(Vector2.right);
+                Rb.Rigidbody.AddForce(Vector2.right * _currentAcceleration * Runner.DeltaTime, ForceMode2D.Force);
+                AnimationHandler.SetSpriteDirection(Vector2.right);
             }
         }
 
@@ -94,8 +83,8 @@ namespace GDT.Character
             {
                 if ((touchDetector.IsGrounded || touchDetector.IsSliding) || _canJumpAgain)
                 {
-                    _rb.Rigidbody.drag = 0f;
-                    _rb.Rigidbody.AddForce(Vector2.up * jumpForce * Runner.DeltaTime, ForceMode2D.Impulse);
+                    Rb.Rigidbody.drag = 0f;
+                    Rb.Rigidbody.AddForce(Vector2.up * jumpForce * Runner.DeltaTime, ForceMode2D.Impulse);
 
                     if (_canJumpAgain)
                     {
@@ -103,7 +92,7 @@ namespace GDT.Character
                     }
                 }
 
-                _animationHandler.SetJumpAnimation(pressedButtons);
+                AnimationHandler.SetJumpAnimation(pressedButtons);
             }
         }
 
@@ -115,31 +104,31 @@ namespace GDT.Character
             {
                 if (touchDetector.IsSliding && input.AxisPressed())
                 {
-                    _rb.Rigidbody.velocity += Vector2.up * Physics2D.gravity.y * (wallSlidingMultiplier - 1) *
+                    Rb.Rigidbody.velocity += Vector2.up * Physics2D.gravity.y * (wallSlidingMultiplier - 1) *
                                               Runner.DeltaTime;
                 }
                 else
                 {
-                    _rb.Rigidbody.velocity +=
+                    Rb.Rigidbody.velocity +=
                         Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Runner.DeltaTime;
                 }
             }
-            else if (_rb.Rigidbody.velocity.y > 0f && !input.GetButton(InputButton.Jump))
+            else if (Rb.Rigidbody.velocity.y > 0f && !input.GetButton(InputButton.Jump))
             {
-                _rb.Rigidbody.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Runner.DeltaTime;
+                Rb.Rigidbody.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Runner.DeltaTime;
             }
         }
 
         public void LimitSpeed()
         {
-            if (Mathf.Abs(_rb.Rigidbody.velocity.x) > maxVelocity)
+            if (Mathf.Abs(Rb.Rigidbody.velocity.x) > maxVelocity)
             {
-                _rb.Rigidbody.velocity *= horizontalVelocityReduction;
+                Rb.Rigidbody.velocity *= horizontalVelocityReduction;
             }
 
-            if (Mathf.Abs(_rb.Rigidbody.velocity.y) > maxVelocity)
+            if (Mathf.Abs(Rb.Rigidbody.velocity.y) > maxVelocity)
             {
-                _rb.Rigidbody.velocity *= verticalVelocityReduction;
+                Rb.Rigidbody.velocity *= verticalVelocityReduction;
             }
         }
 
@@ -147,8 +136,8 @@ namespace GDT.Character
         {
             if (touchDetector.IsSliding)
             {
-                _rb.Rigidbody.velocity = new Vector2(_rb.Rigidbody.velocity.x,
-                    Mathf.Clamp(_rb.Rigidbody.velocity.y, -wallSlidingMultiplier, float.MaxValue));
+                Rb.Rigidbody.velocity = new Vector2(Rb.Rigidbody.velocity.x,
+                    Mathf.Clamp(Rb.Rigidbody.velocity.y, -wallSlidingMultiplier, float.MaxValue));
             }
         }
 
@@ -162,18 +151,18 @@ namespace GDT.Character
         
         public void SetDrag()
         {
-            _rb.Rigidbody.drag = drag;
-            _animationHandler.SetMovementAnimation(false);
+            Rb.Rigidbody.drag = drag;
+            AnimationHandler.SetMovementAnimation(false);
         }
 
         public void ResetDrag()
         {
-            _rb.Rigidbody.drag = 0f;
+            Rb.Rigidbody.drag = 0f;
         }
         
         public bool IsFallingDown()
         {
-            return _rb.Rigidbody.velocity.y < 0f;
+            return Rb.Rigidbody.velocity.y < 0f;
         }
 
         public void EnableDoubleJump()
@@ -183,7 +172,7 @@ namespace GDT.Character
 
         public void EnablePhysics(bool enable)
         {
-            _rb.Rigidbody.simulated = enable;
+            Rb.Rigidbody.simulated = enable;
         }
 
         public void SetSlow(float slowTime, float slowMultiplier)

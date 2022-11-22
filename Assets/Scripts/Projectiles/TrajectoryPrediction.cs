@@ -6,6 +6,8 @@ namespace GDT.Projectiles
     public class TrajectoryPrediction : MonoBehaviour 
     {
         [SerializeField] private GameObject predictionPointPrefab;
+        [SerializeField] private Transform predictionPointsContainer;
+        
         [SerializeField] private float spaceBetweenPoints;
         [SerializeField] private int amountOfPoints;
 
@@ -19,7 +21,7 @@ namespace GDT.Projectiles
             for (var i = 0; i < amountOfPoints; i++)
             {
                 var point = Instantiate(predictionPointPrefab, transform.position, Quaternion.identity);
-                point.transform.SetParent(transform);
+                point.transform.SetParent(predictionPointsContainer);
                 _predictionPoints[i] = point;
             }
         }

@@ -11,7 +11,7 @@ namespace GDT.Character.Effects
         
         public override void ApplyTo(CharacterController character, Vector2? sourcePosition)
         {
-            character.movementHandler.SetSlow(slowTime, slowMultiplier);
+            character.MovementHandler.SetSlow(slowTime, slowMultiplier);
         }
     }
 }

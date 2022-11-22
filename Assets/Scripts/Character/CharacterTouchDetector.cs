@@ -1,5 +1,6 @@
 using Fusion;
 using UnityEngine;
+using Medicine;
 
 namespace GDT.Character
 {
@@ -10,7 +11,8 @@ namespace GDT.Character
         [SerializeField] private LayerMask platformLayer;
         [SerializeField] private float groundCheckMultiplier;
 
-        private Collider2D _collider;
+        [Inject.FromChildren] private Collider2D Collider { get; }
+        
         private LayerMask _groundCollisionLayer;
         private bool _isSlidingLeft, _isSlidingRight;
 
@@ -18,11 +20,10 @@ namespace GDT.Character
             IsGrounded && GroundCollider.gameObject.layer == LayerMask.NameToLayer("Platform");
         public Collider2D GroundCollider { get; private set; }
         public bool IsSliding => _isSlidingLeft || _isSlidingRight;
-        public bool IsGrounded => GroundCollider && !Physics2D.GetIgnoreCollision(_collider, GroundCollider);
+        public bool IsGrounded => GroundCollider && !Physics2D.GetIgnoreCollision(Collider, GroundCollider);
 
         private void Awake()
         {
-            _collider = GetComponentInChildren<BoxCollider2D>();
             _groundCollisionLayer = groundLayer | platformLayer;
         }
 
@@ -30,15 +31,15 @@ namespace GDT.Character
         {
             GroundCollider = Runner.GetPhysicsScene2D()
                 .OverlapBox(
-                    (Vector2)transform.position + Vector2.down * _collider.bounds.extents.y * groundCheckMultiplier,
-                    _collider.bounds.size, 0f, _groundCollisionLayer);
+                    (Vector2)transform.position + Vector2.down * Collider.bounds.extents.y * groundCheckMultiplier,
+                    Collider.bounds.size, 0f, _groundCollisionLayer);
             
             _isSlidingLeft = Runner.GetPhysicsScene2D()
-                .OverlapCircle((Vector2)transform.position + (Vector2.left * _collider.bounds.extents.x), 0.01f,
+                .OverlapCircle((Vector2)transform.position + (Vector2.left * Collider.bounds.extents.x), 0.01f,
                     wallLayer);
 
             _isSlidingRight = Runner.GetPhysicsScene2D()
-                .OverlapCircle((Vector2)transform.position + (Vector2.right * _collider.bounds.extents.x), 0.01f,
+                .OverlapCircle((Vector2)transform.position + (Vector2.right * Collider.bounds.extents.x), 0.01f,
                     wallLayer);
         }
     }

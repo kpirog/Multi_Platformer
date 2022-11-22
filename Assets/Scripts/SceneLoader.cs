@@ -2,25 +2,14 @@ using Fusion;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader : MonoBehaviour
+public class SceneLoader : MonoBehaviourSingleton<SceneLoader>
 {
-    public static SceneLoader Instance;
-    
     [SerializeField] private NetworkRunner networkRunner;
 
     private SceneRef _gameScene;
-    
-    private void Awake()
+
+    protected override void SingletonAwakened()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-
         _gameScene = SceneManager.GetActiveScene().buildIndex + 1;
     }
 

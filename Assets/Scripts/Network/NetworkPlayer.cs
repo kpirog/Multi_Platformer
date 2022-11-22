@@ -1,22 +1,19 @@
 using Cinemachine;
 using Fusion;
 using GDT.Data;
+using Medicine;
 
 
 namespace GDT.Network
 {
     public class NetworkPlayer : NetworkBehaviour
     {
-        public static NetworkPlayer Local { get; private set; }
-        
         [Networked] public NetworkString<_16> NickName { get; private set; }
         [Networked] public bool Ready { get; private set; }
-        
-        private CinemachineVirtualCamera _virtualCamera;
+        [Inject.FromChildren] private CinemachineVirtualCamera VirtualCamera { get; }
         
         private void Awake()
         {
-            _virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
             DontDestroyOnLoad(gameObject);
         }
 
@@ -24,11 +21,10 @@ namespace GDT.Network
         {
             if (Object.HasInputAuthority)
             {
-                Local = this;
                 RPC_SetNickname(LocalPlayerDataHandler.Nickname);
             }
 
-            _virtualCamera.gameObject.SetActive(Object.HasInputAuthority);
+            VirtualCamera.gameObject.SetActive(Object.HasInputAuthority);
             PlayerManager.RegisterPlayer(this);
         }
 

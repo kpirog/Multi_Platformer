@@ -1,47 +1,40 @@
 using Fusion;
 using UnityEngine;
+using Medicine;
 
 namespace GDT.Character
 {
     public class CharacterCollisionHandler : SimulationBehaviour
     {
-        private CharacterAnimationHandler _animationHandler;
-        private CharacterTouchDetector _touchDetector;
+        [Inject] private CharacterAnimationHandler AnimationHandler { get; }
+        [Inject] private CharacterTouchDetector TouchDetector { get; }
+        [Inject] private NetworkRigidbody2D Rb { get; }
+        [Inject.FromChildren] private Collider2D Collider { get; }
         
-        private NetworkRigidbody2D _rb;
-        private Collider2D _collider;
         private Collider2D _platformCollider;
-
-        private void Awake()
-        {
-            _animationHandler = GetComponent<CharacterAnimationHandler>();
-            _touchDetector = GetComponent<CharacterTouchDetector>();
-            _rb = GetComponent<NetworkRigidbody2D>();
-            _collider = GetComponentInChildren<BoxCollider2D>();
-        }
-
+        
         public override void FixedUpdateNetwork()
         {
-            if (_touchDetector.IsGrounded && _platformCollider && Physics2D.GetIgnoreCollision(_collider, _platformCollider))
+            if (TouchDetector.IsGrounded && _platformCollider && Physics2D.GetIgnoreCollision(Collider, _platformCollider))
             {
                 IncludePlatformCollider();
             }
             
-            if (_touchDetector.IsStayingOnPlatform)
+            if (TouchDetector.IsStayingOnPlatform)
             {
-                _platformCollider = _touchDetector.GroundCollider;
+                _platformCollider = TouchDetector.GroundCollider;
             }
         }
         
         public void ExcludePlatformCollider()
         {
-            if (!_touchDetector.IsStayingOnPlatform) return;
-            Physics2D.IgnoreCollision(_collider, _platformCollider);
+            if (!TouchDetector.IsStayingOnPlatform) return;
+            Physics2D.IgnoreCollision(Collider, _platformCollider);
         }
 
         private void IncludePlatformCollider()
         {
-            Physics2D.IgnoreCollision(_collider, _platformCollider, false);
+            Physics2D.IgnoreCollision(Collider, _platformCollider, false);
             _platformCollider = null;
         }
         
@@ -50,8 +43,8 @@ namespace GDT.Character
             var direction = hitPoint - (Vector2)transform.position;
             direction = -direction.normalized;
             
-            _rb.Rigidbody.AddForce(direction * pushForce * Runner.DeltaTime, ForceMode2D.Impulse);
-            _animationHandler.SetGetHitAnimation();
+            Rb.Rigidbody.AddForce(direction * pushForce * Runner.DeltaTime, ForceMode2D.Impulse);
+            AnimationHandler.SetGetHitAnimation();
         }
         
         public void ExplosionPush(Vector2 hitPoint, float pushForce)
@@ -64,8 +57,8 @@ namespace GDT.Character
             var direction = hitPoint - characterPosition;
             direction = -direction.normalized;
             
-            _rb.Rigidbody.AddForce(direction * pushForce * distance * Runner.DeltaTime, ForceMode2D.Impulse);
-            _animationHandler.SetGetHitAnimation();
+            Rb.Rigidbody.AddForce(direction * pushForce * distance * Runner.DeltaTime, ForceMode2D.Impulse);
+            AnimationHandler.SetGetHitAnimation();
         }
     }
 }

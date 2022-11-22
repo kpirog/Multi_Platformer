@@ -2,6 +2,7 @@ using Fusion;
 using GDT.Data;
 using GDT.Projectiles;
 using UnityEngine;
+using Medicine;
 
 namespace GDT.Character
 {
@@ -16,15 +17,13 @@ namespace GDT.Character
         [Networked] private int CurrentArrowIndex { get; set; }
         [Networked] private int ArrowsCount { get; set; }
 
-        private CharacterAnimationHandler _animationHandler;
-        private TrajectoryPrediction _trajectoryPrediction;
+        [Inject] private CharacterAnimationHandler AnimationHandler { get; }
+        [Inject] private TrajectoryPrediction TrajectoryPrediction { get; }
 
         private Arrow CurrentArrowPrefab => arrowPrefabs[CurrentArrowIndex];
 
         private void Start()
         {
-            _animationHandler = GetComponent<CharacterAnimationHandler>();
-            _trajectoryPrediction = GetComponent<TrajectoryPrediction>();
             CurrentArrowIndex = 0;
             ArrowsCount = StandardArrowsCount;
         }
@@ -64,11 +63,11 @@ namespace GDT.Character
                 ReleaseTimer = 1f;
             }
 
-            _animationHandler.SetShootAnimation();
+            AnimationHandler.SetShootAnimation();
 
             if (Object.HasInputAuthority)
             {
-                _trajectoryPrediction.DisplayTrajectory(ReleaseTimer, CurrentArrowPrefab.Speed,
+                TrajectoryPrediction.DisplayTrajectory(ReleaseTimer, CurrentArrowPrefab.Speed,
                     CalculateShootDirection(angle));
             }
         }
@@ -86,8 +85,8 @@ namespace GDT.Character
             }
 
             ReleaseTimer = 0f;
-            _animationHandler.StopShootAnimation();
-            _trajectoryPrediction.SetVisible(false);
+            AnimationHandler.StopShootAnimation();
+            TrajectoryPrediction.SetVisible(false);
         }
 
         private void RemoveArrow()

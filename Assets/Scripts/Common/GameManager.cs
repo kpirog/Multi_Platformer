@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Fusion;
 using UnityEngine;
+using Medicine;
 
 namespace GDT.Common
 {
@@ -16,12 +17,12 @@ namespace GDT.Common
         [Networked(OnChanged = nameof(OnStateChanged))]
         public GameState State { get; private set; } = GameState.Lobby;
         
-        [Networked] public TickTimer StartGameTimer { get; private set; } 
+        [Networked] private TickTimer StartGameTimer { get; set; } 
 
         private bool AllPlayersReady => PlayerManager.Players.Count >= requiredPlayersCount &&
                                         PlayerManager.Players.All(x => x.Ready);
         
-        private GameTimer _gameTimer;
+        [Inject] private GameTimer GameTimer { get; }
 
         private void Awake()
         {
@@ -33,8 +34,6 @@ namespace GDT.Common
 
             Instance = this;
             DontDestroyOnLoad(gameObject);
-
-            _gameTimer = GetComponent<GameTimer>();
         }
 
         public override void FixedUpdateNetwork()
@@ -61,7 +60,7 @@ namespace GDT.Common
                     if (StartGameTimer.Expired(Runner))
                     {
                         SetGameState(GameState.Playing);
-                        _gameTimer.StartCounting();
+                        GameTimer.StartCounting();
                     }
 
                     break;
@@ -70,7 +69,7 @@ namespace GDT.Common
                 {
                     //Debug.Log($"Time to finish: {_gameTimer.RemainingTime}");
                     
-                    if (_gameTimer.Finished)
+                    if (GameTimer.Finished)
                     {
                         SetGameState(GameState.Finished);
                     }

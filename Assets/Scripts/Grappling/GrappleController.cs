@@ -1,6 +1,7 @@
 using Fusion;
 using GDT.Data;
 using UnityEngine;
+using Medicine;
 
 namespace GDT.Grappling
 {
@@ -21,22 +22,17 @@ namespace GDT.Grappling
         private bool _isChangingDistance;
         private float _ropeLenght;
         
-        private NetworkRigidbody2D _rb;
+        [Inject] private NetworkRigidbody2D Rb { get; }
         [Networked] private NetworkButtons PressedButtons { get; set; }
         private bool HasReachedTarget => _targetPosition == _grapplePoint;
-
-        private void Awake()
-        {
-            _rb = GetComponent<NetworkRigidbody2D>();
-        }
-
+        
         public override void Spawned()
         {
             var interpolationData = Object.HasInputAuthority
                 ? InterpolationDataSources.Predicted
                 : InterpolationDataSources.Snapshots;
             
-            _rb.InterpolationDataSource = interpolationData;
+            Rb.InterpolationDataSource = interpolationData;
             InterpolationDataSource = interpolationData;
         }
 
@@ -129,13 +125,13 @@ namespace GDT.Grappling
             if (_grappleDirection.magnitude < _ropeLenght)
             {
                 var perpendicular = Vector2.Perpendicular(_grappleDirection).normalized;
-                var newDirection = Vector2.Dot(_rb.Rigidbody.velocity, perpendicular) * perpendicular;
+                var newDirection = Vector2.Dot(Rb.Rigidbody.velocity, perpendicular) * perpendicular;
 
-                _rb.Rigidbody.velocity = newDirection.normalized * _rb.Rigidbody.velocity.magnitude;
+                Rb.Rigidbody.velocity = newDirection.normalized * Rb.Rigidbody.velocity.magnitude;
             }
             else
             {
-                _rb.Rigidbody.AddForce(_grappleDirection.normalized * pullForce);
+                Rb.Rigidbody.AddForce(_grappleDirection.normalized * pullForce);
             }
         }
 
@@ -164,7 +160,7 @@ namespace GDT.Grappling
                 ? (Quaternion.Euler(0f, 0f, 180f) * _grappleDirection.normalized)
                 : _grappleDirection.normalized;
             
-            _rb.Rigidbody.AddForce(direction * pullForce);
+            Rb.Rigidbody.AddForce(direction * pullForce);
             Debug.Log($"Rope lenght = {_ropeLenght}");
         }
     }

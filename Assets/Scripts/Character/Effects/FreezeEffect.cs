@@ -10,7 +10,7 @@ namespace GDT.Character.Effects
         
         public override void ApplyTo(CharacterController character, Vector2? sourcePosition)
         {
-            character.inputHandler.FreezeInputForSeconds(freezeTime);
+            character.InputHandler.FreezeInputForSeconds(freezeTime);
         }
     }
 }

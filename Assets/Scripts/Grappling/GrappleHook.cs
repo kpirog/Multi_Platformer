@@ -1,17 +1,17 @@
 using Fusion;
 using UnityEngine;
+using Medicine;
 
 namespace GDT.Grappling
 {
     public class GrappleHook : NetworkBehaviour
     {
         [SerializeField] private Transform parent;
-        [SerializeField] private Transform child;
-        [SerializeField] private LineRenderer lineRenderer;
-
+        [Inject] private LineRenderer LineRenderer { get; }
+        
         private Transform _connectedTransform;
         [Networked] public GrappleState State { get; private set; } = GrappleState.Disconnected; //jak nie bylo networked to sie psulo na cliencie
-        public Vector2 Position => child.position;
+        public Vector2 Position => transform.GetChild(0).position;
         
         public void Connect(Vector2 mousePosition)
         {
@@ -40,9 +40,9 @@ namespace GDT.Grappling
         [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
         public void RPC_SetRopeVisible(Vector2 startPos, Vector2 endPos, bool visible)
         {
-            lineRenderer.enabled = visible;
-            lineRenderer.SetPosition(0, startPos);
-            lineRenderer.SetPosition(1, endPos);
+            LineRenderer.enabled = visible;
+            LineRenderer.SetPosition(0, startPos);
+            LineRenderer.SetPosition(1, endPos);
         }
     }
 

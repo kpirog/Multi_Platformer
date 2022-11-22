@@ -1,39 +1,33 @@
 using Fusion;
 using UnityEngine;
+using Medicine;
 
 namespace GDT.Platforms
 {
     public class PlatformTrigger : NetworkBehaviour
     {
         [SerializeField] private LayerMask collisionLayer;
+        [Inject] private Collider2D Collider { get; }
+        [Inject] private PlatformDurability PlatformDurability { get; }
         
-        private Collider2D _collider;
-        private PlatformDurability _platformDurability;
-        
-        private void Awake()
-        {
-            _collider = GetComponent<Collider2D>();
-            _platformDurability = GetComponent<PlatformDurability>();
-        }
-
         public override void FixedUpdateNetwork()
         {
-            var characterCollider = Runner.GetPhysicsScene2D().OverlapBox(_collider.bounds.center, _collider.bounds.size, 0f, collisionLayer);
+            var characterCollider = Runner.GetPhysicsScene2D().OverlapBox(Collider.bounds.center, Collider.bounds.size, 0f, collisionLayer);
 
             if (characterCollider)
             {
                 //_platformDurability.DecreaseDurability(Runner.DeltaTime); //different solution
-                _platformDurability.StartDestroying();
+                PlatformDurability.StartDestroying();
                 return;
             }
             
-            _platformDurability.StopDestroying();
+            PlatformDurability.StopDestroying();
         }
 
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.magenta;
-            Gizmos.DrawWireCube((Vector2)_collider.bounds.center, _collider.bounds.size);
+            Gizmos.DrawWireCube((Vector2)Collider.bounds.center, Collider.bounds.size);
         }
     }
 }

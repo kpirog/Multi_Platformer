@@ -8,7 +8,7 @@ namespace GDT.Character.Effects
         [SerializeField] private float force;
         public override void ApplyTo(CharacterController character, Vector2? sourcePosition)
         {
-            character.collisionHandler.ExplosionPush(sourcePosition ?? character.transform.position, force);
+            character.CollisionHandler.ExplosionPush(sourcePosition ?? character.transform.position, force);
         }
     }
 }

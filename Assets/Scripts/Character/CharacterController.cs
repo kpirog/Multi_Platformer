@@ -1,7 +1,6 @@
 using Fusion;
 using GDT.Common;
 using GDT.Data;
-using GDT.Grappling;
 using UnityEngine;
 using NetworkPlayer = GDT.Network.NetworkPlayer;
 

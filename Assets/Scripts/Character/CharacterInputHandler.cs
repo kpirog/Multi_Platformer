@@ -66,6 +66,7 @@ namespace GDT.Character
 
             switch (GameManager.Instance.State)
             {
+                default:
                 case GameState.Lobby:
                     inputData.Buttons.Set(InputButton.Ready, Input.GetKey(KeyCode.R));
                     break;
@@ -117,18 +118,7 @@ namespace GDT.Character
 
             return worldPosition;
         }
-
-        public RaycastHit2D GetMouseRaycastHit()
-        {
-            if (!_mainCamera)
-            {
-                _mainCamera = Camera.main;
-            }
-
-            var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-            return Runner.GetPhysicsScene2D().Raycast(ray.origin, ray.direction, Mathf.Infinity);
-        }
-
+        
         #region Useless code
 
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)

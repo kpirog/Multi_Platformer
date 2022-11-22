@@ -25,12 +25,10 @@ namespace GDT.Grappling
             transform.SetParent(parent);
             _connectedTransform = null;
             State = GrappleState.Disconnected;
-
-            if (Object.HasStateAuthority)
-            {
-                Vector2 position = transform.position;
-                RPC_SetRopeVisible(position, position, false);
-            }
+            
+            if (!Object.HasStateAuthority) return;
+            Vector2 position = transform.position;
+            RPC_SetRopeVisible(position, position, false);
         }
 
         public void Release(Transform connectedTransform, Vector2 mousePosition)

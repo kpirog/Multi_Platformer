@@ -17,10 +17,8 @@ namespace GDT.Grappling
         private Vector2 _grapplePoint;
         private Vector2 _grappleDirection;
         private Vector2 _targetPosition;
-
-        private bool _hasReachedTarget;
-        private bool _isChangingDistance;
         
+        private bool _isChangingDistance;
         private float _ropeLenght;
         
         private NetworkRigidbody2D _rb;

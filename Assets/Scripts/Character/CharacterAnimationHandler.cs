@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GDT.Character
 {
-    public class CharacterAnimationHandler : MonoBehaviour
+    public class CharacterAnimationHandler : NetworkBehaviour
     {
         [SerializeField] private Animator animator;
         [SerializeField] private SpriteRenderer spriteRenderer;
@@ -15,11 +15,13 @@ namespace GDT.Character
         private static readonly int ShootKey = Animator.StringToHash("IsShooting");
         private static readonly int GetHitKey = Animator.StringToHash("GetHit");
 
-        public void SetSpriteDirection(Vector2 direction)
-        {
-            spriteRenderer.flipX = direction.x < 0;
-        }
+        [Networked(OnChanged = nameof(OnSpriteDirectionChanged))] public Vector2 SpriteDirection { get; set; }
 
+        private static void OnSpriteDirectionChanged(Changed<CharacterAnimationHandler> changed)
+        {
+            changed.Behaviour.spriteRenderer.flipX = changed.Behaviour.SpriteDirection.x < 0;
+        }
+        
         public void SetMovementAnimation(bool isMoving)
         {
             animator.SetBool(MovementKey, isMoving);
@@ -36,7 +38,7 @@ namespace GDT.Character
         public void SetFallDownAnimation(bool isFallingDown)
         {
             animator.ResetTrigger(JumpKey);
-            animator.SetBool(FallDownKey, isFallingDown);
+             animator.SetBool(FallDownKey, isFallingDown);
         }
 
         public void SetShootAnimation()

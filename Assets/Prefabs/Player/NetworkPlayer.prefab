@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &451250082444480747
 Transform:
   m_ObjectHideFlags: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 4
   m_Sprite: {fileID: -320073481, guid: 193f33026b2b6364ab9de0e2a5bead59, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -215,6 +215,7 @@ MonoBehaviour:
   - {fileID: 8408755885801751688}
   - {fileID: 5872625924751504148}
   - {fileID: 3032775604980960168}
+  - {fileID: 5313378900914907410}
   - {fileID: 3473388298916993735}
   - {fileID: 1884619130283848126}
   - {fileID: 2404496963435984385}
@@ -334,7 +335,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   acceleration: 1500
   maxVelocity: 10
-  jumpForce: 1500
+  jumpForce: 1000
   drag: 200
   wallSlidingMultiplier: 1
   fallMultiplier: 2
@@ -353,8 +354,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9794f94636baaf841957cc6a5654e8b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   animator: {fileID: 451250082444480745}
   spriteRenderer: {fileID: 451250082444480744}
+  _SpriteDirection: {x: 0, y: 0}
 --- !u!114 &3473388298916993735
 MonoBehaviour:
   m_ObjectHideFlags: 0

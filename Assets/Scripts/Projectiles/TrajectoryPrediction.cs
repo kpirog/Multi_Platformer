@@ -24,6 +24,8 @@ namespace GDT.Projectiles
                 point.transform.SetParent(predictionPointsContainer);
                 _predictionPoints[i] = point;
             }
+            
+            SetVisible(false);
         }
     
         public void DisplayTrajectory(float stretch, float speed, Vector2 direction)

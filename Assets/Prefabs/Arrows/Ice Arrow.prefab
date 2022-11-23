@@ -8,6 +8,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3320710225548115782, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
+      propertyPath: homing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3320710225548115782, guid: 6f9b3eda881effb4c975696d60da2719, type: 3}
       propertyPath: characterEffect
       value: 
       objectReference: {fileID: 11400000, guid: 1ed57b199be5abc4abead9ad482ef7e6, type: 2}

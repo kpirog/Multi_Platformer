@@ -13,7 +13,7 @@ namespace GDT.Network
         
         private void Update()
         {
-            if (NetworkRunner != null && Input.GetKeyDown(KeyCode.G))
+            if (NetworkRunner && Input.GetKeyDown(KeyCode.G))
             {
                 NetworkRunner.SetActiveScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex + 1);
             }

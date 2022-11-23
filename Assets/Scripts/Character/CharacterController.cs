@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using Fusion;
 using GDT.Common;
 using GDT.Data;
@@ -10,7 +13,6 @@ namespace GDT.Character
     public class CharacterController : NetworkBehaviour
     {
         [SerializeField] private GameObject model;
-
         [Inject] private CharacterTouchDetector TouchDetector { get; }
         [Inject] private CharacterShootingController ShootingController { get; }
         [Inject] private CharacterAnimationHandler AnimationHandler { get; }
@@ -22,8 +24,6 @@ namespace GDT.Character
         public override void Spawned()
         {
             MovementHandler.EnablePhysics(false);
-            SetModelVisible(false);
-
             GameManager.OnGameStateChanged += SetInteractable;
         }
 
@@ -133,8 +133,9 @@ namespace GDT.Character
             return Vector2.zero;
         }
 
-        private void SetModelVisible(bool visible)
+        private IEnumerator SetModelVisibleAfterTime(bool visible, float time)
         {
+            yield return new WaitForSeconds(time);
             model.gameObject.SetActive(visible);
         }
 
@@ -143,7 +144,7 @@ namespace GDT.Character
             if (state != GameState.Preparing) return;
 
             MovementHandler.EnablePhysics(true);
-            SetModelVisible(true);
+            StartCoroutine(SetModelVisibleAfterTime(true, 0.5f));
         }
     }
 }

@@ -19,7 +19,7 @@ namespace GDT.Projectiles
         [SerializeField] private LayerMask collisionLayer;
 
         [SerializeField] private CharacterEffect characterEffect;
-        [Networked] private TickTimer LifeTimer { get; set; }
+        private TickTimer LifeTimer { get; set; }
         [Inject] private NetworkRigidbody2D Rb { get; }
         
         private bool _collisionActive;
@@ -77,6 +77,9 @@ namespace GDT.Projectiles
                 if (damageable != null)
                 {
                     damageable.TakeDamage(damage);
+                    LifeTimer = TickTimer.None;
+                    Runner.Despawn(Object);
+                    return;
                 }
                 
                 RPC_SetAfterCollision(null);

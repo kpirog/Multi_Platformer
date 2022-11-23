@@ -18,13 +18,14 @@ namespace GDT.Character
 
         [SerializeField] private Vector2 horizontalVelocityReduction;
         [SerializeField] private Vector2 verticalVelocityReduction;
-
+        
         [Inject] private NetworkRigidbody2D Rb { get; }
         [Inject] private CharacterAnimationHandler AnimationHandler { get; }
         
         [Inject.FromChildren] private Collider2D Collider { get; }
-        [Networked] private NetworkBool DoubleJump { get; set; }
         [Networked] private TickTimer SlowTimer { get; set; }
+        
+        [Networked] private NetworkBool DoubleJump { get; set; }
         
         private bool _canJumpAgain;
         private float _currentAcceleration;
@@ -60,7 +61,7 @@ namespace GDT.Character
                 }
 
                 Rb.Rigidbody.AddForce(Vector2.left * _currentAcceleration * Runner.DeltaTime, ForceMode2D.Force);
-                AnimationHandler.SetSpriteDirection(Vector2.left);
+                AnimationHandler.SpriteDirection = Vector2.left;
             }
 
             if (input.GetButton(InputButton.Right))
@@ -71,7 +72,7 @@ namespace GDT.Character
                 }
 
                 Rb.Rigidbody.AddForce(Vector2.right * _currentAcceleration * Runner.DeltaTime, ForceMode2D.Force);
-                AnimationHandler.SetSpriteDirection(Vector2.right);
+                AnimationHandler.SpriteDirection = Vector2.right;
             }
         }
 
@@ -89,7 +90,10 @@ namespace GDT.Character
                     if (_canJumpAgain)
                     {
                         DoubleJump = false;
+                        return;
                     }
+
+                    DoubleJump = true;
                 }
 
                 AnimationHandler.SetJumpAnimation(pressedButtons);

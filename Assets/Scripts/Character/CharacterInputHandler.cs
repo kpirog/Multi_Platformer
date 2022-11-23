@@ -83,6 +83,7 @@ namespace GDT.Character
                     inputData.Buttons.Set(InputButton.JumpDown, Input.GetKey(KeyCode.S));
                     inputData.Buttons.Set(InputButton.GrapplingHook, Input.GetKey(KeyCode.E));
                     inputData.Buttons.Set(InputButton.DecreaseRope, Input.GetKey(KeyCode.W));
+                    inputData.Buttons.Set(InputButton.W, Input.GetKey(KeyCode.W));
                     inputData.Buttons.Set(InputButton.IncreaseRope, Input.GetKey(KeyCode.S));
                     inputData.ShootingAngle = _shootingAngle;
                     inputData.MousePosition = _mousePosition;

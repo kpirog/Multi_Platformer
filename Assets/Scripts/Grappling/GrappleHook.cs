@@ -8,7 +8,7 @@ namespace GDT.Grappling
     {
         [SerializeField] private Transform parent;
         [Inject] private LineRenderer LineRenderer { get; }
-        [Networked] public GrappleState State { get; private set; } = GrappleState.Disconnected; //jak nie bylo networked to sie psulo na cliencie
+        [Networked] public GrappleState State { get; private set; } = GrappleState.Disconnected; 
         public Vector2 Position => transform.GetChild(0).position;
         
         public void Connect(Transform connectedTransform, Vector2 connectPoint)
@@ -23,10 +23,8 @@ namespace GDT.Grappling
             transform.SetParent(parent);
             transform.localPosition = Vector3.zero;
             State = GrappleState.Disconnected;
-            
             if (!Object.HasStateAuthority) return;
-            Vector2 position = transform.position;
-            RPC_SetRopeVisible(position, position, false);
+            RPC_HideRope();
         }
 
         public void Release()
@@ -34,12 +32,18 @@ namespace GDT.Grappling
             State = GrappleState.Released;
         }
 
-        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-        public void RPC_SetRopeVisible(Vector2 startPos, Vector2 endPos, bool visible)
+        [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+        public void RPC_DrawRope(Vector2 startPos, Vector2 endPos)
         {
-            LineRenderer.enabled = visible;
+            LineRenderer.enabled = true;
             LineRenderer.SetPosition(0, startPos);
             LineRenderer.SetPosition(1, endPos);
+        }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        private void RPC_HideRope()
+        {
+            LineRenderer.enabled = false;
         }
     }
 

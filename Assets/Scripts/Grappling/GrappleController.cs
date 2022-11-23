@@ -69,9 +69,9 @@ namespace GDT.Grappling
                             _contactPoint = _raycastHit.point;
                         }
                         
-                        if (Object.HasStateAuthority)
+                        if (Object.HasInputAuthority)
                         {
-                            grappleHook.RPC_SetRopeVisible(position, _ropePosition, true);
+                            grappleHook.RPC_DrawRope(position, _ropePosition);
                         }
 
                         _ropePosition = Vector2.MoveTowards(_ropePosition, _contactPoint, Runner.DeltaTime * releaseSpeed);
@@ -97,9 +97,9 @@ namespace GDT.Grappling
                     _grappleDirection = grappleHook.Position - (Vector2)transform.position;
                     HandleRopeDistance(input);
                     
-                    if (Object.HasStateAuthority)
+                    if (Object.HasInputAuthority)
                     {
-                        grappleHook.RPC_SetRopeVisible(transform.position, grappleHook.Position, true);
+                        grappleHook.RPC_DrawRope(transform.position, grappleHook.Position);
                     }
                     
                     if (!_isChangingDistance)

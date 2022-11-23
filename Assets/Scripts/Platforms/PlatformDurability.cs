@@ -40,7 +40,6 @@ namespace GDT.Platforms
             if (durability > 0)
             {
                 durability -= deltaTime * damageSpeed;
-                Debug.Log($"Current durability = {durability}");
                 return;
             }
 
@@ -49,7 +48,6 @@ namespace GDT.Platforms
 
         private void SetPlatformDestroyed()
         {
-            Debug.Log($"Set platform destroyed!");
             gameObject.layer = _untouchableLayer;
             Rb.Rigidbody.isKinematic = false;
             Collider.usedByEffector = false;
@@ -64,7 +62,6 @@ namespace GDT.Platforms
         public void StartDestroying()
         {
             if (DurabilityTimer.IsRunning || durabilityTime <= 0f) return;
-            Debug.Log($"Start destroying: {durabilityTime}");
             DurabilityTimer = TickTimer.CreateFromSeconds(Runner, durabilityTime);
         }
 

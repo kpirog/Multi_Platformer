@@ -17,7 +17,7 @@ namespace GDT.Data
         GrapplingHook = 10,
         IncreaseRope = 11,
         DecreaseRope = 12,
-        W = 13
+        Jetpack = 13
     }
 
     public struct NetworkInputData : INetworkInput

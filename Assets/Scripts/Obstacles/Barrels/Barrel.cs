@@ -37,7 +37,6 @@ namespace GDT.Obstacles.Barrels
 
                 if (player)
                 {
-                    Debug.Log($"Collision with = {player.gameObject.name}");
                     characterEffect.ApplyTo(player, transform.position);
                 }
             }
@@ -48,7 +47,6 @@ namespace GDT.Obstacles.Barrels
         
         private static void OnExploded(Changed<Barrel> changed)
         {
-            Debug.Log($"Exploded");
             changed.Behaviour.DisableComponents();
             changed.Behaviour.particles.Play();
         }

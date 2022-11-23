@@ -52,10 +52,13 @@ namespace GDT.Character
                 _shootingAngle = Vector3.SignedAngle(_shootDirection, transform.right, Vector3.back);
             }
 
+            /*
             if (Input.GetKeyDown(KeyCode.E))
             {
-                _mousePosition = GetMousePosition();
-            }
+                
+            }*/
+            
+            _mousePosition = GetMousePosition();
         }
 
         public void OnInput(NetworkRunner runner, NetworkInput input)
@@ -83,7 +86,7 @@ namespace GDT.Character
                     inputData.Buttons.Set(InputButton.JumpDown, Input.GetKey(KeyCode.S));
                     inputData.Buttons.Set(InputButton.GrapplingHook, Input.GetKey(KeyCode.E));
                     inputData.Buttons.Set(InputButton.DecreaseRope, Input.GetKey(KeyCode.W));
-                    inputData.Buttons.Set(InputButton.W, Input.GetKey(KeyCode.W));
+                    inputData.Buttons.Set(InputButton.Jetpack, Input.GetKey(KeyCode.W));
                     inputData.Buttons.Set(InputButton.IncreaseRope, Input.GetKey(KeyCode.S));
                     inputData.ShootingAngle = _shootingAngle;
                     inputData.MousePosition = _mousePosition;

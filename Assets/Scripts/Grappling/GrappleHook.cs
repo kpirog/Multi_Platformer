@@ -8,22 +8,20 @@ namespace GDT.Grappling
     {
         [SerializeField] private Transform parent;
         [Inject] private LineRenderer LineRenderer { get; }
-        
-        private Transform _connectedTransform;
         [Networked] public GrappleState State { get; private set; } = GrappleState.Disconnected; //jak nie bylo networked to sie psulo na cliencie
         public Vector2 Position => transform.GetChild(0).position;
         
-        public void Connect(Vector2 mousePosition)
+        public void Connect(Transform connectedTransform, Vector2 connectPoint)
         {
-            transform.position = mousePosition;
-            transform.SetParent(_connectedTransform);
+            transform.position = connectPoint;
+            transform.SetParent(connectedTransform);
             State = GrappleState.Connected;
         }
 
         public void Disconnect()
         {
             transform.SetParent(parent);
-            _connectedTransform = null;
+            transform.localPosition = Vector3.zero;
             State = GrappleState.Disconnected;
             
             if (!Object.HasStateAuthority) return;
@@ -31,9 +29,8 @@ namespace GDT.Grappling
             RPC_SetRopeVisible(position, position, false);
         }
 
-        public void Release(Transform connectedTransform, Vector2 mousePosition)
+        public void Release()
         {
-            _connectedTransform = connectedTransform;
             State = GrappleState.Released;
         }
 

@@ -1,4 +1,3 @@
-using System;
 using Fusion;
 using GDT.Data;
 using Medicine;
@@ -16,7 +15,6 @@ namespace GDT.Jetpack
 
         private bool _equipped;
 
-
         public override void FixedUpdateNetwork()
         {
             var collider = Runner.GetPhysicsScene2D()
@@ -33,7 +31,7 @@ namespace GDT.Jetpack
 
             if (GetInput(out NetworkInputData input))
             {
-                if (input.GetButton(InputButton.W))
+                if (input.GetButton(InputButton.Jetpack))
                 {
                     player.Rigidbody.AddForce(Vector2.up * force, ForceMode2D.Force);
                     fuel -= Runner.DeltaTime;

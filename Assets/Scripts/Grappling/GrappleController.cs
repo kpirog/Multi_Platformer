@@ -15,16 +15,19 @@ namespace GDT.Grappling
         [SerializeField] private GrappleHook grappleHook;
         [SerializeField] private LayerMask rayLayerMask;
 
-        private Vector2 _grapplePoint;
         private Vector2 _grappleDirection;
-        private Vector2 _targetPosition;
+        private Vector2 _mousePosition;
+        private Vector2 _ropePosition;
+        private Vector2 _contactPoint;
+
+        private RaycastHit2D _raycastHit;
+        private float _ropeLenght;
         
         private bool _isChangingDistance;
-        private float _ropeLenght;
+        private bool HasReachedTarget => _ropePosition == _contactPoint;
         
         [Inject] private NetworkRigidbody2D Rb { get; }
         [Networked] private NetworkButtons PressedButtons { get; set; }
-        private bool HasReachedTarget => _targetPosition == _grapplePoint;
         
         public override void Spawned()
         {
@@ -57,16 +60,34 @@ namespace GDT.Grappling
                 }
                 case GrappleState.Released:
                 {
-                    _targetPosition = Vector2.MoveTowards(_targetPosition, _grapplePoint, Runner.DeltaTime * releaseSpeed);
+                    Vector2 position = transform.position;
 
-                    if (Object.HasStateAuthority)
+                    if (!HasReachedTarget)
                     {
-                        grappleHook.RPC_SetRopeVisible(transform.position, _targetPosition, true);
+                        if (_raycastHit.collider)
+                        {
+                            _contactPoint = _raycastHit.point;
+                        }
+                        
+                        if (Object.HasStateAuthority)
+                        {
+                            grappleHook.RPC_SetRopeVisible(position, _ropePosition, true);
+                        }
+
+                        _ropePosition = Vector2.MoveTowards(_ropePosition, _contactPoint, Runner.DeltaTime * releaseSpeed);
+                        _raycastHit = Runner.GetPhysicsScene2D().Linecast(position, _mousePosition, rayLayerMask);
                     }
-
-                    if (HasReachedTarget)
+                    else
                     {
-                        grappleHook.Connect(_grapplePoint);
+                        if (_raycastHit.collider)
+                        {
+                            _ropeLenght = Vector2.Distance(position, _ropePosition);
+                            grappleHook.Connect(_raycastHit.transform, _ropePosition);
+                        }
+                        else
+                        {
+                            grappleHook.Disconnect();
+                        }
                     }
 
                     break;
@@ -93,31 +114,23 @@ namespace GDT.Grappling
 
         private void UseHook(Vector2 mousePosition)
         {
+            _ropePosition = transform.position;
+            _mousePosition = mousePosition;
+            _contactPoint = mousePosition;
+            _raycastHit = new RaycastHit2D();
+
             if (grappleHook.State != GrappleState.Disconnected)
             {
                 grappleHook.Disconnect();
                 return;
             }
 
-            Vector2 position = transform.position;
-            var mouseHit = Runner.GetPhysicsScene2D().Linecast(position, mousePosition, rayLayerMask);
-            
-            if (!mouseHit.collider)
+            if (Vector2.Distance(transform.position, mousePosition) > ropeRange.y)
             {
-                Debug.Log("There is no collider!");
                 return;
             }
 
-            if (Vector2.Distance(transform.position, mouseHit.point) < ropeRange.x ||
-                Vector2.Distance(transform.position, mouseHit.point) > ropeRange.y)
-            {
-                return;
-            }
-            
-            _grapplePoint = mouseHit.point;
-            _targetPosition = transform.position;
-            _ropeLenght = Vector2.Distance(_targetPosition, mouseHit.point);
-            grappleHook.Release(mouseHit.transform, mouseHit.point);
+            grappleHook.Release();
         }
 
         private void Grapple()
@@ -161,7 +174,6 @@ namespace GDT.Grappling
                 : _grappleDirection.normalized;
             
             Rb.Rigidbody.AddForce(direction * pullForce);
-            Debug.Log($"Rope lenght = {_ropeLenght}");
         }
     }
 }
